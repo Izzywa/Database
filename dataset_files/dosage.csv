@@ -1,0 +1,504 @@
+,ab,name,type,dose,dose_times,administration,notes,original_txt,eucast_version
+0,AMK,Amikacin,standard_dosage,25-30 mg/kg,1.0,iv,,25-30 mg/kg x 1 iv,13
+1,AMX,Amoxicillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,13
+2,AMX,Amoxicillin,standard_dosage,1 g,3.0,iv,,1 g x 3-4 iv,13
+3,AMX,Amoxicillin,high_dosage,0.75-1 g,3.0,oral,,0.75-1 g x 3 oral,13
+4,AMX,Amoxicillin,standard_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,13
+5,AMX,Amoxicillin,uncomplicated_uti,0.5 g,3.0,oral,,0.5 g x 3 oral,13
+6,AMC,Amoxicillin/clavulanic acid,high_dosage,2 g + 0.2 g,3.0,iv,,(2 g amoxicillin + 0.2 g clavulanic acid) x 3 iv,13
+7,AMC,Amoxicillin/clavulanic acid,standard_dosage,1 g + 0.2 g,3.0,iv,,(1 g amoxicillin + 0.2 g clavulanic acid) x 3-4 iv,13
+8,AMC,Amoxicillin/clavulanic acid,high_dosage,0.875 g + 0.125 g,3.0,oral,,(0.875 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,13
+9,AMC,Amoxicillin/clavulanic acid,standard_dosage,0.5 g + 0.125 g,3.0,oral,,(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,13
+10,AMC,Amoxicillin/clavulanic acid,uncomplicated_uti,0.5 g + 0.125 g,3.0,oral,,(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,13
+11,AMP,Ampicillin,high_dosage,2 g,4.0,iv,,2 g x 4 iv,13
+12,AMP,Ampicillin,standard_dosage,2 g,3.0,iv,,2 g x 3 iv,13
+13,SAM,Ampicillin/sulbactam,high_dosage,2 g + 1 g,4.0,iv,,(2 g ampicillin + 1 g sulbactam) x 4 iv,13
+14,SAM,Ampicillin/sulbactam,standard_dosage,2 g + 1 g,3.0,iv,,(2 g ampicillin + 1 g sulbactam) x 3 iv,13
+15,AZM,Azithromycin,standard_dosage,0.5 g,1.0,iv,,0.5 g x 1 iv,13
+16,AZM,Azithromycin,standard_dosage,0.5 g,1.0,oral,,0.5 g x 1 oral,13
+17,ATM,Aztreonam,high_dosage,2 g,4.0,iv,,2 g x 4 iv,13
+18,ATM,Aztreonam,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,13
+19,PEN,Benzylpenicillin,high_dosage,1.2 g,4.0,iv,,1.2 g (2 MU) x 4-6 iv,13
+20,PEN,Benzylpenicillin,standard_dosage,0.6 g,4.0,iv,,0.6 g (1 MU) x 4 iv,13
+21,CEC,Cefaclor,high_dosage,1 g,3.0,oral,,1 g x 3 oral,13
+22,CEC,Cefaclor,standard_dosage,0.25-0.5 g,3.0,oral,,0.25-0.5 g x 3 oral,13
+23,CFR,Cefadroxil,standard_dosage,0.5-1 g,2.0,oral,,0.5-1 g x 2 oral,13
+24,CFR,Cefadroxil,uncomplicated_uti,0.5-1 g,2.0,oral,,0.5-1 g x 2 oral,13
+25,LEX,Cefalexin,standard_dosage,0.25-1 g,2.0,oral,,0.25-1 g x 2-3 oral,13
+26,LEX,Cefalexin,uncomplicated_uti,0.25-1 g,2.0,oral,,0.25-1 g x 2-3 oral,13
+27,CZO,Cefazolin,high_dosage,2 g,3.0,iv,,2 g x 3 iv,13
+28,CZO,Cefazolin,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,13
+29,FEP,Cefepime,high_dosage,2 g,3.0,iv,,2 g x 3 iv,13
+30,FEP,Cefepime,standard_dosage,2 g,2.0,iv,,2 g x 2 iv,13
+31,FDC,Cefiderocol,standard_dosage,2 g,3.0,iv,over 3 hours,2 g x 3 iv over 3 hours,13
+32,CFM,Cefixime,standard_dosage,0.2-0.4 g,2.0,oral,,0.2-0.4 g x 2 oral,13
+33,CFM,Cefixime,uncomplicated_uti,0.2-0.4 g,2.0,oral,,0.2-0.4 g x 2 oral,13
+34,CTX,Cefotaxime,high_dosage,2 g,3.0,iv,,2 g x 3 iv,13
+35,CTX,Cefotaxime,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,13
+36,CPD,Cefpodoxime,standard_dosage,0.1-0.2 g,2.0,oral,,0.1-0.2 g x 2 oral,13
+37,CPD,Cefpodoxime,uncomplicated_uti,0.1-0.2 g,2.0,oral,,0.1-0.2 g x 2 oral,13
+38,CPT,Ceftaroline,high_dosage,0.6 g,3.0,iv,over 2 hours,0.6 g x 3 iv over 2 hours,13
+39,CPT,Ceftaroline,standard_dosage,0.6 g,2.0,iv,over 1 hour,0.6 g x 2 iv over 1 hour,13
+40,CAZ,Ceftazidime,high_dosage,1 g,6.0,iv,,1 g x 6 iv,13
+41,CAZ,Ceftazidime,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,13
+42,CZA,Ceftazidime/avibactam,standard_dosage,2 g + 0.5 g,3.0,iv,over 2 hours,(2 g ceftazidime + 0.5 g avibactam) x 3 iv over 2 hours,13
+43,CTB,Ceftibuten,standard_dosage,0.4 g,1.0,oral,,0.4 g x 1 oral,13
+44,BPR,Ceftobiprole,standard_dosage,0.5 g,3.0,iv,over 2 hours,0.5 g x 3 iv over 2 hours,13
+45,CZT,Ceftolozane/tazobactam,standard_dosage,1 g + 0.5 g,3.0,iv,over 1 hour,(1 g ceftolozane + 0.5 g tazobactam) x 3 iv over 1 hour,13
+46,CZT,Ceftolozane/tazobactam,standard_dosage,2 g + 1 g,3.0,iv,over 1 hour,(2 g ceftolozane + 1 g tazobactam) x 3 iv over 1 hour,13
+47,CRO,Ceftriaxone,high_dosage,4 g,1.0,iv,,4 g x 1 iv,13
+48,CRO,Ceftriaxone,standard_dosage,2 g,1.0,iv,,2 g x 1 iv,13
+49,CXM,Cefuroxime,high_dosage,1.5 g,3.0,iv,,1.5 g x 3 iv,13
+50,CXM,Cefuroxime,standard_dosage,0.75 g,3.0,iv,,0.75 g x 3 iv,13
+51,CXM,Cefuroxime,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,13
+52,CXM,Cefuroxime,standard_dosage,0.25 g,2.0,oral,,0.25 g x 2 oral,13
+53,CXM,Cefuroxime,uncomplicated_uti,0.25 g,2.0,oral,,0.25 g x 2 oral,13
+54,CHL,Chloramphenicol,high_dosage,2 g,4.0,iv,,2 g x 4 iv,13
+55,CHL,Chloramphenicol,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,13
+56,CHL,Chloramphenicol,high_dosage,2 g,4.0,oral,,2 g x 4 oral,13
+57,CHL,Chloramphenicol,standard_dosage,1 g,4.0,oral,,1 g x 4 oral,13
+58,CIP,Ciprofloxacin,high_dosage,0.4 g,3.0,iv,,0.4 g x 3 iv,13
+59,CIP,Ciprofloxacin,standard_dosage,0.4 g,2.0,iv,,0.4 g x 2 iv,13
+60,CIP,Ciprofloxacin,high_dosage,0.75 g,2.0,oral,,0.75 g x 2 oral,13
+61,CIP,Ciprofloxacin,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,13
+62,CLR,Clarithromycin,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,13
+63,CLR,Clarithromycin,standard_dosage,0.25 g,2.0,oral,,0.25 g x 2 oral,13
+64,CLI,Clindamycin,high_dosage,0.9 g,3.0,iv,,0.9 g x 3 iv,13
+65,CLI,Clindamycin,standard_dosage,0.6 g,3.0,iv,,0.6 g x 3 iv,13
+66,CLI,Clindamycin,high_dosage,0.3 g,4.0,oral,,0.3 g x 4 oral,13
+67,CLI,Clindamycin,standard_dosage,0.3 g,2.0,oral,,0.3 g x 2 oral,13
+68,CLO,Cloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,13
+69,CLO,Cloxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,13
+70,CLO,Cloxacillin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,13
+71,CLO,Cloxacillin,standard_dosage,0.5 g,4.0,oral,,0.5 g x 4 oral,13
+72,COL,Colistin,standard_dosage,4.5 MU,2.0,iv,loading dose of 9 MU,4.5 MU x 2 iv with a loading dose of 9 MU,13
+73,DAL,Dalbavancin,standard_dosage,1 g,1.0,iv,over 30 minutes on day 8,"1 g x 1 iv over 30 minutes on day 1  If needed, 0.5 g x 1 iv over 30 minutes on day 8",13
+74,DAP,Daptomycin,standard_dosage,4 mg/kg,1.0,iv,,4 mg/kg x 1 iv,13
+75,DAP,Daptomycin,standard_dosage,6 mg/kg,1.0,iv,,6 mg/kg x 1 iv,13
+76,DFX,Delafloxacin,standard_dosage,0.3 g,2.0,iv,,0.3 g x 2 iv,13
+77,DFX,Delafloxacin,standard_dosage,0.45 g,2.0,oral,,0.45 g x 2 oral,13
+78,DIC,Dicloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,13
+79,DIC,Dicloxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,13
+80,DIC,Dicloxacillin,high_dosage,2 g,4.0,oral,,2 g x 4 oral,13
+81,DIC,Dicloxacillin,standard_dosage,0.5-1 g,4.0,oral,,0.5-1 g x 4 oral,13
+82,DOR,Doripenem,high_dosage,1 g,3.0,iv,over 1 hour,1 g x 3 iv over 1 hour,13
+83,DOR,Doripenem,standard_dosage,0.5 g,3.0,iv,over 1 hour,0.5 g x 3 iv over 1 hour,13
+84,DOX,Doxycycline,high_dosage,0.2 g,1.0,oral,,0.2 g x 1 oral,13
+85,DOX,Doxycycline,standard_dosage,0.1 g,1.0,oral,,0.1 g x 1 oral,13
+86,ERV,Eravacycline,standard_dosage,1 mg/kg,2.0,iv,,1 mg/kg x 2 iv,13
+87,ETP,Ertapenem,standard_dosage,1 g,1.0,iv,over 30 minutes,1 g x 1 iv over 30 minutes,13
+88,ERY,Erythromycin,high_dosage,1 g,4.0,iv,,1 g x 4 iv,13
+89,ERY,Erythromycin,standard_dosage,0.5 g,2.0,iv,,0.5 g x 2-4 iv,13
+90,ERY,Erythromycin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,13
+91,ERY,Erythromycin,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2-4 oral,13
+92,FDX,Fidaxomicin,standard_dosage,0.2 g,2.0,oral,,0.2 g x 2 oral,13
+93,FLC,Flucloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,13
+94,FLC,Flucloxacillin,standard_dosage,2 g,4.0,iv,,2 g x 4 iv (or 1 g x 6 iv),13
+95,FLC,Flucloxacillin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,13
+96,FLC,Flucloxacillin,standard_dosage,1 g,3.0,oral,,1 g x 3 oral,13
+97,FOS,Fosfomycin,high_dosage,8 g,3.0,iv,,8 g x 3 iv,13
+98,FOS,Fosfomycin,standard_dosage,4 g,3.0,iv,,4 g x 3 iv,13
+99,FUS,Fusidic acid,high_dosage,0.5 g,3.0,iv,,0.5 g x 3 iv,13
+100,FUS,Fusidic acid,standard_dosage,0.5 g,2.0,iv,,0.5 g x 2 iv,13
+101,FUS,Fusidic acid,high_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,13
+102,FUS,Fusidic acid,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,13
+103,GEN,Gentamicin,standard_dosage,6-7 mg/kg,1.0,iv,,6-7 mg/kg x 1 iv,13
+104,IPM,Imipenem,high_dosage,1 g,4.0,iv,over 30 minutes,1 g x 4 iv over 30 minutes,13
+105,IPM,Imipenem,standard_dosage,0.5 g,4.0,iv,over 30 minutes,0.5 g x 4 iv over 30 minutes,13
+106,IMR,Imipenem/relebactam,standard_dosage,0.5 g + 0.25 g,4.0,iv,over 30 minutes,(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes,13
+107,IMR,Imipenem/relebactam,standard_dosage,0.5 g + 0.25 g,4.0,iv,over 30 minutes,(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes,13
+108,LMU,Lefamulin,standard_dosage,0.15 g,2.0,iv,or 0.6 g x 2 oral,0.15 g x 2 iv or 0.6 g x 2 oral,13
+109,LMU,Lefamulin,standard_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,13
+110,LVX,Levofloxacin,high_dosage,0.5 g,2.0,iv,,0.5 g x 2 iv,13
+111,LVX,Levofloxacin,standard_dosage,0.5 g,1.0,iv,,0.5 g x 1 iv,13
+112,LVX,Levofloxacin,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,13
+113,LVX,Levofloxacin,standard_dosage,0.5 g,1.0,oral,,0.5 g x 1 oral,13
+114,LNZ,Linezolid,standard_dosage,0.6 g,2.0,iv,,0.6 g x 2 iv,13
+115,LNZ,Linezolid,standard_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,13
+116,MEM,Meropenem,high_dosage,2 g,3.0,iv,over 3 hours,2 g x 3 iv over 3 hours,13
+117,MEM,Meropenem,standard_dosage,1 g,3.0,iv,over 30 minutes,1 g x 3 iv over 30 minutes,13
+118,MEV,Meropenem/vaborbactam,standard_dosage,2 g + 2 g,3.0,iv,over 3 hours,(2 g meropenem + 2 g vaborbactam) x 3 iv over 3 hours,13
+119,MTR,Metronidazole,high_dosage,0.5 g,3.0,iv,,0.5 g x 3 iv,13
+120,MTR,Metronidazole,standard_dosage,0.4 g,3.0,iv,,0.4 g x 3 iv,13
+121,MTR,Metronidazole,high_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,13
+122,MTR,Metronidazole,standard_dosage,0.4 g,3.0,oral,,0.4 g x 3 oral,13
+123,MNO,Minocycline,standard_dosage,0.1 g,2.0,oral,,0.1 g x 2 oral,13
+124,MFX,Moxifloxacin,standard_dosage,0.4 g,1.0,iv,,0.4 g x 1 iv,13
+125,MFX,Moxifloxacin,standard_dosage,0.4 g,1.0,oral,,0.4 g x 1 oral,13
+126,OFX,Ofloxacin,high_dosage,0.4 g,2.0,iv,,0.4 g x 2 iv,13
+127,OFX,Ofloxacin,standard_dosage,0.2 g,2.0,iv,,0.2 g x 2 iv,13
+128,OFX,Ofloxacin,high_dosage,0.4 g,2.0,oral,,0.4 g x 2 oral,13
+129,OFX,Ofloxacin,standard_dosage,0.2 g,2.0,oral,,0.2 g x 2 oral,13
+130,ORI,Oritavancin,standard_dosage,1.2 g,1.0,iv,,1.2 g x 1 (single dose) iv over 3 hours,13
+131,OXA,Oxacillin,high_dosage,1 g,6.0,iv,,1 g x 6 iv,13
+132,OXA,Oxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,13
+133,PHN,Phenoxymethylpenicillin,standard_dosage,0.5-2 g,3.0,oral,,0.5-2 g x 3-4 oral,13
+134,PIP,Piperacillin,high_dosage,4 g,4.0,iv,,4 g x 4 iv by extended 3-hour infusion,13
+135,PIP,Piperacillin,standard_dosage,4 g,4.0,iv,,4 g x 4 iv,13
+136,TZP,Piperacillin/tazobactam,high_dosage,4 g + 0.5 g,4.0,iv,,(4 g piperacillin + 0.5 g tazobactam) x 4 iv by extended 3-hour infusion,13
+137,TZP,Piperacillin/tazobactam,standard_dosage,4 g + 0.5 g,4.0,iv,,(4 g piperacillin + 0.5 g tazobactam) x 4 iv 30-minute infusion or x 3 iv by extended 4-hour infusion,13
+138,QDA,Quinupristin/dalfopristin,high_dosage,7.5 mg/kg,3.0,iv,,7.5 mg/kg x 3 iv,13
+139,QDA,Quinupristin/dalfopristin,standard_dosage,7.5 mg/kg,2.0,iv,,7.5 mg/kg x 2 iv,13
+140,RIF,Rifampicin,standard_dosage,0.6 g,1.0,iv,,0.6 g x 1 iv,13
+141,RIF,Rifampicin,standard_dosage,0.6 g,1.0,oral,,0.6 g x 1 oral,13
+142,RXT,Roxithromycin,standard_dosage,0.15 g,2.0,oral,,0.15 g x 2 oral,13
+143,SPT,Spectinomycin,standard_dosage,2 g,1.0,im,,2 g x 1 im,13
+144,TZD,Tedizolid,standard_dosage,0.2 g,1.0,iv,,0.2 g x 1 iv,13
+145,TZD,Tedizolid,standard_dosage,0.2 g,1.0,oral,,0.2 g x 1 oral,13
+146,TEC,Teicoplanin,high_dosage,0.8 g,1.0,iv,,0.8 g x 1 iv,13
+147,TEC,Teicoplanin,standard_dosage,0.4 g,1.0,iv,,0.4 g x 1 iv,13
+148,TLV,Telavancin,standard_dosage,10 mg/kg,1.0,iv,over 1 hour,10 mg/kg x 1 iv over 1 hour,13
+149,TLT,Telithromycin,standard_dosage,0.8 g,1.0,oral,,0.8 g x 1 oral,13
+150,TEM,Temocillin,high_dosage,2 g,3.0,iv,,2 g x 3 iv,13
+151,TEM,Temocillin,standard_dosage,2 g,2.0,iv,,2 g x 2 iv,13
+152,TCY,Tetracycline,high_dosage,0.5 g,4.0,oral,,0.5 g x 4 oral,13
+153,TCY,Tetracycline,standard_dosage,0.25 g,4.0,oral,,0.25 g x 4 oral,13
+154,TIC,Ticarcillin,high_dosage,3 g,6.0,iv,,3 g x 6 iv,13
+155,TIC,Ticarcillin,standard_dosage,3 g,4.0,iv,,3 g x 4 iv,13
+156,TCC,Ticarcillin/clavulanic acid,high_dosage,3 g + 0.1 g,6.0,iv,,(3 g ticarcillin + 0.1 g clavulanic acid) x 6 iv,13
+157,TCC,Ticarcillin/clavulanic acid,standard_dosage,3 g + 0.1-0.2 g,4.0,iv,,(3 g ticarcillin + 0.1-0.2 g clavulanic acid) x 4 iv,13
+158,TGC,Tigecycline,standard_dosage,0.1 g,,,loading dose followed by 50 mg x 2 iv,0.1 g loading dose followed by 50 mg x 2 iv,13
+159,TOB,Tobramycin,standard_dosage,6-7 mg/kg,1.0,iv,,6-7 mg/kg x 1 iv,13
+160,SXT,Trimethoprim/sulfamethoxazole,high_dosage,0.24 g + 1.2 g,2.0,oral,,(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral,13
+161,SXT,Trimethoprim/sulfamethoxazole,high_dosage,0.24 g + 1.2 g,2.0,oral,,(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral or (0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 iv,13
+162,SXT,Trimethoprim/sulfamethoxazole,standard_dosage,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,13
+163,SXT,Trimethoprim/sulfamethoxazole,standard_dosage,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral or (0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 iv,13
+164,SXT,Trimethoprim/sulfamethoxazole,uncomplicated_uti,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,13
+165,SXT,Trimethoprim/sulfamethoxazole,uncomplicated_uti,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,13
+166,VAN,Vancomycin,standard_dosage,1 g,2.0,iv,,1 g x 2 iv or 2 g x 1 by continuous infusion,13
+167,AMK,Amikacin,standard_dosage,25-30 mg/kg,1.0,iv,,25-30 mg/kg x 1 iv,12
+168,AMX,Amoxicillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,12
+169,AMX,Amoxicillin,standard_dosage,1 g,3.0,iv,,1 g x 3-4 iv,12
+170,AMX,Amoxicillin,high_dosage,0.75-1 g,3.0,oral,,0.75-1 g x 3 oral,12
+171,AMX,Amoxicillin,standard_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,12
+172,AMX,Amoxicillin,uncomplicated_uti,0.5 g,3.0,oral,,0.5 g x 3 oral,12
+173,AMC,Amoxicillin/clavulanic acid,high_dosage,2 g + 0.2 g,3.0,iv,,(2 g amoxicillin + 0.2 g clavulanic acid) x 3 iv,12
+174,AMC,Amoxicillin/clavulanic acid,standard_dosage,1 g + 0.2 g,3.0,iv,,(1 g amoxicillin + 0.2 g clavulanic acid) x 3-4 iv,12
+175,AMC,Amoxicillin/clavulanic acid,high_dosage,0.875 g + 0.125 g,3.0,oral,,(0.875 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,12
+176,AMC,Amoxicillin/clavulanic acid,standard_dosage,0.5 g + 0.125 g,3.0,oral,,(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,12
+177,AMC,Amoxicillin/clavulanic acid,uncomplicated_uti,0.5 g + 0.125 g,3.0,oral,,(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,12
+178,AMP,Ampicillin,high_dosage,2 g,4.0,iv,,2 g x 4 iv,12
+179,AMP,Ampicillin,standard_dosage,2 g,3.0,iv,,2 g x 3 iv,12
+180,SAM,Ampicillin/sulbactam,high_dosage,2 g + 1 g,4.0,iv,,(2 g ampicillin + 1 g sulbactam) x 4 iv,12
+181,SAM,Ampicillin/sulbactam,standard_dosage,2 g + 1 g,3.0,iv,,(2 g ampicillin + 1 g sulbactam) x 3 iv,12
+182,AZM,Azithromycin,standard_dosage,0.5 g,1.0,iv,,0.5 g x 1 iv,12
+183,AZM,Azithromycin,standard_dosage,0.5 g,1.0,oral,,0.5 g x 1 oral,12
+184,ATM,Aztreonam,high_dosage,2 g,4.0,iv,,2 g x 4 iv,12
+185,ATM,Aztreonam,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,12
+186,PEN,Benzylpenicillin,high_dosage,1.2 g,4.0,iv,,1.2 g (2 MU) x 4-6 iv,12
+187,PEN,Benzylpenicillin,standard_dosage,0.6 g,4.0,iv,,0.6 g (1 MU) x 4 iv,12
+188,CEC,Cefaclor,high_dosage,1 g,3.0,oral,,1 g x 3 oral,12
+189,CEC,Cefaclor,standard_dosage,0.25-0.5 g,3.0,oral,,0.25-0.5 g x 3 oral,12
+190,CFR,Cefadroxil,standard_dosage,0.5-1 g,2.0,oral,,0.5-1 g x 2 oral,12
+191,CFR,Cefadroxil,uncomplicated_uti,0.5-1 g,2.0,oral,,0.5-1 g x 2 oral,12
+192,LEX,Cefalexin,standard_dosage,0.25-1 g,2.0,oral,,0.25-1 g x 2-3 oral,12
+193,LEX,Cefalexin,uncomplicated_uti,0.25-1 g,2.0,oral,,0.25-1 g x 2-3 oral,12
+194,CZO,Cefazolin,high_dosage,2 g,3.0,iv,,2 g x 3 iv,12
+195,CZO,Cefazolin,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,12
+196,FEP,Cefepime,high_dosage,2 g,3.0,iv,,2 g x 3 iv,12
+197,FEP,Cefepime,standard_dosage,2 g,2.0,iv,,2 g x 2 iv,12
+198,FDC,Cefiderocol,standard_dosage,2 g,3.0,iv,over 3 hours,2 g x 3 iv over 3 hours,12
+199,CFM,Cefixime,standard_dosage,0.2-0.4 g,2.0,oral,,0.2-0.4 g x 2 oral,12
+200,CFM,Cefixime,uncomplicated_uti,0.2-0.4 g,2.0,oral,,0.2-0.4 g x 2 oral,12
+201,CTX,Cefotaxime,high_dosage,2 g,3.0,iv,,2 g x 3 iv,12
+202,CTX,Cefotaxime,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,12
+203,CPD,Cefpodoxime,standard_dosage,0.1-0.2 g,2.0,oral,,0.1-0.2 g x 2 oral,12
+204,CPD,Cefpodoxime,uncomplicated_uti,0.1-0.2 g,2.0,oral,,0.1-0.2 g x 2 oral,12
+205,CPT,Ceftaroline,high_dosage,0.6 g,3.0,iv,over 2 hours,0.6 g x 3 iv over 2 hours,12
+206,CPT,Ceftaroline,standard_dosage,0.6 g,2.0,iv,over 1 hour,0.6 g x 2 iv over 1 hour,12
+207,CAZ,Ceftazidime,high_dosage,1 g,6.0,iv,,1 g x 6 iv,12
+208,CAZ,Ceftazidime,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,12
+209,CZA,Ceftazidime/avibactam,standard_dosage,2 g + 0.5 g,3.0,iv,over 2 hours,(2 g ceftazidime + 0.5 g avibactam) x 3 iv over 2 hours,12
+210,CTB,Ceftibuten,standard_dosage,0.4 g,1.0,oral,,0.4 g x 1 oral,12
+211,BPR,Ceftobiprole,standard_dosage,0.5 g,3.0,iv,over 2 hours,0.5 g x 3 iv over 2 hours,12
+212,CZT,Ceftolozane/tazobactam,standard_dosage,1 g + 0.5 g,3.0,iv,over 1 hour,(1 g ceftolozane + 0.5 g tazobactam) x 3 iv over 1 hour,12
+213,CZT,Ceftolozane/tazobactam,standard_dosage,2 g + 1 g,3.0,iv,over 1 hour,(2 g ceftolozane + 1 g tazobactam) x 3 iv over 1 hour,12
+214,CRO,Ceftriaxone,high_dosage,4 g,1.0,iv,,4 g x 1 iv,12
+215,CRO,Ceftriaxone,standard_dosage,2 g,1.0,iv,,2 g x 1 iv,12
+216,CXM,Cefuroxime,high_dosage,1.5 g,3.0,iv,,1.5 g x 3 iv,12
+217,CXM,Cefuroxime,standard_dosage,0.75 g,3.0,iv,,0.75 g x 3 iv,12
+218,CXM,Cefuroxime,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,12
+219,CXM,Cefuroxime,standard_dosage,0.25 g,2.0,oral,,0.25 g x 2 oral,12
+220,CXM,Cefuroxime,uncomplicated_uti,0.25 g,2.0,oral,,0.25 g x 2 oral,12
+221,CHL,Chloramphenicol,high_dosage,2 g,4.0,iv,,2 g x 4 iv,12
+222,CHL,Chloramphenicol,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,12
+223,CHL,Chloramphenicol,high_dosage,2 g,4.0,oral,,2 g x 4 oral,12
+224,CHL,Chloramphenicol,standard_dosage,1 g,4.0,oral,,1 g x 4 oral,12
+225,CIP,Ciprofloxacin,high_dosage,0.4 g,3.0,iv,,0.4 g x 3 iv,12
+226,CIP,Ciprofloxacin,standard_dosage,0.4 g,2.0,iv,,0.4 g x 2 iv,12
+227,CIP,Ciprofloxacin,high_dosage,0.75 g,2.0,oral,,0.75 g x 2 oral,12
+228,CIP,Ciprofloxacin,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,12
+229,CLR,Clarithromycin,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,12
+230,CLR,Clarithromycin,standard_dosage,0.25 g,2.0,oral,,0.25 g x 2 oral,12
+231,CLI,Clindamycin,high_dosage,0.9 g,3.0,iv,,0.9 g x 3 iv,12
+232,CLI,Clindamycin,standard_dosage,0.6 g,3.0,iv,,0.6 g x 3 iv,12
+233,CLI,Clindamycin,high_dosage,0.3 g,4.0,oral,,0.3 g x 4 oral,12
+234,CLI,Clindamycin,standard_dosage,0.3 g,2.0,oral,,0.3 g x 2 oral,12
+235,CLO,Cloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,12
+236,CLO,Cloxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,12
+237,CLO,Cloxacillin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,12
+238,CLO,Cloxacillin,standard_dosage,0.5 g,4.0,oral,,0.5 g x 4 oral,12
+239,COL,Colistin,standard_dosage,4.5 MU,2.0,iv,loading dose of 9 MU,4.5 MU x 2 iv with a loading dose of 9 MU,12
+240,DAL,Dalbavancin,standard_dosage,1 g,1.0,iv,over 30 minutes on day 8,"1 g x 1 iv over 30 minutes on day 1  If needed, 0.5 g x 1 iv over 30 minutes on day 8",12
+241,DAP,Daptomycin,standard_dosage,4 mg/kg,1.0,iv,,4 mg/kg x 1 iv,12
+242,DAP,Daptomycin,standard_dosage,6 mg/kg,1.0,iv,,6 mg/kg x 1 iv,12
+243,DFX,Delafloxacin,standard_dosage,0.3 g,2.0,iv,,0.3 g x 2 iv,12
+244,DFX,Delafloxacin,standard_dosage,0.45 g,2.0,oral,,0.45 g x 2 oral,12
+245,DIC,Dicloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,12
+246,DIC,Dicloxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,12
+247,DIC,Dicloxacillin,high_dosage,2 g,4.0,oral,,2 g x 4 oral,12
+248,DIC,Dicloxacillin,standard_dosage,0.5-1 g,4.0,oral,,0.5-1 g x 4 oral,12
+249,DOR,Doripenem,high_dosage,1 g,3.0,iv,over 1 hour,1 g x 3 iv over 1 hour,12
+250,DOR,Doripenem,standard_dosage,0.5 g,3.0,iv,over 1 hour,0.5 g x 3 iv over 1 hour,12
+251,DOX,Doxycycline,high_dosage,0.2 g,1.0,oral,,0.2 g x 1 oral,12
+252,DOX,Doxycycline,standard_dosage,0.1 g,1.0,oral,,0.1 g x 1 oral,12
+253,ERV,Eravacycline,standard_dosage,1 mg/kg,2.0,iv,,1 mg/kg x 2 iv,12
+254,ETP,Ertapenem,standard_dosage,1 g,1.0,iv,over 30 minutes,1 g x 1 iv over 30 minutes,12
+255,ERY,Erythromycin,high_dosage,1 g,4.0,iv,,1 g x 4 iv,12
+256,ERY,Erythromycin,standard_dosage,0.5 g,2.0,iv,,0.5 g x 2-4 iv,12
+257,ERY,Erythromycin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,12
+258,ERY,Erythromycin,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2-4 oral,12
+259,FDX,Fidaxomicin,standard_dosage,0.2 g,2.0,oral,,0.2 g x 2 oral,12
+260,FLC,Flucloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,12
+261,FLC,Flucloxacillin,standard_dosage,2 g,4.0,iv,,2 g x 4 iv (or 1 g x 6 iv),12
+262,FLC,Flucloxacillin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,12
+263,FLC,Flucloxacillin,standard_dosage,1 g,3.0,oral,,1 g x 3 oral,12
+264,FOS,Fosfomycin,high_dosage,8 g,3.0,iv,,8 g x 3 iv,12
+265,FOS,Fosfomycin,standard_dosage,4 g,3.0,iv,,4 g x 3 iv,12
+266,FUS,Fusidic acid,high_dosage,0.5 g,3.0,iv,,0.5 g x 3 iv,12
+267,FUS,Fusidic acid,standard_dosage,0.5 g,2.0,iv,,0.5 g x 2 iv,12
+268,FUS,Fusidic acid,high_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,12
+269,FUS,Fusidic acid,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,12
+270,GEN,Gentamicin,standard_dosage,6-7 mg/kg,1.0,iv,,6-7 mg/kg x 1 iv,12
+271,IPM,Imipenem,high_dosage,1 g,4.0,iv,over 30 minutes,1 g x 4 iv over 30 minutes,12
+272,IPM,Imipenem,standard_dosage,0.5 g,4.0,iv,over 30 minutes,0.5 g x 4 iv over 30 minutes,12
+273,IMR,Imipenem/relebactam,standard_dosage,0.5 g + 0.25 g,4.0,iv,over 30 minutes,(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes,12
+274,IMR,Imipenem/relebactam,standard_dosage,0.5 g + 0.25 g,4.0,iv,over 30 minutes,(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes,12
+275,LMU,Lefamulin,standard_dosage,0.15 g,2.0,iv,or 0.6 g x 2 oral,0.15 g x 2 iv or 0.6 g x 2 oral,12
+276,LMU,Lefamulin,standard_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,12
+277,LVX,Levofloxacin,high_dosage,0.5 g,2.0,iv,,0.5 g x 2 iv,12
+278,LVX,Levofloxacin,standard_dosage,0.5 g,1.0,iv,,0.5 g x 1 iv,12
+279,LVX,Levofloxacin,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,12
+280,LVX,Levofloxacin,standard_dosage,0.5 g,1.0,oral,,0.5 g x 1 oral,12
+281,LNZ,Linezolid,standard_dosage,0.6 g,2.0,iv,,0.6 g x 2 iv,12
+282,LNZ,Linezolid,standard_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,12
+283,MEM,Meropenem,high_dosage,2 g,3.0,iv,over 3 hours,2 g x 3 iv over 3 hours,12
+284,MEM,Meropenem,standard_dosage,1 g,3.0,iv,over 30 minutes,1 g x 3 iv over 30 minutes,12
+285,MEV,Meropenem/vaborbactam,standard_dosage,2 g + 2 g,3.0,iv,over 3 hours,(2 g meropenem + 2 g vaborbactam) x 3 iv over 3 hours,12
+286,MTR,Metronidazole,high_dosage,0.5 g,3.0,iv,,0.5 g x 3 iv,12
+287,MTR,Metronidazole,standard_dosage,0.4 g,3.0,iv,,0.4 g x 3 iv,12
+288,MTR,Metronidazole,high_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,12
+289,MTR,Metronidazole,standard_dosage,0.4 g,3.0,oral,,0.4 g x 3 oral,12
+290,MNO,Minocycline,standard_dosage,0.1 g,2.0,oral,,0.1 g x 2 oral,12
+291,MFX,Moxifloxacin,standard_dosage,0.4 g,1.0,iv,,0.4 g x 1 iv,12
+292,MFX,Moxifloxacin,standard_dosage,0.4 g,1.0,oral,,0.4 g x 1 oral,12
+293,OFX,Ofloxacin,high_dosage,0.4 g,2.0,iv,,0.4 g x 2 iv,12
+294,OFX,Ofloxacin,standard_dosage,0.2 g,2.0,iv,,0.2 g x 2 iv,12
+295,OFX,Ofloxacin,high_dosage,0.4 g,2.0,oral,,0.4 g x 2 oral,12
+296,OFX,Ofloxacin,standard_dosage,0.2 g,2.0,oral,,0.2 g x 2 oral,12
+297,ORI,Oritavancin,standard_dosage,1.2 g,1.0,iv,,1.2 g x 1 (single dose) iv over 3 hours,12
+298,OXA,Oxacillin,high_dosage,1 g,6.0,iv,,1 g x 6 iv,12
+299,OXA,Oxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,12
+300,PHN,Phenoxymethylpenicillin,standard_dosage,0.5-2 g,3.0,oral,,0.5-2 g x 3-4 oral,12
+301,PIP,Piperacillin,high_dosage,4 g,4.0,iv,,4 g x 4 iv by extended 3-hour infusion,12
+302,PIP,Piperacillin,standard_dosage,4 g,4.0,iv,,4 g x 4 iv,12
+303,TZP,Piperacillin/tazobactam,high_dosage,4 g + 0.5 g,4.0,iv,,(4 g piperacillin + 0.5 g tazobactam) x 4 iv by extended 3-hour infusion,12
+304,TZP,Piperacillin/tazobactam,standard_dosage,4 g + 0.5 g,4.0,iv,,(4 g piperacillin + 0.5 g tazobactam) x 4 iv 30-minute infusion or x 3 iv by extended 4-hour infusion,12
+305,QDA,Quinupristin/dalfopristin,high_dosage,7.5 mg/kg,3.0,iv,,7.5 mg/kg x 3 iv,12
+306,QDA,Quinupristin/dalfopristin,standard_dosage,7.5 mg/kg,2.0,iv,,7.5 mg/kg x 2 iv,12
+307,RIF,Rifampicin,standard_dosage,0.6 g,1.0,iv,,0.6 g x 1 iv,12
+308,RIF,Rifampicin,standard_dosage,0.6 g,1.0,oral,,0.6 g x 1 oral,12
+309,RXT,Roxithromycin,standard_dosage,0.15 g,2.0,oral,,0.15 g x 2 oral,12
+310,SPT,Spectinomycin,standard_dosage,2 g,1.0,im,,2 g x 1 im,12
+311,TZD,Tedizolid,standard_dosage,0.2 g,1.0,iv,,0.2 g x 1 iv,12
+312,TZD,Tedizolid,standard_dosage,0.2 g,1.0,oral,,0.2 g x 1 oral,12
+313,TEC,Teicoplanin,high_dosage,0.8 g,1.0,iv,,0.8 g x 1 iv,12
+314,TEC,Teicoplanin,standard_dosage,0.4 g,1.0,iv,,0.4 g x 1 iv,12
+315,TLV,Telavancin,standard_dosage,10 mg/kg,1.0,iv,over 1 hour,10 mg/kg x 1 iv over 1 hour,12
+316,TLT,Telithromycin,standard_dosage,0.8 g,1.0,oral,,0.8 g x 1 oral,12
+317,TEM,Temocillin,high_dosage,2 g,3.0,iv,,2 g x 3 iv,12
+318,TEM,Temocillin,standard_dosage,2 g,2.0,iv,,2 g x 2 iv,12
+319,TCY,Tetracycline,high_dosage,0.5 g,4.0,oral,,0.5 g x 4 oral,12
+320,TCY,Tetracycline,standard_dosage,0.25 g,4.0,oral,,0.25 g x 4 oral,12
+321,TIC,Ticarcillin,high_dosage,3 g,6.0,iv,,3 g x 6 iv,12
+322,TIC,Ticarcillin,standard_dosage,3 g,4.0,iv,,3 g x 4 iv,12
+323,TCC,Ticarcillin/clavulanic acid,high_dosage,3 g + 0.1 g,6.0,iv,,(3 g ticarcillin + 0.1 g clavulanic acid) x 6 iv,12
+324,TCC,Ticarcillin/clavulanic acid,standard_dosage,3 g + 0.1-0.2 g,4.0,iv,,(3 g ticarcillin + 0.1-0.2 g clavulanic acid) x 4 iv,12
+325,TGC,Tigecycline,standard_dosage,0.1 g,,,loading dose followed by 50 mg x 2 iv,0.1 g loading dose followed by 50 mg x 2 iv,12
+326,TOB,Tobramycin,standard_dosage,6-7 mg/kg,1.0,iv,,6-7 mg/kg x 1 iv,12
+327,SXT,Trimethoprim/sulfamethoxazole,high_dosage,0.24 g + 1.2 g,2.0,oral,,(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral,12
+328,SXT,Trimethoprim/sulfamethoxazole,high_dosage,0.24 g + 1.2 g,2.0,oral,,(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral or (0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 iv,12
+329,SXT,Trimethoprim/sulfamethoxazole,standard_dosage,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,12
+330,SXT,Trimethoprim/sulfamethoxazole,standard_dosage,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral or (0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 iv,12
+331,SXT,Trimethoprim/sulfamethoxazole,uncomplicated_uti,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,12
+332,SXT,Trimethoprim/sulfamethoxazole,uncomplicated_uti,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,12
+333,VAN,Vancomycin,standard_dosage,1 g,2.0,iv,,1 g x 2 iv or 2 g x 1 by continuous infusion,12
+334,AMK,Amikacin,standard_dosage,25-30 mg/kg,1.0,iv,,25-30 mg/kg x 1 iv,11
+335,AMX,Amoxicillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,11
+336,AMX,Amoxicillin,standard_dosage,1 g,3.0,iv,,1 g x 3-4 iv,11
+337,AMX,Amoxicillin,high_dosage,0.75-1 g,3.0,oral,,0.75-1 g x 3 oral,11
+338,AMX,Amoxicillin,standard_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,11
+339,AMX,Amoxicillin,uncomplicated_uti,0.5 g,3.0,oral,,0.5 g x 3 oral,11
+340,AMC,Amoxicillin/clavulanic acid,high_dosage,2 g + 0.2 g,3.0,iv,,(2 g amoxicillin + 0.2 g clavulanic acid) x 3 iv,11
+341,AMC,Amoxicillin/clavulanic acid,standard_dosage,1 g + 0.2 g,3.0,iv,,(1 g amoxicillin + 0.2 g clavulanic acid) x 3-4 iv,11
+342,AMC,Amoxicillin/clavulanic acid,high_dosage,0.875 g + 0.125 g,3.0,oral,,(0.875 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,11
+343,AMC,Amoxicillin/clavulanic acid,standard_dosage,0.5 g + 0.125 g,3.0,oral,,(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,11
+344,AMC,Amoxicillin/clavulanic acid,uncomplicated_uti,0.5 g + 0.125 g,3.0,oral,,(0.5 g amoxicillin + 0.125 g clavulanic acid) x 3 oral,11
+345,AMP,Ampicillin,high_dosage,2 g,4.0,iv,,2 g x 4 iv,11
+346,AMP,Ampicillin,standard_dosage,2 g,3.0,iv,,2 g x 3 iv,11
+347,SAM,Ampicillin/sulbactam,high_dosage,2 g + 1 g,4.0,iv,,(2 g ampicillin + 1 g sulbactam) x 4 iv,11
+348,SAM,Ampicillin/sulbactam,standard_dosage,2 g + 1 g,3.0,iv,,(2 g ampicillin + 1 g sulbactam) x 3 iv,11
+349,AZM,Azithromycin,standard_dosage,0.5 g,1.0,iv,,0.5 g x 1 iv,11
+350,AZM,Azithromycin,standard_dosage,0.5 g,1.0,oral,,0.5 g x 1 oral,11
+351,ATM,Aztreonam,high_dosage,2 g,4.0,iv,,2 g x 4 iv,11
+352,ATM,Aztreonam,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,11
+353,PEN,Benzylpenicillin,high_dosage,1.2 g,4.0,iv,,1.2 g (2 MU) x 4-6 iv,11
+354,PEN,Benzylpenicillin,standard_dosage,0.6 g,4.0,iv,,0.6 g (1 MU) x 4 iv,11
+355,CEC,Cefaclor,high_dosage,1 g,3.0,oral,,1 g x 3 oral,11
+356,CEC,Cefaclor,standard_dosage,0.25-0.5 g,3.0,oral,,0.25-0.5 g x 3 oral,11
+357,CFR,Cefadroxil,standard_dosage,0.5-1 g,2.0,oral,,0.5-1 g x 2 oral,11
+358,CFR,Cefadroxil,uncomplicated_uti,0.5-1 g,2.0,oral,,0.5-1 g x 2 oral,11
+359,CZO,Cefazolin,high_dosage,2 g,3.0,iv,,2 g x 3 iv,11
+360,CZO,Cefazolin,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,11
+361,FEP,Cefepime,high_dosage,2 g,3.0,iv,,2 g x 3 iv,11
+362,FEP,Cefepime,standard_dosage,2 g,2.0,iv,,2 g x 2 iv,11
+363,FDC,Cefiderocol,standard_dosage,2 g,3.0,iv,over 3 hours,2 g x 3 iv over 3 hours,11
+364,CFM,Cefixime,standard_dosage,0.2-0.4 g,2.0,oral,,0.2-0.4 g x 2 oral,11
+365,CFM,Cefixime,uncomplicated_uti,0.2-0.4 g,2.0,oral,,0.2-0.4 g x 2 oral,11
+366,CTX,Cefotaxime,high_dosage,2 g,3.0,iv,,2 g x 3 iv,11
+367,CTX,Cefotaxime,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,11
+368,CPD,Cefpodoxime,standard_dosage,0.1-0.2 g,2.0,oral,,0.1-0.2 g x 2 oral,11
+369,CPD,Cefpodoxime,uncomplicated_uti,0.1-0.2 g,2.0,oral,,0.1-0.2 g x 2 oral,11
+370,CPT,Ceftaroline,high_dosage,0.6 g,3.0,iv,over 2 hours,0.6 g x 3 iv over 2 hours,11
+371,CPT,Ceftaroline,standard_dosage,0.6 g,2.0,iv,over 1 hour,0.6 g x 2 iv over 1 hour,11
+372,CAZ,Ceftazidime,high_dosage,1 g,6.0,iv,,1 g x 6 iv,11
+373,CAZ,Ceftazidime,standard_dosage,1 g,3.0,iv,,1 g x 3 iv,11
+374,CZA,Ceftazidime/avibactam,standard_dosage,2 g + 0.5 g,3.0,iv,over 2 hours,(2 g ceftazidime + 0.5 g avibactam) x 3 iv over 2 hours,11
+375,CTB,Ceftibuten,standard_dosage,0.4 g,1.0,oral,,0.4 g x 1 oral,11
+376,BPR,Ceftobiprole,standard_dosage,0.5 g,3.0,iv,over 2 hours,0.5 g x 3 iv over 2 hours,11
+377,CZT,Ceftolozane/tazobactam,standard_dosage,1 g + 0.5 g,3.0,iv,over 1 hour,(1 g ceftolozane + 0.5 g tazobactam) x 3 iv over 1 hour,11
+378,CZT,Ceftolozane/tazobactam,standard_dosage,2 g + 1 g,3.0,iv,over 1 hour,(2 g ceftolozane + 1 g tazobactam) x 3 iv over 1 hour,11
+379,CRO,Ceftriaxone,high_dosage,4 g,1.0,iv,,4 g x 1 iv,11
+380,CRO,Ceftriaxone,standard_dosage,2 g,1.0,iv,,2 g x 1 iv,11
+381,CXM,Cefuroxime,high_dosage,1.5 g,3.0,iv,,1.5 g x 3 iv,11
+382,CXM,Cefuroxime,standard_dosage,0.75 g,3.0,iv,,0.75 g x 3 iv,11
+383,CXM,Cefuroxime,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,11
+384,CXM,Cefuroxime,standard_dosage,0.25 g,2.0,oral,,0.25 g x 2 oral,11
+385,CXM,Cefuroxime,uncomplicated_uti,0.25 g,2.0,oral,,0.25 g x 2 oral,11
+386,LEX,Cefalexin,standard_dosage,0.25-1 g,2.0,oral,,0.25-1 g x 2-3 oral,11
+387,LEX,Cefalexin,uncomplicated_uti,0.25-1 g,2.0,oral,,0.25-1 g x 2-3 oral,11
+388,CHL,Chloramphenicol,high_dosage,2 g,4.0,iv,,2 g x 4 iv,11
+389,CHL,Chloramphenicol,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,11
+390,CHL,Chloramphenicol,high_dosage,2 g,4.0,oral,,2 g x 4 oral,11
+391,CHL,Chloramphenicol,standard_dosage,1 g,4.0,oral,,1 g x 4 oral,11
+392,CIP,Ciprofloxacin,high_dosage,0.4 g,3.0,iv,,0.4 g x 3 iv,11
+393,CIP,Ciprofloxacin,standard_dosage,0.4 g,2.0,iv,,0.4 g x 2 iv,11
+394,CIP,Ciprofloxacin,high_dosage,0.75 g,2.0,oral,,0.75 g x 2 oral,11
+395,CIP,Ciprofloxacin,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,11
+396,CLR,Clarithromycin,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,11
+397,CLR,Clarithromycin,standard_dosage,0.25 g,2.0,oral,,0.25 g x 2 oral,11
+398,CLI,Clindamycin,high_dosage,0.9 g,3.0,iv,,0.9 g x 3 iv,11
+399,CLI,Clindamycin,standard_dosage,0.6 g,3.0,iv,,0.6 g x 3 iv,11
+400,CLI,Clindamycin,high_dosage,0.3 g,4.0,oral,,0.3 g x 4 oral,11
+401,CLI,Clindamycin,standard_dosage,0.3 g,2.0,oral,,0.3 g x 2 oral,11
+402,CLO,Cloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,11
+403,CLO,Cloxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,11
+404,CLO,Cloxacillin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,11
+405,CLO,Cloxacillin,standard_dosage,0.5 g,4.0,oral,,0.5 g x 4 oral,11
+406,COL,Colistin,standard_dosage,4.5 MU,2.0,iv,loading dose of 9 MU,4.5 MU x 2 iv with a loading dose of 9 MU,11
+407,DAL,Dalbavancin,standard_dosage,1 g,1.0,iv,over 30 minutes on day 8,"1 g x 1 iv over 30 minutes on day 1  If needed, 0.5 g x 1 iv over 30 minutes on day 8",11
+408,DAP,Daptomycin,standard_dosage,4 mg/kg,1.0,iv,,4 mg/kg x 1 iv,11
+409,DAP,Daptomycin,standard_dosage,6 mg/kg,1.0,iv,,6 mg/kg x 1 iv,11
+410,DFX,Delafloxacin,standard_dosage,0.3 g,2.0,iv,,0.3 g x 2 iv,11
+411,DFX,Delafloxacin,standard_dosage,0.45 g,2.0,oral,,0.45 g x 2 oral,11
+412,DIC,Dicloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,11
+413,DIC,Dicloxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,11
+414,DIC,Dicloxacillin,high_dosage,2 g,4.0,oral,,2 g x 4 oral,11
+415,DIC,Dicloxacillin,standard_dosage,0.5-1 g,4.0,oral,,0.5-1 g x 4 oral,11
+416,DOR,Doripenem,high_dosage,1 g,3.0,iv,over 1 hour,1 g x 3 iv over 1 hour,11
+417,DOR,Doripenem,standard_dosage,0.5 g,3.0,iv,over 1 hour,0.5 g x 3 iv over 1 hour,11
+418,DOX,Doxycycline,high_dosage,0.2 g,1.0,oral,,0.2 g x 1 oral,11
+419,DOX,Doxycycline,standard_dosage,0.1 g,1.0,oral,,0.1 g x 1 oral,11
+420,ERV,Eravacycline,standard_dosage,1 mg/kg,2.0,iv,,1 mg/kg x 2 iv,11
+421,ETP,Ertapenem,standard_dosage,1 g,1.0,iv,over 30 minutes,1 g x 1 iv over 30 minutes,11
+422,ERY,Erythromycin,high_dosage,1 g,4.0,iv,,1 g x 4 iv,11
+423,ERY,Erythromycin,standard_dosage,0.5 g,2.0,iv,,0.5 g x 2-4 iv,11
+424,ERY,Erythromycin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,11
+425,ERY,Erythromycin,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2-4 oral,11
+426,FDX,Fidaxomicin,standard_dosage,0.2 g,2.0,oral,,0.2 g x 2 oral,11
+427,FLC,Flucloxacillin,high_dosage,2 g,6.0,iv,,2 g x 6 iv,11
+428,FLC,Flucloxacillin,standard_dosage,2 g,4.0,iv,,2 g x 4 iv (or 1 g x 6 iv),11
+429,FLC,Flucloxacillin,high_dosage,1 g,4.0,oral,,1 g x 4 oral,11
+430,FLC,Flucloxacillin,standard_dosage,1 g,3.0,oral,,1 g x 3 oral,11
+431,FOS,Fosfomycin,high_dosage,8 g,3.0,iv,,8 g x 3 iv,11
+432,FOS,Fosfomycin,standard_dosage,4 g,3.0,iv,,4 g x 3 iv,11
+433,FUS,Fusidic acid,high_dosage,0.5 g,3.0,iv,,0.5 g x 3 iv,11
+434,FUS,Fusidic acid,standard_dosage,0.5 g,2.0,iv,,0.5 g x 2 iv,11
+435,FUS,Fusidic acid,high_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,11
+436,FUS,Fusidic acid,standard_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,11
+437,GEN,Gentamicin,standard_dosage,6-7 mg/kg,1.0,iv,,6-7 mg/kg x 1 iv,11
+438,IPM,Imipenem,high_dosage,1 g,4.0,iv,over 30 minutes,1 g x 4 iv over 30 minutes,11
+439,IPM,Imipenem,standard_dosage,0.5 g,4.0,iv,over 30 minutes,0.5 g x 4 iv over 30 minutes,11
+440,IMR,Imipenem/relebactam,standard_dosage,0.5 g + 0.25 g,4.0,iv,over 30 minutes,(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes,11
+441,IMR,Imipenem/relebactam,standard_dosage,0.5 g + 0.25 g,4.0,iv,over 30 minutes,(0.5 g imipenem + 0.25 g relebactam) x 4 iv over 30 minutes,11
+442,LMU,Lefamulin,standard_dosage,0.15 g,2.0,iv,or 0.6 g x 2 oral,0.15 g x 2 iv or 0.6 g x 2 oral,11
+443,LMU,Lefamulin,standard_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,11
+444,LVX,Levofloxacin,high_dosage,0.5 g,2.0,iv,,0.5 g x 2 iv,11
+445,LVX,Levofloxacin,standard_dosage,0.5 g,1.0,iv,,0.5 g x 1 iv,11
+446,LVX,Levofloxacin,high_dosage,0.5 g,2.0,oral,,0.5 g x 2 oral,11
+447,LVX,Levofloxacin,standard_dosage,0.5 g,1.0,oral,,0.5 g x 1 oral,11
+448,LNZ,Linezolid,standard_dosage,0.6 g,2.0,iv,,0.6 g x 2 iv,11
+449,LNZ,Linezolid,standard_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,11
+450,MEM,Meropenem,high_dosage,2 g,3.0,iv,over 3 hours,2 g x 3 iv over 3 hours,11
+451,MEM,Meropenem,standard_dosage,1 g,3.0,iv,over 30 minutes,1 g x 3 iv over 30 minutes,11
+452,MEV,Meropenem/vaborbactam,standard_dosage,2 g + 2 g,3.0,iv,over 3 hours,(2 g meropenem + 2 g vaborbactam) x 3 iv over 3 hours,11
+453,MTR,Metronidazole,high_dosage,0.5 g,3.0,iv,,0.5 g x 3 iv,11
+454,MTR,Metronidazole,standard_dosage,0.4 g,3.0,iv,,0.4 g x 3 iv,11
+455,MTR,Metronidazole,high_dosage,0.5 g,3.0,oral,,0.5 g x 3 oral,11
+456,MTR,Metronidazole,standard_dosage,0.4 g,3.0,oral,,0.4 g x 3 oral,11
+457,MNO,Minocycline,standard_dosage,0.1 g,2.0,oral,,0.1 g x 2 oral,11
+458,MFX,Moxifloxacin,standard_dosage,0.4 g,1.0,iv,,0.4 g x 1 iv,11
+459,MFX,Moxifloxacin,standard_dosage,0.4 g,1.0,oral,,0.4 g x 1 oral,11
+460,OFX,Ofloxacin,high_dosage,0.4 g,2.0,iv,,0.4 g x 2 iv,11
+461,OFX,Ofloxacin,standard_dosage,0.2 g,2.0,iv,,0.2 g x 2 iv,11
+462,OFX,Ofloxacin,high_dosage,0.4 g,2.0,oral,,0.4 g x 2 oral,11
+463,OFX,Ofloxacin,standard_dosage,0.2 g,2.0,oral,,0.2 g x 2 oral,11
+464,ORI,Oritavancin,standard_dosage,1.2 g,1.0,iv,,1.2 g x 1 (single dose) iv over 3 hours,11
+465,OXA,Oxacillin,high_dosage,1 g,6.0,iv,,1 g x 6 iv,11
+466,OXA,Oxacillin,standard_dosage,1 g,4.0,iv,,1 g x 4 iv,11
+467,PHN,Phenoxymethylpenicillin,standard_dosage,0.5-2 g,3.0,oral,,0.5-2 g x 3-4 oral,11
+468,PIP,Piperacillin,high_dosage,4 g,4.0,iv,,4 g x 4 iv by extended 3-hour infusion,11
+469,PIP,Piperacillin,standard_dosage,4 g,4.0,iv,,4 g x 4 iv,11
+470,TZP,Piperacillin/tazobactam,high_dosage,4 g + 0.5 g,4.0,iv,,(4 g piperacillin + 0.5 g tazobactam) x 4 iv by extended 3-hour infusion,11
+471,TZP,Piperacillin/tazobactam,standard_dosage,4 g + 0.5 g,4.0,iv,,(4 g piperacillin + 0.5 g tazobactam) x 4 iv or x 3 by extended 4-hour infusion,11
+472,QDA,Quinupristin/dalfopristin,high_dosage,7.5 mg/kg,3.0,iv,,7.5 mg/kg x 3 iv,11
+473,QDA,Quinupristin/dalfopristin,standard_dosage,7.5 mg/kg,2.0,iv,,7.5 mg/kg x 2 iv,11
+474,RIF,Rifampicin,high_dosage,0.6 g,2.0,iv,,0.6 g x 2 iv,11
+475,RIF,Rifampicin,standard_dosage,0.6 g,1.0,iv,,0.6 g x 1 iv,11
+476,RIF,Rifampicin,high_dosage,0.6 g,2.0,oral,,0.6 g x 2 oral,11
+477,RIF,Rifampicin,standard_dosage,0.6 g,1.0,oral,,0.6 g x 1 oral,11
+478,RXT,Roxithromycin,standard_dosage,0.15 g,2.0,oral,,0.15 g x 2 oral,11
+479,SPT,Spectinomycin,standard_dosage,2 g,1.0,im,,2 g x 1 im,11
+480,TZD,Tedizolid,standard_dosage,0.2 g,1.0,iv,,0.2 g x 1 iv,11
+481,TZD,Tedizolid,standard_dosage,0.2 g,1.0,oral,,0.2 g x 1 oral,11
+482,TEC,Teicoplanin,high_dosage,0.8 g,1.0,iv,,0.8 g x 1 iv,11
+483,TEC,Teicoplanin,standard_dosage,0.4 g,1.0,iv,,0.4 g x 1 iv,11
+484,TLV,Telavancin,standard_dosage,10 mg/kg,1.0,iv,over 1 hour,10 mg/kg x 1 iv over 1 hour,11
+485,TLT,Telithromycin,standard_dosage,0.8 g,1.0,oral,,0.8 g x 1 oral,11
+486,TEM,Temocillin,high_dosage,2 g,3.0,iv,,2 g x 3 iv,11
+487,TEM,Temocillin,standard_dosage,2 g,2.0,iv,,2 g x 2 iv,11
+488,TCY,Tetracycline,high_dosage,0.5 g,4.0,oral,,0.5 g x 4 oral,11
+489,TCY,Tetracycline,standard_dosage,0.25 g,4.0,oral,,0.25 g x 4 oral,11
+490,TIC,Ticarcillin,high_dosage,3 g,6.0,iv,,3 g x 6 iv,11
+491,TIC,Ticarcillin,standard_dosage,3 g,4.0,iv,,3 g x 4 iv,11
+492,TCC,Ticarcillin/clavulanic acid,high_dosage,3 g + 0.1 g,6.0,iv,,(3 g ticarcillin + 0.1 g clavulanic acid) x 6 iv,11
+493,TCC,Ticarcillin/clavulanic acid,standard_dosage,3 g + 0.1-0.2 g,4.0,iv,,(3 g ticarcillin + 0.1-0.2 g clavulanic acid) x 4 iv,11
+494,TGC,Tigecycline,standard_dosage,0.1 g,,,loading dose followed by 50 mg x 2 iv,0.1 g loading dose followed by 50 mg x 2 iv,11
+495,TOB,Tobramycin,standard_dosage,6-7 mg/kg,1.0,iv,,6-7 mg/kg x 1 iv,11
+496,SXT,Trimethoprim/sulfamethoxazole,high_dosage,0.24 g + 1.2 g,2.0,oral,,(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral,11
+497,SXT,Trimethoprim/sulfamethoxazole,high_dosage,0.24 g + 1.2 g,2.0,oral,,(0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 oral or (0.24 g trimethoprim + 1.2 g sulfamethoxazole) x 2 iv,11
+498,SXT,Trimethoprim/sulfamethoxazole,standard_dosage,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,11
+499,SXT,Trimethoprim/sulfamethoxazole,standard_dosage,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral or (0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 iv,11
+500,SXT,Trimethoprim/sulfamethoxazole,uncomplicated_uti,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,11
+501,SXT,Trimethoprim/sulfamethoxazole,uncomplicated_uti,0.16 g + 0.8 g,2.0,oral,,(0.16 g trimethoprim + 0.8 g sulfamethoxazole) x 2 oral,11
+502,VAN,Vancomycin,standard_dosage,1 g,2.0,iv,,1 g x 2 iv or 2 g x 1 by continuous infusion,11
