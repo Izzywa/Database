@@ -56,7 +56,10 @@ Out of the scope of the database is other medications not listed
 
 ## Entities
 
-`antibiotic_groups`: collection of unique groups of antibiotic
+`antibiotic_groups`
+<details>
+<summary>collection of unique groups of antibiotic</summary>
+
 - `id`
     - Primary Key
     - `TINYINT UNSIGNED NOT NULL`
@@ -64,8 +67,12 @@ Out of the scope of the database is other medications not listed
 - `name`
     - short and concise group name based on WHONET and WHOCC
     - `VARCHAR(32) NOT NULL`
+</details>
 
-`antibiotics`: list of unique type of antibiotics
+`antibiotics`
+<details>
+<summary>list of unique type of antibiotics</summary>
+
 - `ab`
     - Antibiotic ID
     - The official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available, unique
@@ -82,8 +89,12 @@ Out of the scope of the database is other medications not listed
 - `group_id`
     - Foreign Key to `antibiotic_groups`'s `id`
     - `TINYINT UNSIGNED NOT NULL`
+</details>
 
-`abbreviations`: List of abbreviations for the antibiotics used in many countries
+`abbreviations`
+<details>
+<summary>List of abbreviations for the antibiotics used in many countries</summary>
+
 - `id`
     - Primary Key
     - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
@@ -94,8 +105,12 @@ Out of the scope of the database is other medications not listed
 - `abbr`
     - abbreviated name
     - `VARCHAR(32) NOT NULL`
+</details>
 
-`synonyms`: often trade names of a drug, as found in PubChem based on their compound ID
+`synonyms`
+<details>
+<summary>often trade names of a drug, as found in PubChem based on their compound ID</summary>
+
 - `id`
     - Primary Key
     - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
@@ -105,7 +120,8 @@ Out of the scope of the database is other medications not listed
     - `CHAR(3) NOT NULL`
 - `synonym`
     - The other name of the drug
-    - VARCHAR(32) NOT NULL`
+    - `VARCHAR(32) NOT NULL`
+</details>
 
 ## Relationships
 
