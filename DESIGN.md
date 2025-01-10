@@ -43,6 +43,7 @@ Out of scope are :
 - other non-antibiotic or antifungal related medication
 
 ## Functional Requirements
+
 The expected users of the database are the healthcare practicioner prescribing or recording the use of antibiotics
 - The users should be able to register the patient's information and record the medication they are taking, as well as their symptoms
 - They would also see the history of the antibiotics previously prescribed by the patient and see the frequency, compliance, or any other complications
@@ -54,14 +55,6 @@ Out of the scope of the database is other medications not listed
 - The database priotise on collecting and analysing information for antibiotics and antifungals
 
 ## Entities
-<!>
-In this section you should answer the following questions:
-
-* Which entities will you choose to represent in your database?
-* What attributes will those entities have?
-* Why did you choose the types you did?
-* Why did you choose the constraints you did?
-<!>
 
 `antibiotic_groups`: collection of unique groups of antibiotic
 - `id`
@@ -93,18 +86,26 @@ In this section you should answer the following questions:
 `abbreviations`: List of abbreviations for the antibiotics used in many countries
 - `id`
     - Primary Key
+    - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
+    - 484 abbreviations in the dataset so `SMALLINT` is used
 - `ab_id`
     - Foreign Key to the unique ID of the antibiotic related to the `ab` column on the `antibiotics` table
+    - `CHAR(3) NOT NULL`
 - `abbr`
     - abbreviated name
+    - `VARCHAR(32) NOT NULL`
 
 `synonyms`: often trade names of a drug, as found in PubChem based on their compound ID
 - `id`
     - Primary Key
+    - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
+    - 5933 synonyms in the dataset so `SMALLINT` is used
 - `ab_id`
     - Foreign Key to the unique ID of the antibiotic related to the `ab` column on the `antibiotics` table
-- `name`
-    - The name of the drug
+    - `CHAR(3) NOT NULL`
+- `synonym`
+    - The other name of the drug
+    - VARCHAR(32) NOT NULL`
 
 ## Relationships
 

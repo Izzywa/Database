@@ -3,6 +3,7 @@ This file will take only the required information about the antibiotics from
 the available dataset and insert into the database
 '''
 import environ
+import math
 import mysql.connector
 import os
 import pandas as pd
@@ -67,4 +68,13 @@ microorg.drop(
 
 resistance = pd.read_csv('intrinsic_resistant.csv')
 
-print(len(abx['group'].unique()))
+count = 0
+for index, row in abx.iterrows():
+    try:
+        for x in row['synonyms']:
+            if len(x) > count:
+                count = len(x)
+    except:
+        pass
+    
+print(count)
