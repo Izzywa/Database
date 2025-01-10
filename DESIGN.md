@@ -53,6 +53,42 @@ In the patient side of the dataset, the healthcare practitioner would be expecte
     - compliant, default, intermittent
 
 ## Entities
+`antibiotic_groups`: collection of unique groups of antibiotic
+- `id`
+    - Primary Key
+- `name`
+    - short and concise group name based on WHONET and WHOCC
+
+`antibiotics`: list of unique type of antibiotics
+- `ab`
+    - Antibiotic ID
+    - Using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
+    - <i>Unique</i>
+    - Primary Key
+- `cid`
+    - Compound ID as found in PubChem
+    - <i>Unique</i>
+- `name`
+    - Official name as used by WHONET/EARS-Net or the WHO
+    - <i>Unique</i>
+- `group_id`
+    - Foreign Key to `antibiotic_groups`'s `id`
+
+`abbreviations`: List of abbreviations for the antibiotics used in many countries
+- `id`
+    - Primary Key
+- `ab_id`
+    - Foreign Key to the unique ID of the antibiotic related to the `ab` column on the `antibiotics` table
+- `abbr`
+    - abbreviated name
+
+`synonyms`: often trade names of a drug, as found in PubChem based on their compound ID
+- `id`
+    - Primary Key
+- `ab_id`
+    - Foreign Key to the unique ID of the antibiotic related to the `ab` column on the `antibiotics` table
+- `name`
+    - The name of the drug
 
 ## Relationships
 
