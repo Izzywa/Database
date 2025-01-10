@@ -1,3 +1,7 @@
+'''
+citiesdb is written in sqlite3 so a new table have to be created in mysql
+and the informations in citiesdb is the inserted into mysql
+'''
 import environ
 import mysql.connector
 import os
@@ -29,6 +33,7 @@ cities = c.execute('SELECT * FROM cities;').fetchall()
 insert_countries ='INSERT INTO countries (id, name) VALUES(%s,%s);'
 insert_cities = 'INSERT INTO cities (id, name, country_id, latitude, longitude) VALUES(%s,%s,%s,%s,%s);'
 
+# the ids are unique, so if the data is already there, skip
 try:
        
     m.executemany(insert_countries, countries)
