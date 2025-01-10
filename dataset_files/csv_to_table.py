@@ -65,7 +65,6 @@ microorg.drop(
     inplace=True
 )
 
-
 resistance = pd.read_csv('intrinsic_resistant.csv')
-for group in abx['group'].unique():
-    print(group)
+
+print(len("Saint Helena, Ascension, and Tristan da Cunha"))
