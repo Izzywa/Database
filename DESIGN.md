@@ -1,14 +1,14 @@
-# About the Database;
+# About the Database
 ## Scope
 According to The World Health Organisation (WHO), AMR is one of the top global public health and development threats. It is estimated that bacterial AMR was directly responsible for 1.27 million global deaths in 2019 and contributed to 4.95 million deaths. [link](https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance)
 
-The misuse and overuse of antimicrobials in humans, animals, and plats are the main drivers in the development of drug-resistant pathogens.
+The misuse and overuse of antimicrobials in humans, animals, and plants are the main drivers in the development of drug-resistant pathogens.
 
 The use of the database is primarily for healthcare workers to store information on their use of antibiotics.
 
-Example datasets taken from [AMR (FOR R)](https://msberends.github.io/AMR/index.html) and [antibiotic dataset from kaggle](https://www.kaggle.com/datasets/kanchana1990/antibiotic-dataset).
+Example datasets taken from [AMR (FOR R)](https://msberends.github.io/AMR/index.html).
 
-Although the datasets taken as an example was focused on the research of AMR and the microorganism, this database focuses on storing and collecting the information of the patient and the health practicioner.
+Although the datasets taken as an example focus on the research of AMR and the microorganisms, this database focuses on storing and collecting the information of the patient by the health practicioner.
 
 The data on the microorganism was simplified due to insufficient knowledge but taking into consideration their name, resistance, kingdom, and oxygen tolerance.
 - Each microorganism from the [AMR (FOR R)](https://msberends.github.io/AMR/index.html) dataset have a unique fullname and ID
@@ -19,13 +19,16 @@ To further investigate the misuse and overuse of the antibiotics, more data is s
 - Unique ID and compound ID
 - Name, brand name, synonyms and abbreviation are included as they can be known or referred differently according to locations
 - Dosage; The different type of dose given by the dataset are "standard  dosage", "high dosage" and "uncomplicated uti"
-- The bacteria they are resistance against
+- The bacteria they are resistant against
 
 In the patient side of the dataset, the healthcare practitioner would be expected to record:
 - location
-    - to record the location of origin and residence of the patient, and where the medication was prescribed
+    - to record the location of origin and residence of the patient.
+    - a collection of cities and countries could be selected from the database
 - details of the patients
-    - contains PII
+    - name
+    - email
+    - age
 - their signs and symptoms
     - anatomy
     - signs
@@ -41,13 +44,14 @@ In the patient side of the dataset, the healthcare practitioner would be expecte
 
 Out of scope are :
 - further details of microorganism such as their DNA, subspecies, etc.
-- other non-antibiotic or microbial related medication
+- other non-antibiotic or antifungal related medication
 
 ## Functional Requirements
 The expected users of the database are the healthcare practicioner prescribing or recording the use of antibiotics
 - The users should be able to register the patient's information and record the medication they are taking, as well as their symptoms
 - They would also see the history of the antibiotics previously prescribed by the patient and see the frequency, compliance, or any other complications
 - Should the patient be allergic to a certain antibiotics, the user will also be notified when prescribing
+
 The database might not have all the necessary data for research of AMR but for a person logging in as a researcher instead of the healthworker will have limited view to the patient's personal information
 
 Out of the scope of the database is other medications not listed
