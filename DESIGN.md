@@ -123,6 +123,44 @@ Out of the scope of the database is other medications not listed
     - `VARCHAR(32) NOT NULL`
 </details>
 
+`microorganisms`
+<details>
+<summary>Containing partial information of microorganisms</summary>
+
+- `mo`
+    - Primary Key
+    - `VARCHAR(16) NOT NULL UNIQUE`
+    - The unique identifier of each microorganism taken from the dataset
+- `fullname`
+    - `VARCHAR(32) NOT NULL UNIQUE`
+    - fullname Unique identifier
+- `kingdom`
+    - The taxonomic kingdom of the microorganism
+    - `ENUM('Bacteria', 'Fungi', '(unknown kingdom)', 'Protozoa', 'Archaea', 'Animalia', 'Chromista')`
+- `oxygen_tolerance`
+    - The oxygen tolerance of the microorganism
+    - Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. 
+    - `ENUM('facultative anaerobe', 'likely facultative anaerobe', 'anaerobe', 'aerobe', 'microaerophile', 'anaerobe/microaerophile')`
+
+For the `kingdom` and `oxygen_tolerance` of the microorganism, creating a separate table to be referenced as foreign key was considered.
+However, since the collection of set was small and very unlikely to change, the data type `ENUM` was used instead
+</details>
+
+`intrinsic_resistance`
+<details>
+<summary>Contains all defined intrinsic resistance by EUCAST</summary>
+
+Intrinsic resistance is when a bacterial species is naturally resistant to a certain antibiotic or family of antibiotics, without the need for mutation or gain of further genes. This means that these antibiotics can never be used to treat infections caused by that species of bacteria.
+
+- `mo`
+    - The unique identifier of an organism
+    - Foreign Key referencing the `mo` column in the `microorganisms` table
+- `ab`
+    - The unique identifier of an antibiotic
+    - Foreign Key referencing the `ab` column in the `antibiotics` table
+
+</details>
+
 ## Relationships
 
 ## Optimisations

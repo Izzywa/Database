@@ -68,13 +68,4 @@ microorg.drop(
 
 resistance = pd.read_csv('intrinsic_resistant.csv')
 
-count = 0
-for index, row in abx.iterrows():
-    try:
-        for x in row['synonyms']:
-            if len(x) > count:
-                count = len(x)
-    except:
-        pass
-    
-print(count)
+print(microorg.head())
