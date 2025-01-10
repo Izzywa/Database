@@ -44,39 +44,51 @@ Out of scope are :
 - other non-antibiotic or microbial related medication
 
 ## Functional Requirements
-In this section you should answer the following questions:
+The expected users of the database are the healthcare practicioner prescribing or recording the use of antibiotics
+- The users should be able to register the patient's information and record the medication they are taking, as well as their symptoms
+- They would also see the history of the antibiotics previously prescribed by the patient and see the frequency, compliance, or any other complications
+- Should the patient be allergic to a certain antibiotics, the user will also be notified when prescribing
+The database might not have all the necessary data for research of AMR but for a person logging in as a researcher instead of the healthworker will have limited view to the patient's personal information
 
-* What should a user be able to do with your database?
-* What's beyond the scope of what a user should be able to do with your database?
-- The expected users of the datab
+Out of the scope of the database is other medications not listed
+- The database priotise on collecting and analysing information for antibiotics and antifungals
 
 ## Entities
+<!>
 In this section you should answer the following questions:
 
 * Which entities will you choose to represent in your database?
 * What attributes will those entities have?
 * Why did you choose the types you did?
 * Why did you choose the constraints you did?
+<!>
+
 `antibiotic_groups`: collection of unique groups of antibiotic
 - `id`
     - Primary Key
+    - `TINYINT UNSIGNED NOT NULL`
+    - `TINYINT` is used because there are only 22 unique groups of antibiotics in the dataset, and this is unlikely to increase over 255, the maximum value for unsigned `TINYINT`
 - `name`
     - short and concise group name based on WHONET and WHOCC
+    - `VARCHAR(32) NOT NULL`
 
 `antibiotics`: list of unique type of antibiotics
 - `ab`
     - Antibiotic ID
-    - Using the official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available
-    - <i>Unique</i>
+    - The official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available, unique
     - Primary Key
+    - `CHAR(3) NOT NULL UNIQUE`
+    - The official code for antibiotics are the unique combination of 3 letters, so the data type of `CHAR(3)` is used.
 - `cid`
-    - Compound ID as found in PubChem
-    - <i>Unique</i>
+    - Compound ID as found in PubChem, unique
+    - `INT UNSIGNED UNIQUE`
+    - Although unique, some antibiotics in the dataset does not have a compound ID so they `NULL` value is allowed
 - `name`
-    - Official name as used by WHONET/EARS-Net or the WHO
-    - <i>Unique</i>
+    - Official name as used by WHONET/EARS-Net or the WHO, unique.
+    - `VARCHAR(64) UNIQUE`
 - `group_id`
     - Foreign Key to `antibiotic_groups`'s `id`
+    - `TINYINT UNSIGNED NOT NULL`
 
 `abbreviations`: List of abbreviations for the antibiotics used in many countries
 - `id`
