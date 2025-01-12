@@ -25,6 +25,7 @@ mydb = mysql.connector.connect(
 )
 m = mydb.cursor(prepared=True)
 
+# store the citiesdb into variable
 citiesdb = sqlite3.connect("cities.db")
 c = citiesdb.cursor()
 countries = c.execute('SELECT * FROM countries;').fetchall()
