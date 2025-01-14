@@ -191,7 +191,7 @@ Separated from the `countries` table as there are some countries that share dial
 
 Added a unique constraint to ensure that there is no duplicate row of a country with a similar dial code.
 
-<details>
+</details>
 
 `patients`
 <details>
@@ -210,7 +210,13 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
 - `dial_code_id`
     - Foreign key, referencing the `id` column in the `dial_codes` table
 - `phone`
+    - `VARCHAR(15)`
+    - `CHECK(phone is NULL or phone regexp '^[0-9]+$')`
+    - Used `VARCHAR` instead of int to take into consideration of phone numbers that need to be stored with 0 as the leading character.
+    - Constraint added to only allow digits to be stored in this column.
 - `birth_date`
+    - `DATE NOT NULL`
+    - Stored in 'YYYY-MM-DD' format.
 - `resident_country_code`
     - Foreign Key referencing the `code` column in the `countries` table
 - `birth_country_code`
@@ -218,6 +224,7 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
     
 
 </details>
+
 
 ## Relationships
 

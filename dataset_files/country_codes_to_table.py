@@ -3,6 +3,7 @@ import mysql.connector
 import os
 import pandas as pd
 from pathlib import Path
+# This file inserts data into the countries and dial_codes table
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -11,6 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(os.path.join(BASE_DIR, 'database/.env'))
 
+# connect to the database
 mydb = mysql.connector.connect(
     host = env('DB_HOST'),
     user = env('DB_USER'),
@@ -19,6 +21,7 @@ mydb = mysql.connector.connect(
 )
 m = mydb.cursor(prepared=True)
 
+# read the csv and only keep the necessary columns 
 codes = pd.read_csv('country-codes.csv')
 codes_columns_to_keep = [
     'Dial',
@@ -54,12 +57,12 @@ for index, row in codes.iterrows():
             try:
                 m.execute(insert_dial_code, dial_code)
             except:
-                print(dial_code)
+                pass
     else:
         dial_code = (row['Dial'], row['ISO3166-1-Alpha-3'])
         try:
             m.execute(insert_dial_code, dial_code)
         except:
-            print(dial_code)
+            pass
 mydb.commit()
 mydb.close()
