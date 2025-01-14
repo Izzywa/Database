@@ -161,6 +161,64 @@ Intrinsic resistance is when a bacterial species is naturally resistant to a cer
 
 </details>
 
+`countries`
+<details>
+<summary>List of countries and their unique three letter ISO 3166-1 alpha-3 codes </summary>
+
+- `code`
+    - Primary key
+    - `CHAR(3) UNIQUE NOT NULL`
+    - Added constraint to ensure the value inserted into this column is always uppercase
+- `name`
+    - The official english name of a country
+
+</details>
+
+`dial_codes`
+<details>
+<summary>List of dial codes and the associated country</summary>
+
+Separated from the `countries` table as there are some countries that share dial codes and some that have multiple
+
+- `id`
+    - Primary Key
+    - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
+- `dial`
+    - The dial code of the country without any '-' symbol.
+    - `SMALLINT UNSIGNED NOT NULL`
+- `country_code`
+    - Foreign Key referencing the `code` column in the `countries` table
+
+Added a unique constraint to ensure that there is no duplicate row of a country with a similar dial code.
+
+<details>
+
+`patients`
+<details>
+<summary>Personal information of patients</summary>
+
+- `id`
+    - Primary Key
+    - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
+- `full name`
+    - Full name of the patient
+    - Although it is common for name of a person to be stored into first name and last name, this information is stored this way to take into consideration for cultures that does not have a surname or last name. From my experience living in Malaysia, where many does not have a last name and instead have their father's name following their first name, there had always been confusion on what should be included in the last name section of a formal form. This results in inconsistencies with the name in a particular form and the name in the National Identification Card.
+    - `VARCHAR(100) TEXT NOT NULL`
+- `email`
+    - email of the patient, allowed `NULL` to take into consideration for patients without one.
+    - `VARCHAR(100) TEXT`
+- `dial_code_id`
+    - Foreign key, referencing the `id` column in the `dial_codes` table
+- `phone`
+- `birth_date`
+- `resident_country_code`
+    - Foreign Key referencing the `code` column in the `countries` table
+- `birth_country_code`
+    - Foreign Key referencing the `code` column in the `countries` table
+    
+
+</details>
+
 ## Relationships
 
 ## Optimisations
