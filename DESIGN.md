@@ -377,7 +377,7 @@ write for a technical audience
 - describing the project and all aspects of its functionality
 
 ## entity relationship diagram
-[ER diagram](images/ER_diagram.json)
+[ER diagram](images/ER_diagram.png)
 
 ## video overview
 - short video no more than 3 minutes
