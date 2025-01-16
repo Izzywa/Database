@@ -69,4 +69,4 @@ microorg.drop(
 
 resistance = pd.read_csv('intrinsic_resistant.csv')
 
-print(dosage['administration'].isna().sum())
+print(len(dosage['ab'].unique()))

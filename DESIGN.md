@@ -270,6 +270,8 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
 - `ab`
     - Foreign Key referencing the `ab` column in the `antibiotics` table
 
+Added constraint between `patient_id` and `ab` so that no duplicate of the same information.
+
 </details>
 
 `visits`
@@ -279,15 +281,19 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
 - `id`
     - Primary Key
     - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
-- `date`
+- `patient_id`
+    - Foreign Key referencing the `id` column in the `patients` table
+- `visit_date`
     - `DATE DEFAULT NOW`
+- `timestamp`
+    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
 - `signs_and_symptoms`
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 
 
 The `visits` table purposed is to collect information on the signs and symptoms of the patient.
-This database is not only to record the current visit of the patient, but also to record previous use of antibiotics of the patient.
+For accountability:
 
 </details>
 
@@ -301,8 +307,10 @@ This database is not only to record the current visit of the patient, but also t
 - `dose_id`
     - Foreign Key referencing the `id` column in the `dosage` table 
     - Default NULL
-- `date`
+- `prescription_date`
     - `DATE DEFAULT NOW`
+- `timestamp`
+    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 
@@ -311,8 +319,6 @@ This database is not only to record the current visit of the patient, but also t
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 
-
-    use of antibiotics without a prescription (161/347, 46.4%), keeping left-over antibiotics for future use (111/347, 32.0%), not completing the course of antibiotics (81/347, 23.3%), use of left-over antibiotics (74/347, 21.3%), prescribing to animals (61/347, 17.6%), prescribing antibiotics to family members or friends (51/347, 14.7%), antibiotic self-medication (25/347, 7.2%) and not following the dosage regime prescribed (24/347, 6.9%)
 
 The purpose of this table is to record antibiotics prescribed to the patient by the current user or previously taken by the patients.
 Often patients did not know what or why they were prescribed antibiotics, this also includes those who took antibiotics without prescriptions. Thus, the `dose_id` and `diagnosis_id` is allowed `NULL` so that it can be further investigated in the future.
@@ -330,16 +336,25 @@ Often patients did not know what or why they were prescribed antibiotics, this a
 
 </details>
 
+`usage`
+<details>
+<summary>List of common use and misuse of antibiotics</summary>
+
+Created a table instead of `ENUM` for easier potential new insertion.
+- `id`
+- `use`
+
+</details>
+
 `compliance`
+<details>
+<summary>A single prescription of antibiotics could have been misused in many ways, so a separate table is created to monitor the compliance of the medication.</summary>
 
-`patient_logs`
-- soft deletion
-- note changes
+- `prescription_id`
+- `use_id`
+Primary Key(`prescription_id`, `use_id`)
 
-`visit_logs`
-- follow up from
-- note changes
-- soft deletion
+</details>
 
 
 ## Relationships
@@ -362,9 +377,7 @@ write for a technical audience
 - describing the project and all aspects of its functionality
 
 ## entity relationship diagram
-- can use Mermaid.js [live editor](https://mermaid.live/)
-    - can create and export diagrams
-- embed the image in the DESIGN.md
+[ER diagram](images/ER_diagram.json)
 
 ## video overview
 - short video no more than 3 minutes
