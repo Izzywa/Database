@@ -20,7 +20,6 @@ To further investigate the misuse and overuse of the antibiotics, more data is s
 In the patient side of the dataset, the healthcare practitioner would be expected to record:
 - location
     - to record the location of origin and residence of the patient.
-    - a collection of cities and countries could be selected from the database
 - details of the patients
     - name
     - email
@@ -161,6 +160,27 @@ Intrinsic resistance is when a bacterial species is naturally resistant to a cer
 
 </details>
 
+`dosage`
+<details>
+<summary>List of standard dosage for antibiotics</summary>
+
+- `id`
+- `ab`
+- `type`
+- `min_dose`
+    - in milligram
+- `max_dose`
+    - in milligram, allowed NULL for doses that does not have a range
+- `per_kg`
+    - 0 for false, 1 for true
+    - If true, the dose is considered mg/kg. Otherwise, dose is as is.
+- `administration`
+    - `ENUM('iv','oral','im')`
+    - Allowed NULL because of some missing information in the csv dataset
+
+</details>
+
+
 `countries`
 <details>
 <summary>List of countries and their unique three letter ISO 3166-1 alpha-3 codes </summary>
@@ -221,9 +241,80 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
     - Foreign Key referencing the `code` column in the `countries` table
 - `birth_country_code`
     - Foreign Key referencing the `code` column in the `countries` table
+- `deleted`
+    - 0 for false, 1 for true
+    - `ENUM(0,1) DEFAULT 0` 
     
 
 </details>
+
+`allergies`
+<details>
+<summary>list of the antibiotics registered patients are allergic to</summary>
+
+- `id`
+    - Primary Key 
+    - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
+- `patient_id`
+    - Foreign Key referencing the `id` column in the `patients` table
+- `ab`
+    - Foreign Key referencing the `ab` column in the `antibiotics` table
+
+</details>
+
+`visits`
+<details>
+<summary>Visit details of patients</summary>
+
+- `id`
+    - Primary Key
+    - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
+- `timestamp`
+    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
+- `signs_and_symptoms`
+- `deleted`
+    - 0 for false, 1 for true
+    - `ENUM(0,1) DEFAULT 0` 
+
+</details>
+
+`prescriptions`
+<details>
+<summary>List of antibiotics prescribed to patients</summary>
+
+- `patient_id`
+    - Foreign Key referencing the `id` column in the `patients` table 
+- `dose_id`
+    - Foreign Key referencing the `id` column in the `dosage` table 
+- `visit_id`
+    - Foreign Key referencing the `id` column in the `visits` table 
+- `timestamp`
+    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
+- `deleted`
+    - 0 for false, 1 for true
+    - `ENUM(0,1) DEFAULT 0` 
+
+</details>
+
+`compliance`
+<details>
+<summary>Note the patient compliance to the medication</summary>
+
+- `id`
+- `prescription_id`
+- `follow_up_date`
+- `compliance`
+
+</details>
+
+`patient_logs`
+- soft deletion
+- note changes
+
+`visit_logs`
+- follow up from
+- note changes
+- soft deletion
 
 
 ## Relationships

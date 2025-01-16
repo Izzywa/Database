@@ -47,7 +47,8 @@ dosage_columns_to_keep = [
     'ab',
     'type',
     'dose',
-    'dose_times'
+    'dose_times',
+    'administration'
 ]
 dosage.drop(
     columns=[col for col in dosage if col not in dosage_columns_to_keep],
@@ -68,4 +69,4 @@ microorg.drop(
 
 resistance = pd.read_csv('intrinsic_resistant.csv')
 
-print(microorg.head())
+print(dosage['administration'].isna().sum())
