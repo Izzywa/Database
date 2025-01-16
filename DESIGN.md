@@ -43,10 +43,18 @@ Out of scope are :
 
 ## Functional Requirements
 
-The expected users of the database are the healthcare practicioner prescribing or recording the use of antibiotics
-- The users should be able to register the patient's information and record the medication they are taking, as well as their symptoms
+The database is expected to be of use to two groups of users:
+- Healthcare practitioners prescribing antibiotics
+- Reasearchers investigating the use and misuse of antibiotics
+
+The healtcare practitioner will be able to:
+- Register the patient's information and record the medication they are taking, as well as their symptoms
 - They would also see the history of the antibiotics previously prescribed by the patient and see the frequency, compliance, or any other complications
 - Should the patient be allergic to a certain antibiotics, the user will also be notified when prescribing
+
+Researchers should be able to:
+- Input information of the history of antibiotics use and misuse of patients
+- Evaluate the common cause for antibiotics prescriptions and their frequency
 
 The database might not have all the necessary data for research of AMR but for a person logging in as a researcher instead of the healthworker will have limited view to the patient's personal information
 
@@ -234,6 +242,8 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
     - `CHECK(phone is NULL or phone regexp '^[0-9]+$')`
     - Used `VARCHAR` instead of int to take into consideration of phone numbers that need to be stored with 0 as the leading character.
     - Constraint added to only allow digits to be stored in this column.
+- `medical_history`
+    - Notable medical history of the patient
 - `birth_date`
     - `DATE NOT NULL`
     - Stored in 'YYYY-MM-DD' format.
@@ -269,43 +279,58 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
 - `id`
     - Primary Key
     - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
-- `timestamp`
-    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
+- `date`
+    - `DATE DEFAULT NOW`
 - `signs_and_symptoms`
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 
 
+The `visits` table purposed is to collect information on the signs and symptoms of the patient.
+This database is not only to record the current visit of the patient, but also to record previous use of antibiotics of the patient.
+
 </details>
+
 
 `prescriptions`
 <details>
-<summary>List of antibiotics prescribed to patients</summary>
+<summary>List of antibiotics prescribed or previously prescribed to patients</summary>
 
 - `patient_id`
     - Foreign Key referencing the `id` column in the `patients` table 
 - `dose_id`
     - Foreign Key referencing the `id` column in the `dosage` table 
-- `visit_id`
-    - Foreign Key referencing the `id` column in the `visits` table 
-- `timestamp`
-    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
+    - Default NULL
+- `date`
+    - `DATE DEFAULT NOW`
+- `deleted`
+    - 0 for false, 1 for true
+    - `ENUM(0,1) DEFAULT 0` 
+- `diagnosis_id`
+    - Default NULL
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 
 
+    use of antibiotics without a prescription (161/347, 46.4%), keeping left-over antibiotics for future use (111/347, 32.0%), not completing the course of antibiotics (81/347, 23.3%), use of left-over antibiotics (74/347, 21.3%), prescribing to animals (61/347, 17.6%), prescribing antibiotics to family members or friends (51/347, 14.7%), antibiotic self-medication (25/347, 7.2%) and not following the dosage regime prescribed (24/347, 6.9%)
+
+The purpose of this table is to record antibiotics prescribed to the patient by the current user or previously taken by the patients.
+Often patients did not know what or why they were prescribed antibiotics, this also includes those who took antibiotics without prescriptions. Thus, the `dose_id` and `diagnosis_id` is allowed `NULL` so that it can be further investigated in the future.
+
+</details>
+
+`diagnoses`
+<details>
+<summary>List of the common diagnosis for antibiotics usage.</summary>
+
+- `id`
+    - Primary Key
+- `diagnosis`
+    - `VARCHAR(64) NOT NULL`
+
 </details>
 
 `compliance`
-<details>
-<summary>Note the patient compliance to the medication</summary>
-
-- `id`
-- `prescription_id`
-- `follow_up_date`
-- `compliance`
-
-</details>
 
 `patient_logs`
 - soft deletion
