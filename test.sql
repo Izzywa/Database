@@ -39,15 +39,15 @@ CREATE TABLE `abbreviations` (
  );
 
  CREATE TABLE `microorganisms` (
-    `mo` VARCHAR(16) NOT NULL UNIQUE,
-    `fullname` VARCHAR(32) NOT NULL UNIQUE,
+    `mo` VARCHAR(64) NOT NULL UNIQUE,
+    `fullname` VARCHAR(75) NOT NULL,
     `kingdom` ENUM('Bacteria', 'Fungi', '(unknown kingdom)', 'Protozoa', 'Archaea', 'Animalia', 'Chromista'),
     `oxygen_tolerance` ENUM('facultative anaerobe', 'likely facultative anaerobe', 'anaerobe', 'aerobe', 'microaerophile', 'anaerobe/microaerophile'),
     PRIMARY KEY(`mo`)
  );
 
  CREATE TABLE `intrinsic_resistance` (
-    `mo` VARCHAR(16) NOT NULL UNIQUE,
+    `mo` VARCHAR(64) NOT NULL,
     `ab` VARCHAR(5) NOT NULL,
     FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`) ON DELETE CASCADE,
     FOREIGN KEY (`mo`) REFERENCES `microorganisms`(`mo`) ON DELETE CASCADE,
