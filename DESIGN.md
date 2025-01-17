@@ -6,16 +6,11 @@ Example datasets taken from [AMR (FOR R)](https://msberends.github.io/AMR/index.
 
 Although the datasets taken as an example focus on the research of AMR and the microorganisms, this database focuses on storing and collecting the information of the patient by the health practicioner.
 
-The data on the microorganism was simplified due to insufficient knowledge but taking into consideration their name, resistance, kingdom, and oxygen tolerance.
-- Each microorganism from the [AMR (FOR R)](https://msberends.github.io/AMR/index.html) dataset have a unique fullname and ID
-- The oxygen tolerance is either "aerobe", "anaerobe", "anaerobe/microaerophile", "facultative anaerobe", "likely facultative anaerobe", or "microaerophile".
-
 
 To further investigate the misuse and overuse of the antibiotics, more data is stored about their:
 - Unique ID and compound ID
 - Name, brand name, synonyms and abbreviation are included as they can be known or referred differently according to locations
 - Dosage; The different type of dose given by the dataset are "standard  dosage", "high dosage" and "uncomplicated uti"
-- The bacteria they are resistant against
 
 In the patient side of the dataset, the healthcare practitioner would be expected to record:
 - location
@@ -38,7 +33,7 @@ In the patient side of the dataset, the healthcare practitioner would be expecte
     - compliant, defaulted, intermittent
 
 Out of scope are :
-- further details of microorganism such as their DNA, subspecies, etc.
+- Details of microorganism affected by the antibiotics and their resistance
 - other non-antibiotic or antifungal related medication
 
 ## Functional Requirements
@@ -130,43 +125,6 @@ Out of the scope of the database is other medications not listed
     - `VARCHAR(32) NOT NULL`
 </details>
 
-`microorganisms`
-<details>
-<summary>Containing partial information of microorganisms</summary>
-
-- `mo`
-    - Primary Key
-    - `VARCHAR(16) NOT NULL UNIQUE`
-    - The unique identifier of each microorganism taken from the dataset
-- `fullname`
-    - `VARCHAR(32) NOT NULL UNIQUE`
-    - fullname Unique identifier
-- `kingdom`
-    - The taxonomic kingdom of the microorganism
-    - `ENUM('Bacteria', 'Fungi', '(unknown kingdom)', 'Protozoa', 'Archaea', 'Animalia', 'Chromista')`
-- `oxygen_tolerance`
-    - The oxygen tolerance of the microorganism
-    - Items that contain "likely" are missing from BacDive and were extrapolated from other species within the same genus to guess the oxygen tolerance. 
-    - `ENUM('facultative anaerobe', 'likely facultative anaerobe', 'anaerobe', 'aerobe', 'microaerophile', 'anaerobe/microaerophile')`
-
-For the `kingdom` and `oxygen_tolerance` of the microorganism, creating a separate table to be referenced as foreign key was considered.
-However, since the collection of set was small and very unlikely to change, the data type `ENUM` was used instead
-</details>
-
-`intrinsic_resistance`
-<details>
-<summary>Contains all defined intrinsic resistance by EUCAST</summary>
-
-Intrinsic resistance is when a bacterial species is naturally resistant to a certain antibiotic or family of antibiotics, without the need for mutation or gain of further genes. This means that these antibiotics can never be used to treat infections caused by that species of bacteria.
-
-- `mo`
-    - The unique identifier of an organism
-    - Foreign Key referencing the `mo` column in the `microorganisms` table
-- `ab`
-    - The unique identifier of an antibiotic
-    - Foreign Key referencing the `ab` column in the `antibiotics` table
-
-</details>
 
 `dosage`
 <details>
@@ -180,23 +138,16 @@ Intrinsic resistance is when a bacterial species is naturally resistant to a cer
 - `type`
     - `ENUM('standard_dosage','high_dosage','uncomplicated_uti')`
     - Three types of dosage based on the dataset
-- `min_dose`
-    - Minimum dosage in milligram
-- `max_dose`
-    - Maximum dosage in milligram, allowed NULL for doses that does not have a range
-- `per_kg`
-    - 0 for false, 1 for true
-    - If true, the dose is considered mg/kg. Otherwise, dose is as is.
+- `dose`
+    - There are variable ranges of doses either in gram, MU, mg/kg or a combination of different dose for antibiotics that are a combination of different material.
+    - Thus, `VARCHAR` is used to include units of the dosage in the value
+    - `VARCHAR(24) NOT NULL`
 - `dose_times`
     - `TINYINT UNSIGNED`
     - Number of times dose must be administered
 - `administration`
     - `ENUM('iv','oral','im')`
     - Allowed NULL because of some missing information in the csv dataset
-- `combination_dose_id`
-    - `SMALLINT DEFAULT NULL`
-
-`CONSTRAINT combination_doses FOREIGN KEY(combination_dose_id) REFERENCES dosage(id) ON DELETE SET NULL`
 
 </details>
 
@@ -240,29 +191,30 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
 - `id`
     - Primary Key
     - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
-- `full name`
+- `full_name`
     - Full name of the patient
     - Although it is common for name of a person to be stored into first name and last name, this information is stored this way to take into consideration for cultures that does not have a surname or last name. From my experience living in Malaysia, where many does not have a last name and instead have their father's name following their first name, there had always been confusion on what should be included in the last name section of a formal form. This results in inconsistencies with the name in a particular form and the name in the National Identification Card.
-    - `VARCHAR(100) TEXT NOT NULL`
+    - `VARCHAR(100) NOT NULL`
 - `email`
     - email of the patient, allowed `NULL` to take into consideration for patients without one.
-    - `VARCHAR(100) TEXT`
+    - `VARCHAR(100)`
 - `dial_code_id`
     - Foreign key, referencing the `id` column in the `dial_codes` table
+    - `SMALLINT UNSIGNED`
 - `phone`
     - `VARCHAR(15)`
     - `CHECK(phone is NULL or phone regexp '^[0-9]+$')`
     - Used `VARCHAR` instead of int to take into consideration of phone numbers that need to be stored with 0 as the leading character.
     - Constraint added to only allow digits to be stored in this column.
-- `medical_history`
-    - Notable medical history of the patient
 - `birth_date`
     - `DATE NOT NULL`
     - Stored in 'YYYY-MM-DD' format.
 - `resident_country_code`
     - Foreign Key referencing the `code` column in the `countries` table
+    - `CHAR(3) NOT NULL`
 - `birth_country_code`
     - Foreign Key referencing the `code` column in the `countries` table
+    - `CHAR(3) NOT NULL`
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 
