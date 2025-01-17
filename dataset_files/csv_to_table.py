@@ -20,8 +20,10 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'database/.env'))
 mydb = mysql.connector.connect(
     host = env('DB_HOST'),
     user = env('DB_USER'),
-    password = env('DB_PASSWORD')
+    password = env('DB_PASSWORD'),
+    database = env('DB_DB'),
 )
+m = mydb.cursor(prepared=True)
 
 
 abx = pd.read_csv('antibiotics.csv')
@@ -33,6 +35,7 @@ abx_columns_to_keep = [
     'abbreviations',
     'synonyms'
 ]
+
 # drop the columns that will not be stored in the database
 abx.drop(
     columns=[col for col in abx if col not in abx_columns_to_keep], 
@@ -41,19 +44,6 @@ abx.drop(
 # convert the synonyms and abbreviations into list
 abx['synonyms'] = abx.synonyms.apply(lambda x: x.split(',') if isinstance(x, str) else x)
 abx['abbreviations'] = abx.abbreviations.apply(lambda x: x.split(',') if isinstance(x, str) else x)
-
-dosage = pd.read_csv('dosage.csv')
-dosage_columns_to_keep = [
-    'ab',
-    'type',
-    'dose',
-    'dose_times',
-    'administration'
-]
-dosage.drop(
-    columns=[col for col in dosage if col not in dosage_columns_to_keep],
-    inplace=True
-    )
 
 microorg = pd.read_csv('microorganisms.csv')
 microorg_columns_to_keep = [
@@ -68,5 +58,47 @@ microorg.drop(
 )
 
 resistance = pd.read_csv('intrinsic_resistant.csv')
+'''
+ab groups
+ab
+abbr
+synonym
+mo
+resistance
+'''
+ab_groups = abx['group'].dropna().unique()
 
-print(len(dosage['ab'].unique()))
+insert_ab_group = 'INSERT INTO antibiotic_groups (name) VALUES (?);'
+get_group_id = "SELECT id FROM antibiotic_groups WHERE name = ? LIMIT 1;"
+insert_ab = 'INSERT INTO antibiotics (ab, cid, name, group_id) VALUES(?,?,?,?);'
+
+for ab in ab_groups:
+    try:
+        m.execute(insert_ab_group, (ab,))
+    except:
+        pass
+    
+
+for index, row in abx.iterrows():
+    ab = row['NA']
+    cid = row['cid']
+    name = row['name']
+    group = row['group']
+    
+    if type(group) == str:
+        m.execute(get_group_id, (group,))
+        group_id = m.fetchone()[0]
+    else:
+        group_id = None
+    
+    if math.isnan(cid):
+        cid = None
+    
+    antibiotic = (ab,cid, name, group_id)
+    try:
+        m.execute(insert_ab, antibiotic)
+    except Exception as e:
+        print(e)
+        
+
+mydb.close()

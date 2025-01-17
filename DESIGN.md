@@ -106,10 +106,10 @@ Out of the scope of the database is other medications not listed
     - Primary Key
     - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
     - 484 abbreviations in the dataset so `SMALLINT` is used
-- `ab_id`
+- `ab`
     - Foreign Key to the unique ID of the antibiotic related to the `ab` column on the `antibiotics` table
     - `CHAR(3) NOT NULL`
-- `abbr`
+- `abbreviation`
     - abbreviated name
     - `VARCHAR(32) NOT NULL`
 </details>
@@ -122,7 +122,7 @@ Out of the scope of the database is other medications not listed
     - Primary Key
     - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
     - 5933 synonyms in the dataset so `SMALLINT` is used
-- `ab_id`
+- `ab`
     - Foreign Key to the unique ID of the antibiotic related to the `ab` column on the `antibiotics` table
     - `CHAR(3) NOT NULL`
 - `synonym`
@@ -173,18 +173,30 @@ Intrinsic resistance is when a bacterial species is naturally resistant to a cer
 <summary>List of standard dosage for antibiotics</summary>
 
 - `id`
+    - Primary Key
+    - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
 - `ab`
+    -  Foreign Key referencing the `ab` column in the `antibiotics` table
 - `type`
+    - `ENUM('standard_dosage','high_dosage','uncomplicated_uti')`
+    - Three types of dosage based on the dataset
 - `min_dose`
-    - in milligram
+    - Minimum dosage in milligram
 - `max_dose`
-    - in milligram, allowed NULL for doses that does not have a range
+    - Maximum dosage in milligram, allowed NULL for doses that does not have a range
 - `per_kg`
     - 0 for false, 1 for true
     - If true, the dose is considered mg/kg. Otherwise, dose is as is.
+- `dose_times`
+    - `TINYINT UNSIGNED`
+    - Number of times dose must be administered
 - `administration`
     - `ENUM('iv','oral','im')`
     - Allowed NULL because of some missing information in the csv dataset
+- `combination_dose_id`
+    - `SMALLINT DEFAULT NULL`
+
+`CONSTRAINT combination_doses FOREIGN KEY(combination_dose_id) REFERENCES dosage(id) ON DELETE SET NULL`
 
 </details>
 
@@ -376,7 +388,7 @@ write for a technical audience
 - neighbourhood of 1000 words
 - describing the project and all aspects of its functionality
 
-## entity relationship diagram
+## Entity Relationship Diagram
 ![ER diagram](images/ER_diagram.png)
 
 ## video overview
