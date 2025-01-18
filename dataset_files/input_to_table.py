@@ -21,4 +21,7 @@ mydb = mysql.connector.connect(
 m = mydb.cursor(prepared=True)
 
 diagnosis_err = input_diagnoses_to_table(m)
-print(diagnosis_err)
+if diagnosis_err is not None:
+    print(diagnosis_err)
+
+    

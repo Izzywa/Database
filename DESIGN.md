@@ -317,8 +317,10 @@ Often patients did not know what or why they were prescribed antibiotics, this a
 A prescription could be prescribed with no diagnosis or multiple diagnoses.
 - `diagnosis_id`
     - Foreign Key referencing the `id` column in the `diagnoses` table 
+    - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
 - `prescription_id`
     - Foreign Key referencing the `id` column in the `prescription` table 
+    - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
 
 `PRIMARY KEY(diagnosis_id, prescription_id)` constraint added so that one prescription does not have duplicate of the same diagnosis
 

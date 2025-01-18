@@ -25,7 +25,6 @@ mydb = mysql.connector.connect(
 )
 m = mydb.cursor(prepared=True)
 
-
 abx = pd.read_csv('antibiotics.csv')
 abx_columns_to_keep = [
     'NA',
@@ -59,6 +58,7 @@ dosage.drop(
     columns=[col for col in dosage if col not in dosage_columns_to_keep],
     inplace=True
     )
+dosage.drop_duplicates(inplace=True)
 
 insert_ab_group = 'INSERT INTO antibiotic_groups (name) VALUES (?);'
 get_group_id = 'SELECT id FROM antibiotic_groups WHERE name = ? LIMIT 1;'
@@ -72,8 +72,7 @@ for ab in ab_groups:
     try:
         m.execute(insert_ab_group, (ab,))
     except Exception as e:
-        pass
-    
+        print(e)
 
 for index, row in abx.iterrows():
     ab = row['NA']
@@ -95,7 +94,7 @@ for index, row in abx.iterrows():
     try:
         m.execute(insert_ab, antibiotic)
     except Exception as e:
-        pass
+        print(e)
     
     # insert the abbreviations
     try:
@@ -123,11 +122,11 @@ for index, row in dosage.iterrows():
     if not isinstance(administration, str):
         administration = None
     
-    dosage = (ab, type, dose, dose_times, administration)
+    doses = (ab, type, dose, dose_times, administration)
     try:
-        m.execute(insert_dose, (dosage))
+        m.execute(insert_dose, (doses))
     except Exception as e:
-        pass
-
+        print(e)
+        
 mydb.commit()
 mydb.close()

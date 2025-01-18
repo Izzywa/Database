@@ -3,8 +3,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
     `code` CHAR(3) UNIQUE NOT NULL,
     `name` VARCHAR(64) NOT NULL,
     PRIMARY KEY (`code`),
-    CONSTRAINT `force_upper_case` CHECK(BINARY `code` = UPPER(`code`)),
-    
+    CONSTRAINT `force_upper_case` CHECK(BINARY `code` = UPPER(`code`))
 );
 
 CREATE TABLE IF NOT EXISTS `dial_codes` (
@@ -17,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `dial_codes` (
 );
 
 CREATE TABLE IF NOT EXISTS `antibiotic_groups` (
-    `id` TINYINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `id` SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     `name` VARCHAR(40) NOT NULL UNIQUE,
     PRIMARY KEY(`id`)
 );
@@ -27,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `antibiotics` (
     `ab` VARCHAR(5) NOT NULL UNIQUE,
     `cid` INT UNSIGNED,
     `name` VARCHAR(64) UNIQUE NOT NULL,
-    `group_id` TINYINT UNSIGNED,
+    `group_id` SMALLINT UNSIGNED,
     FOREIGN KEY(`group_id`) REFERENCES `antibiotic_groups`(`id`) ON DELETE SET NULL,
     PRIMARY KEY(`ab`)
 );
@@ -57,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `abbreviations` (
     `dose_times` TINYINT UNSIGNED,
     `administration` ENUM('iv','oral','im'),
     FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`) ON DELETE CASCADE,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`),
+    CONSTRAINT `unique_combinations` UNIQUE (`ab`, `type`, `dose`, `dose_times`, `administration`)
  );
 
  CREATE TABLE IF NOT EXISTS `patients` (
@@ -118,4 +118,12 @@ CREATE TABLE IF NOT EXISTS `prescriptions` (
     FOREIGN KEY (`dose_id`) REFERENCES `dosage`(`id`),
     PRIMARY KEY(`id`),
     CONSTRAINT `check_date` CHECK(`prescription_date` <= `last_modified`)
+);
+
+CREATE TABLE IF NOT EXISTS `prescription_diagnosis` (
+    `diagnosis_id` SMALLINT UNSIGNED NOT NULL,
+    `prescription_id` INT UNSIGNED NOT NULL,
+    FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnoses`(`id`),
+    FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions`(`id`),
+    PRIMARY KEY (`diagnosis_id`, `prescription_id`)
 );
