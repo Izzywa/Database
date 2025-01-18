@@ -21,7 +21,12 @@ mydb = mysql.connector.connect(
 m = mydb.cursor(prepared=True)
 
 diagnosis_err = input_diagnoses_to_table(m)
-if diagnosis_err is not None:
-    print(diagnosis_err)
 
-    
+usage = pd.read_csv('use_misuse.csv')
+insert_usage = 'INSERT INTO `ab_usage` (`use`) VALUES (?);'
+
+for index, row in usage.iterrows():
+    use = row['use_misuse']
+    m.execute(insert_usage, (use,))
+mydb.commit()
+mydb.close()

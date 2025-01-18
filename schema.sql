@@ -127,3 +127,15 @@ CREATE TABLE IF NOT EXISTS `prescription_diagnosis` (
     FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions`(`id`),
     PRIMARY KEY (`diagnosis_id`, `prescription_id`)
 );
+
+CREATE TABLE IF NOT EXISTS `ab_usage` (
+    `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `use` VARCHAR(64) NOT NULL UNIQUE,
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `compliance` (
+    `prescription_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `use_id` VARCHAR(64) NOT NULL,
+    PRIMARY KEY(`prescription_id`, `use_id`)   
+)

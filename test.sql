@@ -1,5 +1,8 @@
-SELECT * FROM `dosage` 
-WHERE `ab` = (
-    SELECT `ab` FROM `synonyms` WHERE `synonym` LIKE 'amoxicillin'
-) 
-ORDER BY `type`, `administration`
+INSERT INTO `compliance` (
+    `prescription_id`,
+    `use_id`
+)
+VALUES (
+    1,
+    12
+)

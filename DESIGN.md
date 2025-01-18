@@ -64,8 +64,7 @@ Out of the scope of the database is other medications not listed
 
 - `id`
     - Primary Key
-    - `TINYINT UNSIGNED NOT NULL`
-    - `TINYINT` is used because there are only 22 unique groups of antibiotics in the dataset, and this is unlikely to increase over 255, the maximum value for unsigned `TINYINT`
+    - `SMALL UNSIGNED NOT NULL`
 - `name`
     - short and concise group name based on WHONET and WHOCC
     - `VARCHAR(32) NOT NULL`
@@ -90,7 +89,7 @@ Out of the scope of the database is other medications not listed
     - `VARCHAR(64) UNIQUE`
 - `group_id`
     - Foreign Key to `antibiotic_groups`'s `id`
-    - `TINYINT UNSIGNED NOT NULL`
+    - `SMALL UNSIGNED NOT NULL`
 </details>
 
 `abbreviations`
@@ -328,13 +327,17 @@ A prescription could be prescribed with no diagnosis or multiple diagnoses.
 
 </details>
 
-`usage`
+`ab_usage`
 <details>
 <summary>List of common use and misuse of antibiotics</summary>
 
 Created a table instead of `ENUM` for easier potential new insertion.
 - `id`
+    - Primary Key
+    - `SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT`
 - `use`
+    - `VARCHAR(64) NOT NULL`
+    - How the antibiotic was used (ex: use of antibiotics without a prescription)
 
 </details>
 
@@ -343,7 +346,9 @@ Created a table instead of `ENUM` for easier potential new insertion.
 <summary>A single prescription of antibiotics could have been misused in many ways, so a separate table is created to monitor the compliance of the medication.</summary>
 
 - `prescription_id`
+    - Foreign Key referencing the `id` column in the `prescription` table 
 - `use_id`
+    - Foreign Key referencing the `id` column in the `ab_usage` table 
 Primary Key(`prescription_id`, `use_id`)
 
 </details>
