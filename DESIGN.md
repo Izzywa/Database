@@ -79,7 +79,7 @@ Out of the scope of the database is other medications not listed
     - Antibiotic ID
     - The official EARS-Net (European Antimicrobial Resistance Surveillance Network) codes where available, unique
     - Primary Key
-    - `CHAR(3) NOT NULL UNIQUE`
+    - `CHAR(5) NOT NULL UNIQUE`
     - The official code for antibiotics are the unique combination of 3 letters, so the data type of `CHAR(3)` is used.
 - `cid`
     - Compound ID as found in PubChem, unique
@@ -203,7 +203,7 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
     - `SMALLINT UNSIGNED`
 - `phone`
     - `VARCHAR(15)`
-    - `CHECK(phone is NULL or phone regexp '^[0-9]+$')`
+    - `CONSTRAINT digits_only_phone CHECK(phone is NULL or phone regexp '^[0-9]+$')`
     - Used `VARCHAR` instead of int to take into consideration of phone numbers that need to be stored with 0 as the leading character.
     - Constraint added to only allow digits to be stored in this column.
 - `birth_date`
@@ -217,8 +217,16 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
     - `CHAR(3) NOT NULL`
 - `deleted`
     - 0 for false, 1 for true
-    - `ENUM(0,1) DEFAULT 0` 
-    
+    - `TINYINT UNSIGNED CHECK(deleted = 1 OR deleted = 0) DEFAULT 0`
+    - Constraint added to only allow 1 or 0 only 
+
+```
+CONSTRAINT phone_dial_constraint CHECK (
+    (phone IS NULL AND dial_code_id IS NULL)
+    OR (phone IS NOT NULL AND dial_code_id IS NOT NULL)
+)
+```
+The above constraint ensures that when a phone number is input, the dial code should also be input and vice versa. Otherwise if a patient does not have a phone number, both columns are allowed NULL values
 
 </details>
 
@@ -248,10 +256,14 @@ Added constraint between `patient_id` and `ab` so that no duplicate of the same 
 - `patient_id`
     - Foreign Key referencing the `id` column in the `patients` table
 - `visit_date`
-    - `DATE DEFAULT NOW`
-- `timestamp`
+    - `DATE DEFAULT NOT NULL`
+    - Note the date of the patient's visit. The default is the current date, but otherwise the user can input visit of the patient from previous date
+- `updated_timestamp`
     - `DATETIME DEFAULT CURRENT_TIMESTAMP`
-- `signs_and_symptoms`
+    - The timestamp will automatically update with every update on the row.
+- `note`
+    - Record of the complaint, signs and symptom of the patient, as well as any note of any treatment done during this visit.
+    - `VARCHAR(5000)`
 - `deleted`
     - 0 for false, 1 for true
     - `ENUM(0,1) DEFAULT 0` 

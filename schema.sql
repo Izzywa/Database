@@ -1,5 +1,5 @@
 -- List of countries and their unique ISO3166-1-Alpha-3 codes which must be in uppercase
-CREATE TABLE `countries` (
+CREATE TABLE IF NOT EXISTS `countries` (
     `code` CHAR(3) UNIQUE NOT NULL,
     `name` VARCHAR(64) NOT NULL,
     PRIMARY KEY (`code`),
@@ -7,7 +7,7 @@ CREATE TABLE `countries` (
     
 );
 
-CREATE TABLE `dial_codes` (
+CREATE TABLE IF NOT EXISTS `dial_codes` (
     `id` SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     `dial` SMALLINT UNSIGNED NOT NULL,
     `country_code` CHAR(3) NOT NULL,
@@ -16,14 +16,14 @@ CREATE TABLE `dial_codes` (
     UNIQUE `unique_together` (`dial`, `country_code`)
 );
 
-CREATE TABLE `antibiotic_groups` (
+CREATE TABLE IF NOT EXISTS `antibiotic_groups` (
     `id` TINYINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     `name` VARCHAR(40) NOT NULL UNIQUE,
     PRIMARY KEY(`id`)
 );
 
 
-CREATE TABLE `antibiotics` (
+CREATE TABLE IF NOT EXISTS `antibiotics` (
     `ab` VARCHAR(5) NOT NULL UNIQUE,
     `cid` INT UNSIGNED,
     `name` VARCHAR(64) UNIQUE NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `antibiotics` (
 );
 
 
-CREATE TABLE `abbreviations` (
+CREATE TABLE IF NOT EXISTS `abbreviations` (
     `id` SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     `ab` VARCHAR(5) NOT NULL,
     `abbreviation` VARCHAR(32) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `abbreviations` (
     PRIMARY KEY(`id`)
 );
 
- CREATE TABLE `synonyms` (
+ CREATE TABLE IF NOT EXISTS `synonyms` (
     `id` SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     `ab` VARCHAR(5) NOT NULL,
     `synonym` VARCHAR(32) NOT NULL,
@@ -79,4 +79,24 @@ CREATE TABLE `abbreviations` (
         (`phone` IS NULL AND `dial_code_id` IS NULL)
         OR (`phone` IS NOT NULL AND `dial_code_id` IS NOT NULL)
         )
+);
+
+CREATE TABLE IF NOT EXISTS `allergies` (
+    `id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `patient_id` INT UNSIGNED NOT NULL,
+    `ab` CHAR(5) NOT NULL,
+    FOREIGN KEY (`patient_id`) REFERENCES `patients`(`id`),
+    FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`),
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `visits` (
+    `id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `patient_id` INT UNSIGNED NOT NULL,
+    `visit_date` DATE DEFAULT (CURRENT_DATE()),
+    `updated_timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `note` VARCHAR(5000),
+    `deleted` TINYINT UNSIGNED CHECK(`deleted` = 1 OR `deleted` = 0) DEFAULT 0,
+    FOREIGN KEY(`patient_id`) REFERENCES `patients`(`id`),
+    PRIMARY KEY (`id`)
 );
