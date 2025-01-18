@@ -51,14 +51,12 @@ Researchers should be able to:
 - Input information of the history of antibiotics use and misuse of patients
 - Evaluate the common cause for antibiotics prescriptions and their frequency
 
-The database might not have all the necessary data for research of AMR but for a person logging in as a researcher instead of the healthworker will have limited view to the patient's personal information
-
 Out of the scope of the database is other medications not listed
 - The database priotise on collecting and analysing information for antibiotics and antifungals
 
 ## Entities
 
-`antibiotic_groups`
+### `antibiotic_groups`
 <details>
 <summary>collection of unique groups of antibiotic</summary>
 
@@ -70,7 +68,7 @@ Out of the scope of the database is other medications not listed
     - `VARCHAR(32) NOT NULL`
 </details>
 
-`antibiotics`
+### `antibiotics`
 <details>
 <summary>list of unique type of antibiotics</summary>
 
@@ -92,7 +90,7 @@ Out of the scope of the database is other medications not listed
     - `SMALL UNSIGNED NOT NULL`
 </details>
 
-`abbreviations`
+### `abbreviations`
 <details>
 <summary>List of abbreviations for the antibiotics used in many countries</summary>
 
@@ -108,7 +106,7 @@ Out of the scope of the database is other medications not listed
     - `VARCHAR(32) NOT NULL`
 </details>
 
-`synonyms`
+### `synonyms`
 <details>
 <summary>often trade names of a drug, as found in PubChem based on their compound ID</summary>
 
@@ -125,7 +123,7 @@ Out of the scope of the database is other medications not listed
 </details>
 
 
-`dosage`
+### `dosage`
 <details>
 <summary>List of standard dosage for antibiotics</summary>
 
@@ -151,7 +149,7 @@ Out of the scope of the database is other medications not listed
 </details>
 
 
-`countries`
+### `countries`
 <details>
 <summary>List of countries and their unique three letter ISO 3166-1 alpha-3 codes </summary>
 
@@ -164,7 +162,7 @@ Out of the scope of the database is other medications not listed
 
 </details>
 
-`dial_codes`
+### `dial_codes`
 <details>
 <summary>List of dial codes and the associated country</summary>
 
@@ -183,7 +181,7 @@ Added a unique constraint to ensure that there is no duplicate row of a country 
 
 </details>
 
-`patients`
+### `patients`
 <details>
 <summary>Personal information of patients</summary>
 
@@ -229,7 +227,7 @@ The above constraint ensures that when a phone number is input, the dial code sh
 
 </details>
 
-`allergies`
+### `allergies`
 <details>
 <summary>list of the antibiotics registered patients are allergic to</summary>
 
@@ -245,7 +243,7 @@ Added constraint between `patient_id` and `ab` so that no duplicate of the same 
 
 </details>
 
-`visits`
+### `visits`
 <details>
 <summary>Visit details of patients</summary>
 
@@ -273,7 +271,7 @@ For accountability:
 </details>
 
 
-`prescriptions`
+### `prescriptions`
 <details>
 <summary>List of antibiotics prescribed or previously prescribed to patients</summary>
 
@@ -298,7 +296,7 @@ Often patients did not know what or why they were prescribed antibiotics, this a
 
 </details>
 
-`diagnoses`
+### `diagnoses`
 <details>
 <summary>List of the common diagnosis for antibiotics usage.</summary>
 
@@ -310,7 +308,7 @@ Often patients did not know what or why they were prescribed antibiotics, this a
 
 </details>
 
-`prescription_diagnosis`
+### `prescription_diagnosis`
 <details>
 <summary>The diagnoses for why the medication was prescribed</summary>
 
@@ -326,7 +324,7 @@ A prescription could be prescribed with no diagnosis or multiple diagnoses.
 
 </details>
 
-`ab_usage`
+### `ab_usage`
 <details>
 <summary>List of common use and misuse of antibiotics</summary>
 
@@ -340,7 +338,7 @@ Created a table instead of `ENUM` for easier potential new insertion.
 
 </details>
 
-`compliance`
+### `compliance`
 <details>
 <summary>A single prescription of antibiotics could have been misused in many ways, so a separate table is created to monitor the compliance of the medication.</summary>
 
@@ -354,6 +352,27 @@ Primary Key(`prescription_id`, `use_id`)
 
 
 ## Relationships
+
+The below entitiy relationship diagram describes the relationships among the entities in the database.
+
+![ER diagram](images/ER_diagram.png)
+
+As detailed by the diagram:
+
+- An antibiotic:
+    - Is part of one and only one of the antibiotic groups.
+    - Could have 0 or many abbreviations or synonsyms.
+    - Could have been listed in the dosage table for multiple type of doses or could not be listed.
+- A patient:
+    - Will be residing in the same or different country.
+    - Have a dial code for their phone number on none if they did not have any phone number.
+    - Could have 0 or many recorded clinical visits.
+- A patient could be allergic to 0 or many antibiotics
+- A prescription:
+    - Record the antibiotic and the dose it was prescribed to the patient.
+    - A prescription could have a diagnosis included or not.
+    - Could have a record on the compliance on the usage of the antibiotic
+
 
 ## Optimisations
 In this section you should answer the following questions:
@@ -371,9 +390,6 @@ write for a technical audience
 - explain why you made certain design choices
 - neighbourhood of 1000 words
 - describing the project and all aspects of its functionality
-
-## Entity Relationship Diagram
-![ER diagram](images/ER_diagram.png)
 
 ## video overview
 - short video no more than 3 minutes

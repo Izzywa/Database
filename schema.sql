@@ -1,4 +1,3 @@
--- List of countries and their unique ISO3166-1-Alpha-3 codes which must be in uppercase
 CREATE TABLE IF NOT EXISTS `countries` (
     `code` CHAR(3) UNIQUE NOT NULL,
     `name` VARCHAR(64) NOT NULL,
