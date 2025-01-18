@@ -256,17 +256,17 @@ Added constraint between `patient_id` and `ab` so that no duplicate of the same 
 - `patient_id`
     - Foreign Key referencing the `id` column in the `patients` table
 - `visit_date`
-    - `DATE DEFAULT NOT NULL`
-    - Note the date of the patient's visit. The default is the current date, but otherwise the user can input visit of the patient from previous date
-- `updated_timestamp`
-    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
+    - `DATE NOT NULL`
+    - The date of the patient's visit.
+- `last_modified`
+    - `DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`
     - The timestamp will automatically update with every update on the row.
 - `note`
     - Record of the complaint, signs and symptom of the patient, as well as any note of any treatment done during this visit.
     - `VARCHAR(5000)`
 - `deleted`
     - 0 for false, 1 for true
-    - `ENUM(0,1) DEFAULT 0` 
+    - `TINYINT UNSIGNED CHECK(deleted = 1 OR deleted = 0) DEFAULT 0`
 
 The `visits` table purposed is to collect information on the signs and symptoms of the patient.
 For accountability:
@@ -278,23 +278,21 @@ For accountability:
 <details>
 <summary>List of antibiotics prescribed or previously prescribed to patients</summary>
 
+- `id`
+    - Primary Key
+    - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
 - `patient_id`
     - Foreign Key referencing the `id` column in the `patients` table 
+    - `INT UNSIGNED NOT NULL`
 - `dose_id`
     - Foreign Key referencing the `id` column in the `dosage` table 
-    - Default NULL
 - `prescription_date`
-    - `DATE DEFAULT NOW`
-- `timestamp`
-    - `DATETIME DEFAULT CURRENT_TIMESTAMP`
+    - `DATE NOT NULL`
+- `last_modified`
+    - `DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`
 - `deleted`
     - 0 for false, 1 for true
-    - `ENUM(0,1) DEFAULT 0` 
-- `diagnosis_id`
-    - Default NULL
-- `deleted`
-    - 0 for false, 1 for true
-    - `ENUM(0,1) DEFAULT 0` 
+    - `TINYINT UNSIGNED CHECK(deleted = 1 OR deleted = 0) DEFAULT 0`
 
 The purpose of this table is to record antibiotics prescribed to the patient by the current user or previously taken by the patients.
 Often patients did not know what or why they were prescribed antibiotics, this also includes those who took antibiotics without prescriptions. Thus, the `dose_id` and `diagnosis_id` is allowed `NULL` so that it can be further investigated in the future.
@@ -307,8 +305,24 @@ Often patients did not know what or why they were prescribed antibiotics, this a
 
 - `id`
     - Primary Key
+    - `SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
 - `diagnosis`
     - `VARCHAR(64) NOT NULL`
+
+</details>
+
+`prescription_diagnosis`
+<summary>The diagnoses for why the medication was prescribed</summary>
+
+A prescription could be prescribed with no diagnosis or multiple diagnoses.
+- `diagnosis_id`
+    - Foreign Key referencing the `id` column in the `diagnoses` table 
+- `prescription_id`
+    - Foreign Key referencing the `id` column in the `prescription` table 
+
+`PRIMARY KEY(diagnosis_id, prescription_id)` constraint added so that one prescription does not have duplicate of the same diagnosis
+
+<details>
 
 </details>
 

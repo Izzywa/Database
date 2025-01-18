@@ -93,10 +93,29 @@ CREATE TABLE IF NOT EXISTS `allergies` (
 CREATE TABLE IF NOT EXISTS `visits` (
     `id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
     `patient_id` INT UNSIGNED NOT NULL,
-    `visit_date` DATE DEFAULT (CURRENT_DATE()),
-    `updated_timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `visit_date` DATE NOT NULL,
+    `updated_timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `note` VARCHAR(5000),
     `deleted` TINYINT UNSIGNED CHECK(`deleted` = 1 OR `deleted` = 0) DEFAULT 0,
     FOREIGN KEY(`patient_id`) REFERENCES `patients`(`id`),
     PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `diagnoses` (
+    `id` SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `diagnosis` VARCHAR(64) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `prescriptions` (
+    `id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
+    `patient_id` INT UNSIGNED NOT NULL,
+    `dose_id` MEDIUMINT UNSIGNED,
+    `prescription_date` DATE NOT NULL,
+    `last_modified` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `deleted` TINYINT UNSIGNED CHECK(`deleted` = 1 OR `deleted` = 0) DEFAULT 0,
+    FOREIGN KEY (`patient_id`) REFERENCES `patients`(`id`),
+    FOREIGN KEY (`dose_id`) REFERENCES `dosage`(`id`),
+    PRIMARY KEY(`id`),
+    CONSTRAINT `check_date` CHECK(`prescription_date` <= `last_modified`)
 );
