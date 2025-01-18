@@ -1,8 +1,6 @@
-INSERT INTO `compliance` (
-    `prescription_id`,
-    `use_id`
-)
-VALUES (
-    1,
-    12
-)
+/*
+create views:
+active users
+undeleted visits and prescription
+take argument of patient id: display visits
+*/

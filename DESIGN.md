@@ -311,6 +311,7 @@ Often patients did not know what or why they were prescribed antibiotics, this a
 </details>
 
 `prescription_diagnosis`
+<details>
 <summary>The diagnoses for why the medication was prescribed</summary>
 
 A prescription could be prescribed with no diagnosis or multiple diagnoses.
@@ -322,8 +323,6 @@ A prescription could be prescribed with no diagnosis or multiple diagnoses.
     - `INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT`
 
 `PRIMARY KEY(diagnosis_id, prescription_id)` constraint added so that one prescription does not have duplicate of the same diagnosis
-
-<details>
 
 </details>
 
