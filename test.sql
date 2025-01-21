@@ -30,7 +30,6 @@ type of user:
         - but can see the date of the patient visit
         - only select
 */
-
 SELECT `visit`.`date` AS `date`,
 GROUP_CONCAT(DISTINCT `visit`.`note`) AS `note`,
 GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `prescription`
@@ -44,7 +43,7 @@ FROM
 ) AS `visit`
 LEFT JOIN (
     SELECT `pr`.`prescription_date` AS `date`,
-    `pr`.`dose_id` AS `dose`
+     CONCAT(`d`.`ab`, ' ' , `d`.`dose`, 'x', `d`.`dose_times`, ' ', `d`.`administration`) AS `dose`
     FROM `patients` AS `p`
     CROSS JOIN `prescriptions` AS `pr` ON `p`.`id` = `pr`.`patient_id`
     JOIN `dosage` AS `d` ON `d`.`id` = `pr`.`dose_id`
@@ -67,7 +66,7 @@ FROM
 ) AS `visit`
 RIGHT JOIN (
     SELECT `pr`.`prescription_date` AS `date`,
-    `pr`.`dose_id` AS `dose`
+    CONCAT(`d`.`ab`, ' ' , `d`.`dose` ,'x', `d`.`dose_times`, ' ', `d`.`administration`) AS `dose`
     FROM `patients` AS `p`
     CROSS JOIN `prescriptions` AS `pr` ON `p`.`id` = `pr`.`patient_id`
     JOIN `dosage` AS `d` ON `d`.`id` = `pr`.`dose_id`
