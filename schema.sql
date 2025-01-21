@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `abbreviations` (
     `ab` VARCHAR(5) NOT NULL,
     `abbreviation` VARCHAR(32) NOT NULL,
     FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`) ON DELETE CASCADE,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`),
+    CONSTRAINT `unique_combo` UNIQUE (`ab`,`abbreviation`)
 );
 
  CREATE TABLE IF NOT EXISTS `synonyms` (
@@ -44,7 +45,8 @@ CREATE TABLE IF NOT EXISTS `abbreviations` (
     `ab` VARCHAR(5) NOT NULL,
     `synonym` VARCHAR(32) NOT NULL,
     FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`) ON DELETE CASCADE,
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`),
+    CONSTRAINT `unique_combo` UNIQUE(`ab`,`synonym`)
  );
 
   CREATE TABLE IF NOT EXISTS `dosage` (
@@ -56,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `abbreviations` (
     `administration` ENUM('iv','oral','im'),
     FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`) ON DELETE CASCADE,
     PRIMARY KEY(`id`),
-    CONSTRAINT `unique_combinations` UNIQUE (`ab`, `type`, `dose`, `dose_times`, `administration`)
+    CONSTRAINT `unique_combo` UNIQUE (`ab`, `type`, `dose`, `dose_times`, `administration`)
  );
 
  CREATE TABLE IF NOT EXISTS `patients` (
@@ -86,7 +88,8 @@ CREATE TABLE IF NOT EXISTS `allergies` (
     `ab` CHAR(5) NOT NULL,
     FOREIGN KEY (`patient_id`) REFERENCES `patients`(`id`),
     FOREIGN KEY (`ab`) REFERENCES `antibiotics`(`ab`),
-    PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`),
+    CONSTRAINT `unique_combo` UNIQUE (`patient_id`, `ab`)
 );
 
 CREATE TABLE IF NOT EXISTS `visits` (
@@ -134,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `ab_usage` (
 );
 
 CREATE TABLE IF NOT EXISTS `compliance` (
-    `prescription_id` INT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
-    `use_id` VARCHAR(64) NOT NULL,
-    PRIMARY KEY(`prescription_id`, `use_id`)   
-)
+    `prescription_id` INT UNSIGNED NOT NULL,
+    `use_id` SMALLINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`prescription_id`, `use_id`)
+);
