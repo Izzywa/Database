@@ -1,3 +1,17 @@
+DELIMITER //
+
+DROP TRIGGER IF EXISTS `delete_pt_cascade`//
+CREATE TRIGGER `delete_pt_cascade`
+AFTER UPDATE ON `patients`
+    FOR EACH ROW
+    BEGIN
+        IF NEW.deleted <> OLD.deleted THEN
+            UPDATE visits SET deleted = NEW.deleted WHERE patient_id = OLD.id;
+            UPDATE prescriptions SET deleted = NEW.deleted WHERE patient_id = OLD.id;
+        END IF;
+    END//
+
+DELIMITER ;
 /*
 create indexes:
     - dosage
@@ -30,17 +44,3 @@ type of user:
         - but can see the date of the patient visit
         - only select
 */
-
-SELECT `pr`.`prescription_date` AS `prescription_date`,
-`ab`.`name` AS `antibiotic`,
-GROUP_CONCAT(DISTINCT `dg`.`diagnosis`) AS `diagnosis`,
-GROUP_CONCAT(`au`.`use`) AS `compliance`
-FROM `prescriptions` AS `pr`
-LEFT JOIN `dosage` AS `d` ON `d`.`id` = `pr`.`dose_id`
-LEFT JOIN `prescription_diagnosis` as `pd` ON `pd`.`prescription_id` = `pr`.`id`
-LEFT JOIN `diagnoses` AS `dg` ON `dg`.`id` = `pd`.`diagnosis_id`
-LEFT JOIN `compliance` AS `c` ON `c`.`prescription_id` = `pr`.`id`
-LEFT JOIN `ab_usage` AS `au` ON `au`.`id` = `c`.`use_id`
-JOIN `antibiotics` AS `ab` ON `ab`.`ab` = `d`.`ab`
-WHERE `pr`.`patient_id` = 1
-GROUP BY `pr`.`id`
