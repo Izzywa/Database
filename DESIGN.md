@@ -35,6 +35,8 @@ In the patient side of the dataset, the healthcare practitioner would be expecte
 Out of scope are :
 - Details of microorganism affected by the antibiotics and their resistance
 - other non-antibiotic or antifungal related medication
+- Further details to identify the patient
+    - The table was simplified so informations such as the address, Identity number, etc was not included
 
 ## Functional Requirements
 

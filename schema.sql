@@ -141,3 +141,28 @@ CREATE TABLE IF NOT EXISTS `compliance` (
     `use_id` SMALLINT UNSIGNED NOT NULL,
     PRIMARY KEY (`prescription_id`, `use_id`)
 );
+
+-- view of patients that was not marked as deleted
+CREATE VIEW `current_patients` AS
+SELECT 
+`p`.`id` AS `id`, 
+`p`.`full_name` AS `full_name`,
+`p`.`email` AS `email`,
+CONCAT('+',`d`.`dial`, ' ', `p`.`phone`) AS `phone`,
+`p`.`birth_date` AS `birth_date`,
+`c1`.`name` AS `resident_country`,
+`c2`.`name` AS `birth_country`
+FROM `patients` AS `p`
+LEFT JOIN `countries` AS `c1` ON `p`.`resident_country_code` = `c1`.`code`
+LEFT JOIN `countries` AS `c2` ON `p`.`birth_country_code` = `c2`.`code`
+LEFT JOIN `dial_codes` AS `d` ON `d`.`id` = `p`.`dial_code_id`
+WHERE `p`.`deleted` = 0
+
+-- View of visits not marked as deleted
+CREATE VIEW `current_visits` AS
+SELECT `p`.`id` AS `pt_id`,
+`v`.`visit_date` AS `visit_date`,
+`v`.`note` AS `note`
+FROM `visits` AS `v`
+JOIN `patients` AS `p` ON `v`.`patient_id` = `p`.`id`
+WHERE `v`.`deleted` = 0

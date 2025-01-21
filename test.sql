@@ -1,17 +1,4 @@
-DELIMITER //
-
-DROP TRIGGER IF EXISTS `delete_pt_cascade`//
-CREATE TRIGGER `delete_pt_cascade`
-AFTER UPDATE ON `patients`
-    FOR EACH ROW
-    BEGIN
-        IF NEW.deleted <> OLD.deleted THEN
-            UPDATE visits SET deleted = NEW.deleted WHERE patient_id = OLD.id;
-            UPDATE prescriptions SET deleted = NEW.deleted WHERE patient_id = OLD.id;
-        END IF;
-    END//
-
-DELIMITER ;
+SELECT * FROM `current_visits` WHERE `pt_id` = 2
 /*
 create indexes:
     - dosage

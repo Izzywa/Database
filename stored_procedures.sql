@@ -4,6 +4,7 @@ DELIMITER //
 The patients, visits, and prescriptions table have a column that allows for soft deletion
 the `delete_pt_cascade` TRIGGER functions to alter the deleted column of in all the visits
 and prescriptions table where the patient id is the 'deleted' patient.
+This also work where the 'deleted' status of a patient is reversed.
 */
 DROP TRIGGER IF EXISTS `delete_pt_cascade`//
 CREATE TRIGGER `delete_pt_cascade`
