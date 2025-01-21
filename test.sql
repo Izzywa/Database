@@ -31,10 +31,9 @@ type of user:
         - only select
 */
 
-SELECT `visit`.`date`,
-`prescription`.`date`,
+SELECT `visit`.`date` AS `date`,
 GROUP_CONCAT(DISTINCT `visit`.`note`) AS `note`,
-GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `dose`
+GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `prescription`
 FROM
 (
     SELECT `v`.`visit_date` AS `date`,
@@ -48,15 +47,16 @@ LEFT JOIN (
     `pr`.`dose_id` AS `dose`
     FROM `patients` AS `p`
     CROSS JOIN `prescriptions` AS `pr` ON `p`.`id` = `pr`.`patient_id`
+    JOIN `dosage` AS `d` ON `d`.`id` = `pr`.`dose_id`
     WHERE `p`.`id` = 1
 ) AS `prescription`
 ON `visit`.`date` = `prescription`.`date`
 GROUP BY `visit`.`date`, `prescription`.`date`
 UNION
-SELECT `visit`.`date`,
-`prescription`.`date`,
+SELECT
+`prescription`.`date` AS `date`,
 GROUP_CONCAT(DISTINCT `visit`.`note`) AS `note`,
-GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `dose`
+GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `prescription`
 FROM
 (
     SELECT `v`.`visit_date` AS `date`,
@@ -70,7 +70,9 @@ RIGHT JOIN (
     `pr`.`dose_id` AS `dose`
     FROM `patients` AS `p`
     CROSS JOIN `prescriptions` AS `pr` ON `p`.`id` = `pr`.`patient_id`
+    JOIN `dosage` AS `d` ON `d`.`id` = `pr`.`dose_id`
     WHERE `p`.`id` = 1
 ) AS `prescription`
 ON `visit`.`date` = `prescription`.`date`
 GROUP BY `visit`.`date`, `prescription`.`date`
+ORDER BY `date`
