@@ -43,6 +43,7 @@ abx.drop(
 # convert the synonyms and abbreviations into list
 abx['synonyms'] = abx.synonyms.apply(lambda x: x.split(',') if isinstance(x, str) else x)
 abx['abbreviations'] = abx.abbreviations.apply(lambda x: x.split(',') if isinstance(x, str) else x)
+abx.drop_duplicates(inplace=True)
 
 ab_groups = abx['group'].dropna().unique()
 
