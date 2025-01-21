@@ -1,4 +1,4 @@
-SELECT * FROM `current_visits` WHERE `pt_id` = 2
+
 /*
 create indexes:
     - dosage

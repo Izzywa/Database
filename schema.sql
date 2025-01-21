@@ -166,3 +166,13 @@ SELECT `p`.`id` AS `pt_id`,
 FROM `visits` AS `v`
 JOIN `patients` AS `p` ON `v`.`patient_id` = `p`.`id`
 WHERE `v`.`deleted` = 0
+
+-- View of prescriptions not marked as deleted
+CREATE VIEW `current_prescriptions` AS 
+SELECT `pr`.`patient_id` AS `pt_id`,
+`pr`.`prescription_date` AS `prescription_date`,
+CONCAT(`ab`.`name`, ' ', `d`.`dose`,' * ',`d`.`dose_times`, ' ', `d`.`administration`) AS `prescription`
+FROM `prescriptions` AS `pr`
+LEFT JOIN `dosage` AS `d` ON `pr`.`dose_id` = `d`.`id`
+JOIN `antibiotics` AS `ab` ON `d`.`ab` = `ab`.`ab`
+WHERE `pr`.`deleted` = 0
