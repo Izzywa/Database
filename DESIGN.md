@@ -378,7 +378,7 @@ As detailed by the diagram:
 
 ## Optimisations
 
-Trigger:
+### Trigger:
 <details>
 <summary>delete_pt_cascade</summary>
 
@@ -387,7 +387,7 @@ Trigger:
 - This also work where the 'deleted' status of a patient is reversed.
 </details>
 
-Views:
+### Views:
 <details>
 <summary>current_patients</summary>
 
@@ -410,7 +410,7 @@ Views:
 - Instead of only the dose id, the full dose elaborated.
 </details>
 
-Stored Procedure:
+### Stored Procedure:
 <details>
 <summary>visit_prescription_by_pt_id</summary>
 
@@ -452,16 +452,12 @@ Stored Procedure:
 </details>
 
 ## Limitations
-In this section you should answer the following questions:
 
-* What are the limitations of your design?
-* What might your database not be able to represent very well?
-
-
-write for a technical audience 
-- explain why you made certain design choices
-- neighbourhood of 1000 words
-- describing the project and all aspects of its functionality
+The current schema allows recording the antibiotic prescribed to a patient and recording the patient's compliance towards given prescription.
+However, there is no relation of visits and prescription.
+Although the visits and prescriptions can be viewed together, grouped by the prescription and visit date, there is currently no relation between both tables.
+This is to allow recording of visits and prescription indipendently.
+However, it is not convenient to view follow up visits after a particular visit or prescription to judge its effects.
 
 ## video overview
 - short video no more than 3 minutes
