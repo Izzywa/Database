@@ -1,3 +1,4 @@
+-- Common queries run on this database
 -- Search patients information by full name
 SELECT * FROM `current_patients`
 WHERE `full_name` LIKE 'someone';
