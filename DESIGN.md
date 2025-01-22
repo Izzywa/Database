@@ -399,12 +399,56 @@ Views:
 <summary>current_visits</summary>
 
 - Views of visits not marked of deletion.
+- Column for last modified timestamp not included.
 </details>
 
 <details>
 <summary>current_prescriptions</summary>
 
 - Views of prescriptions not marked of deletion.
+- Column for last modified timestamp not included.
+- Instead of only the dose id, the full dose elaborated.
+</details>
+
+Stored Procedure:
+<details>
+<summary>visit_prescription_by_pt_id</summary>
+
+- Takes in the patient id as an argument.
+- Group the patient's visit and prescription by date.
+- List out the note of the visit as well as the prescriptions.
+</details>
+
+<details>
+<summary>allergy_trade_name_by_pt_id</summary>
+
+- Takes in the patient id as an argument.
+- List out all the trade name medication containing the antibiotic the patient is allergic to.
+</details>
+
+<details>
+<summary>allergy_official_name_by_pt_id</summary>
+
+- Takes in the patient id as an argument.
+- List out the official name of the antibiotics the patient is allergic to.
+</details>
+
+<details>
+<summary>diagnosis_compliance_by_pt_id</summary>
+
+- Takes in the patient id as an argument.
+- This table functions to show if the antibiotics was prescribed accordingly.
+- The date column will show when it was prescribed, so it can be seen if it was prescribed too frequently.
+- The diagnosis table will show the diagnosis, if any for why it was prescribed. 
+- Further evaluation could be done to evaluate if the prescription was appropriate for the diagnosis.
+- The compliance should be a follow up of the patient and how they had used the antibiotics.
+</details>
+
+<details>
+<summary>search_ab</summary>
+
+- Takes in string as an argument.
+- Look through the official name, abbreviation, and synonym to find a match for the name of the antibiotic given by the argument and return its official name or a list of antibiotics mathcing the argument.
 </details>
 
 ## Limitations
