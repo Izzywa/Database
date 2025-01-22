@@ -377,9 +377,35 @@ As detailed by the diagram:
 
 
 ## Optimisations
-In this section you should answer the following questions:
 
-* Which optimizations (e.g., indexes, views) did you create? Why?
+Trigger:
+<details>
+<summary>delete_pt_cascade</summary>
+
+- The patients, visits, and prescriptions table have a deleted column to allow for soft deletion.
+- This trigger functions to alter the deleted column of in all the visits and prescriptions table where the patient id is the 'deleted' patient.
+- This also work where the 'deleted' status of a patient is reversed.
+</details>
+
+Views:
+<details>
+<summary>current_patients</summary>
+
+- Views of patients not marked for deletion.
+- Shows the phone with the dial code and the country names.
+</details>
+
+<details>
+<summary>current_visits</summary>
+
+- Views of visits not marked of deletion.
+</details>
+
+<details>
+<summary>current_prescriptions</summary>
+
+- Views of prescriptions not marked of deletion.
+</details>
 
 ## Limitations
 In this section you should answer the following questions:
