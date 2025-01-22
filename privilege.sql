@@ -1,3 +1,4 @@
+-- Privileges given to the user 'test_user'
 GRANT SELECT, INSERT, UPDATE, DELETE ON `myproject`.`prescription_diagnosis` TO 'test_user';
 GRANT SELECT, INSERT, UPDATE, DELETE ON `myproject`.`compliance` TO 'test_user';
 GRANT SELECT, INSERT, UPDATE ON `myproject`.`visits` TO 'test_user';
