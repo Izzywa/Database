@@ -160,16 +160,17 @@ WHERE `p`.`deleted` = 0
 
 -- View of visits not marked as deleted
 CREATE VIEW `current_visits` AS
-SELECT `p`.`id` AS `pt_id`,
+SELECT `v`.`id` AS `id`,
+`v`.`patient_id` AS `patient_id`,
 `v`.`visit_date` AS `visit_date`,
 `v`.`note` AS `note`
 FROM `visits` AS `v`
-JOIN `patients` AS `p` ON `v`.`patient_id` = `p`.`id`
 WHERE `v`.`deleted` = 0
 
 -- View of prescriptions not marked as deleted
 CREATE VIEW `current_prescriptions` AS 
-SELECT `pr`.`patient_id` AS `pt_id`,
+SELECT `pr`.`id` AS `id`,
+`pr`.`patient_id` AS `pt_id`,
 `pr`.`prescription_date` AS `prescription_date`,
 CONCAT(`ab`.`name`, ' ', `d`.`dose`,' * ',`d`.`dose_times`, ' ', `d`.`administration`) AS `prescription`
 FROM `prescriptions` AS `pr`

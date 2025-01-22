@@ -1,32 +1,22 @@
-/*
-create indexes:
-    - dosage
-    - synonym
-    - abbr
-
-create views/ temp view:
-active users
-undeleted visits and prescription
-take argument of patient id: 
-    - display visits and prescription, join
-    - display prescription, date, compliance, diagnosis
-    - display the list of ab pt is confirmed to be allergic to
-
-create prepared statement:
-
-create user permissions:
-other user but the admin could not delete,
-if they want to delete values in the table , will set the deleted column to 1
-type of user:
-    - admin
-        - all permission
-    - healthcare worker
-        - could not delete
-        - can update
-        - could not update anything related to the antibiotic, dosage
-    - analyst
-        - could only view patient_id
-        - can view the patients prescription and diagnosis, but not the visit.
-        - but can see the date of the patient visit
-        - only select
-*/
+GRANT SELECT, INSERT, UPDATE, DELETE ON `myproject`.`prescription_diagnosis` TO 'test_user';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `myproject`.`compliance` TO 'test_user';
+GRANT SELECT, INSERT, UPDATE ON `myproject`.`visits` TO 'test_user';
+GRANT SELECT, INSERT, UPDATE ON `myproject`.`prescriptions` TO 'test_user';
+GRANT EXECUTE ON PROCEDURE `myproject`.`allergy_trade_name_by_pt_id` TO 'test_user';
+GRANT EXECUTE ON PROCEDURE `myproject`.`allergy_official_name_by_pt_id` TO 'test_user';
+GRANT EXECUTE ON PROCEDURE `myproject`.`diagnosis_compliance_by_pt_id` TO 'test_user';
+GRANT EXECUTE ON PROCEDURE `myproject`.`visit_prescription_by_pt_id` TO 'test_user';
+GRANT EXECUTE ON PROCEDURE `myproject`.`search_ab` TO 'test_user';
+GRANT SELECT, INSERT, UPDATE ON `myproject`.`patients` TO 'test_user';
+GRANT SELECT ON `myproject`.`dosage` TO 'test_user';
+GRANT SELECT ON `myproject`.`dial_codes` TO 'test_user';
+GRANT SELECT ON `myproject`.`diagnoses` TO 'test_user';
+GRANT SELECT ON `myproject`.`current_visits` TO 'test_user';
+GRANT SELECT ON `myproject`.`current_prescriptions` TO 'test_user';
+GRANT SELECT ON `myproject`.`current_patients` TO 'test_user';
+GRANT SELECT ON `myproject`.`countries` TO 'test_user';
+GRANT SELECT ON `myproject`.`ab_usage` TO 'test_user';
+GRANT SELECT ON `myproject`.`synonyms` TO 'test_user';
+GRANT SELECT ON `myproject`.`abbreviations` TO 'test_user';
+GRANT SELECT ON `myproject`.`antibiotics` TO 'test_user';
+GRANT SELECT ON `myproject`.`antibiotic_groups` TO 'test_user';
