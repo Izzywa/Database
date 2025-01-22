@@ -113,4 +113,23 @@ BEGIN
     GROUP BY `pr`.`id`;
 END//
 
+/*
+Search the official name and the official EARS-Net code of an antibiotic.
+The argument passed could be an abbreviation, a tradename, or part of the official name
+*/
+DROP PROCEDURE IF EXISTS `search_ab`//
+CREATE PROCEDURE `search_ab` (IN `ab_name` VARCHAR(74))
+BEGIN
+    SELECT `ab`, `name`
+    FROM `antibiotics`
+    WHERE `ab` IN (
+        SELECT DISTINCT `ab` FROM `synonyms`
+        WHERE `synonym` LIKE CONCAT('%',`ab_name`,'%')
+        UNION
+        SELECT DISTINCT `ab` FROM `abbreviations`
+        WHERE `abbreviation` LIKE CONCAT('%',`ab_name`,'%')
+    )
+    OR `name` LIKE CONCAT('%',`ab_name`,'%');
+END //
+
 DELIMITER ;
