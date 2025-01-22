@@ -1,3 +1,15 @@
-.container {
-    border: 2px solid red;
+html, body {
+  height: 100%;
+  width: 100%;
 }
+
+.login-container {
+  height: 100vh;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/*# sourceMappingURL=index.css.map */
