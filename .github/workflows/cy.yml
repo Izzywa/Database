@@ -7,8 +7,12 @@ jobs:
     Test:
         runs-on: ubuntu-latest
         env: 
-            DB_USER: ${{secrets.DB_USER}}
+            secret: ${{secrets.ENV_FILE}},
         steps:
             - uses: actions/checkout@v4
             - name: Test database
               run: pipx install virtualenv
+                   python3 -m venv venv
+                   source venv/bin/activate
+                   python3 -m pip install -r requirements.txt
+                   echo "${{ env.DB_USER }}" > database/.env
