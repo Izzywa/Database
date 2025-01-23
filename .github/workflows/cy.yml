@@ -6,7 +6,9 @@ on:
 jobs:
     Test:
         runs-on: ubuntu-latest
+        env: 
+            DB_USER: ${{secrets.DB_USER}}
         steps:
             - uses: actions/checkout@v4
-            - name: Run Unit test
-              run: python3 test.py
+            - name: Test database
+              run: pipx install virtualenv
