@@ -2,10 +2,23 @@ import React from "react";
 import csrftoken from "./CSRFToken";
 
 export default function Login(props) {
-
-    const csrf = csrftoken();
     function handleLogin() {
-        console.log('logged in')
+        const requestOptions = {
+            method: ('POST'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+                username: "username"
+            })
+        }
+
+        fetch('backend/login', requestOptions)
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log(error))
     }
 
     return (
