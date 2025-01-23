@@ -9,4 +9,4 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Run Unit test
-              run: echo Hello, world!
+              run: python3 test.py
