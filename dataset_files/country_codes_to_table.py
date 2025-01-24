@@ -21,48 +21,47 @@ mydb = mysql.connector.connect(
 )
 m = mydb.cursor(prepared=True)
 
-# read the csv and only keep the necessary columns 
-codes = pd.read_csv('country-codes.csv')
-codes_columns_to_keep = [
-    'Dial',
-    'ISO3166-1-Alpha-3',
-    'official_name_en'
-]
+def insert_countries_and_dial_codes(cursor, filename):
+    # read the csv and only keep the necessary columns 
+    codes = pd.read_csv(filename)
+    codes_columns_to_keep = [
+        'Dial',
+        'ISO3166-1-Alpha-3',
+        'official_name_en'
+    ]
 
-codes.drop(
-    columns=[col for col in codes if col not in codes_columns_to_keep],
-    inplace=True
-    )
+    codes.drop(
+        columns=[col for col in codes if col not in codes_columns_to_keep],
+        inplace=True
+        )
 
-# remove the '-' from the dial 
-codes['Dial'] = codes.Dial.apply(lambda x: x.replace('-','') if isinstance(x, str) else x)
+    # remove the '-' from the dial 
+    codes['Dial'] = codes.Dial.apply(lambda x: x.replace('-','') if isinstance(x, str) else x)
 
-# drop countries without dial codes
-codes = codes[codes['ISO3166-1-Alpha-3'] != 'UMI']
+    # drop countries without dial codes
+    codes = codes[codes['ISO3166-1-Alpha-3'] != 'UMI']
 
 
-insert_country = 'INSERT INTO countries (code, name) VALUES (?,?);'
-insert_dial_code = 'INSERT INTO dial_codes (dial, country_code) VALUES (?,?);'
+    insert_country = 'INSERT INTO countries (code, name) VALUES (?,?);'
+    insert_dial_code = 'INSERT INTO dial_codes (dial, country_code) VALUES (?,?);'
 
-for index, row in codes.iterrows():
-    country = (row['ISO3166-1-Alpha-3'], row['official_name_en'])
-    try:
-        m.execute(insert_country, country)
-    except:
-        print(country)
-    
-    if len(row['Dial'].split(',')) != 1:
-        for d in row['Dial'].split(','):
-            dial_code = (d, row['ISO3166-1-Alpha-3'])
-            try:
-                m.execute(insert_dial_code, dial_code)
-            except:
-                pass
-    else:
-        dial_code = (row['Dial'], row['ISO3166-1-Alpha-3'])
+    for index, row in codes.iterrows():
+        country = (row['ISO3166-1-Alpha-3'], row['official_name_en'])
         try:
-            m.execute(insert_dial_code, dial_code)
+            cursor.execute(insert_country, country)
         except:
             pass
-mydb.commit()
-mydb.close()
+        
+        if len(row['Dial'].split(',')) != 1:
+            for d in row['Dial'].split(','):
+                dial_code = (d, row['ISO3166-1-Alpha-3'])
+                try:
+                    cursor.execute(insert_dial_code, dial_code)
+                except:
+                    pass
+        else:
+            dial_code = (row['Dial'], row['ISO3166-1-Alpha-3'])
+            try:
+                cursor.execute(insert_dial_code, dial_code)
+            except:
+                pass

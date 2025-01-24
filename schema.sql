@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `antibiotic_groups` (
     PRIMARY KEY(`id`)
 );
 
-
 CREATE TABLE IF NOT EXISTS `antibiotics` (
     `ab` VARCHAR(5) NOT NULL UNIQUE,
     `cid` INT UNSIGNED,
@@ -29,7 +28,6 @@ CREATE TABLE IF NOT EXISTS `antibiotics` (
     FOREIGN KEY(`group_id`) REFERENCES `antibiotic_groups`(`id`) ON DELETE SET NULL,
     PRIMARY KEY(`ab`)
 );
-
 
 CREATE TABLE IF NOT EXISTS `abbreviations` (
     `id` SMALLINT UNSIGNED NOT NULL UNIQUE AUTO_INCREMENT,
