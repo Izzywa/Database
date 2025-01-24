@@ -17,4 +17,5 @@ jobs:
                    source venv/bin/activate
                    python3 -m pip install -r requirements.txt
                    echo "${{ env.ENV_FILE }}" > database/.env
+                   sudo mysql --user=root --password=root
                    python3 test.py
