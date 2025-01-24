@@ -68,24 +68,10 @@ class TestMySQL(unittest.TestCase):
             dial = cursor.fetchone()[0]
             
             # Test constraint for duplicate countries
-            try:
-                cursor.execute(insert_country, (test_country['code'], test_country['name']))
-                self.fail('should not be allowed to insert duplicate countries')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_country, (test_country['code'], test_country['name']), 'countries')
             
             # Test constraint for duplicate dial codes
-            try:
-                cursor.execute(insert_dial, (test_country['dial_code'], test_country['code']))
-                self.fail('should not be allowed to insert duplicate dial code and country')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_dial, (test_country['dial_code'], test_country['code']), 'dial code')
     
         # Test the data that was input
         self.assertEqual(test_country['name'], country)
@@ -120,59 +106,24 @@ class TestMySQL(unittest.TestCase):
             insert_antibiotics(cursor, 'dataset_files/antibiotics.csv', 'dataset_files/dosage.csv')
             
             # Test constraint for duplicate ab group
-            try:
-                cursor.execute(insert_ab_group, (test_abx['group'],))
-                self.fail('should not be able to insert duplicate antibiotic group')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_ab_group, (test_abx['group'],), 'antibiotic group')
             
             cursor.execute(get_group_id, (test_abx['group'],))
             group_id = cursor.fetchone()[0]
             ab = (test_abx['ab'], test_abx['cid'], test_abx['name'], group_id)
             
             # Test constraint for duplicate ab
-            try:
-                cursor.execute(insert_ab, ab)
-                self.fail('should not be able to insert duplicate antibiotics')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_ab, ab, 'antibiotic')
         
             # Test constraint for duplicate abbreviations
-            try:
-                cursor.execute(insert_abbr, (test_abx['ab'],test_abx['abbreviation']))
-                self.fail('should not be able to insert duplicate abbreviation')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_abbr, (test_abx['ab'], test_abx['abbreviation']), 'abbreviation')
                 
             # Test constraint for duplicate synonyms
-            try:
-                cursor.execute(insert_syn, (test_abx['ab'],test_abx['synonym']))
-                self.fail('should not be able to insert duplicate synonyms')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_syn, (test_abx['ab'], test_abx['synonym']), 'synonym')
                 
-            # Test constraint for duplicate dosage
+            # Test constraint for duplicate dosage duplicates
             dosage = (test_abx['ab'],test_abx['dose_type'],test_abx['dose'],test_abx['dose_times'],test_abx['dose_administration'])    
-            try:
-                cursor.execute(insert_dose, dosage)
-                self.fail('should not be able to insert duplicate dosage')
-            except mysql.connector.Error as err:
-                if err.errno == -1:
-                    pass
-                else:
-                    raise
+            self.duplicates_testing(cursor, insert_dose, dosage, 'dosage')
     
     def test_patients(self):
         # sample testing data
@@ -201,6 +152,7 @@ class TestMySQL(unittest.TestCase):
             VALUES (?,?,?,?,?,?,?);'
         get_country = 'SELECT code FROM countries WHERE name = ?;'
         get_dial = 'SELECT id FROM dial_codes WHERE dial = ? AND country_code = ?;'
+        insert_allergy = 'INSERT INTO allergies (patient_id, ab) VALUES (?,?);'
         
         
         with mysql.connector.connect(**config) as self.connection:
@@ -215,6 +167,7 @@ class TestMySQL(unittest.TestCase):
             cursor.execute(get_dial, (test_pt['dial_code'], country_code))
             dial = cursor.fetchone()[0]
             
+            # test phone_dial_constraint
             try:
                 cursor.execute(
                     insert_pt,
@@ -226,7 +179,7 @@ class TestMySQL(unittest.TestCase):
                     pass
                 else:
                     raise
-            
+            # test phone_dial_constraint
             try:
                 cursor.execute(
                     insert_pt,
@@ -239,16 +192,37 @@ class TestMySQL(unittest.TestCase):
                 else:
                     raise
                 
+            # test insertion of patient into the table
             cursor.execute(
                 insert_pt,
                 (test_pt['full_name'], None, None, None, test_pt['birth_date'], country_code, country_code)
             )
             pt_id = cursor.lastrowid
             
+            # test insertion of allergies
+            cursor.execute(
+                insert_allergy,
+                (pt_id, test_prescription['ab'])
+            )
+            # test constraint for duplicate allergies
+            self.duplicates_testing(cursor, insert_allergy, (pt_id, test_prescription['ab']), 'allergies')
+            
+            # test insertion for visits
             # clear database
             self.execute_sql_script('drop.sql')
                 
-                    
+    def duplicates_testing(self, cursor, query, argument, table_name):
+        try:
+            cursor.execute(
+                query,
+                argument
+            )
+            self.fail(f'should not be able to insert duplicate {table_name}')
+        except mysql.connector.Error as err:
+            if err.errno == -1:
+                pass
+            else:
+                raise    
                     
 if __name__ == '__main__':
     unittest.main()
