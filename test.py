@@ -4,7 +4,6 @@ import environ
 import os
 import re
 from pathlib import Path
-from dataset_files.country_codes_to_table import insert_countries_and_dial_codes
 
 env = environ.Env(
     DEBUG=(bool, False)
