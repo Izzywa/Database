@@ -2,11 +2,10 @@ import unittest
 import mysql.connector
 import environ
 import os
-import pandas as pd
 import re
 from pathlib import Path
-from django.db import transaction
 from dataset_files.country_codes_to_table import insert_countries_and_dial_codes
+from dataset_files.csv_to_table import insert_antibiotics
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -41,6 +40,8 @@ class TestMySQL(unittest.TestCase):
                 # Execute non-empty command
             cursor.execute(statement)
         cursor.close()
+        
+        
     
     def test_country_codes(self):
     # insert into countries and dial_codes
@@ -61,25 +62,102 @@ class TestMySQL(unittest.TestCase):
             dial = cursor.fetchone()[0]
             
             try:
-                with transaction.atomic():
-                    cursor.execute(insert_country, (test_country['code'], test_country['name']))
-                    self.fail('should not be allowed to insert duplicate countries')
-            except:
-                pass
+                cursor.execute(insert_country, (test_country['code'], test_country['name']))
+                self.fail('should not be allowed to insert duplicate countries')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
             
             try:
-                with transaction.atomic():
-                    cursor.execute(insert_dial, (test_country['dial_code'], test_country['code']))
-                    self.fail('should not be allowed to insert duplicate dial code and country')
-            except:
-                pass
+                cursor.execute(insert_dial, (test_country['dial_code'], test_country['code']))
+                self.fail('should not be allowed to insert duplicate dial code and country')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
     
         self.assertEqual(test_country['name'], country)
         self.assertEqual(test_country['dial_code'], dial)
         
-        def test_antibiotics(self):
-            pass
+    def test_antibiotics(self):
+        test_abx = {
+            'ab': 'AMX',
+            'cid': 33613,
+            'name': 'Amoxicillin',
+            'group': 'Beta-lactams/penicillins',
+            'abbreviation': 'amox',
+            'synonym': 'actimoxi',
+            'dose_type': 'standard_dosage',
+            'dose': '0.5 g',
+            'dose_times': 3,
+            'dose_administration': 'oral'
+        }
+        get_group_id = 'SELECT id FROM antibiotic_groups WHERE name = ?;'
+        insert_ab_group = 'INSERT INTO antibiotic_groups (name) VALUES (?);'
+        insert_ab = 'INSERT INTO antibiotics (ab, cid, name, group_id) VALUES(?,?,?,?);'
+        insert_abbr = 'INSERT INTO abbreviations (ab, abbreviation) VALUES(?,?);'
+        insert_syn = 'INSERT INTO synonyms (ab, synonym) VALUES (?,?);'
+        insert_dose = 'INSERT INTO dosage (ab, type, dose, dose_times, administration) VALUES (?,?,?,?,?);'
         
+        with mysql.connector.connect(**config) as self.connection:
+            cursor = self.connection.cursor(prepared=True)
+            insert_antibiotics(cursor, 'dataset_files/antibiotics.csv', 'dataset_files/dosage.csv')
+            
+            try:
+                cursor.execute(insert_ab_group, (test_abx['group'],))
+                self.fail('should not be able to insert duplicate antibiotic group')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
+            
+            cursor.execute(get_group_id, (test_abx['group'],))
+            group_id = cursor.fetchone()[0]
+            ab = (test_abx['ab'], test_abx['cid'], test_abx['name'], group_id)
+            
+            try:
+                cursor.execute(insert_ab, ab)
+                self.fail('should not be able to insert duplicate antibiotics')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
         
+            try:
+                cursor.execute(insert_abbr, (test_abx['ab'],test_abx['abbreviation']))
+                self.fail('should not be able to insert duplicate abbreviation')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
+                
+            try:
+                cursor.execute(insert_syn, (test_abx['ab'],test_abx['synonym']))
+                self.fail('should not be able to insert duplicate synonyms')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
+                
+            dosage = (test_abx['ab'],test_abx['dose_type'],test_abx['dose'],test_abx['dose_times'],test_abx['dose_administration'])    
+            try:
+                cursor.execute(insert_dose, dosage)
+                self.fail('should not be able to insert duplicate dosage')
+            except mysql.connector.Error as err:
+                if err.errno == -1:
+                    pass
+                else:
+                    raise
+    
+    def test_patients(self):
+        pass
+                    
 if __name__ == '__main__':
     unittest.main()
