@@ -23,7 +23,7 @@ m = mydb.cursor(prepared=True)
 
 def insert_countries_and_dial_codes(cursor, filename):
     # read the csv and only keep the necessary columns 
-    codes = pd.read_csv(filename)
+    codes = pd.read_csv(os.path.join(BASE_DIR, filename))
     codes_columns_to_keep = [
         'Dial',
         'ISO3166-1-Alpha-3',

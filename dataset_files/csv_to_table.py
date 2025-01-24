@@ -128,6 +128,3 @@ for index, row in dosage.iterrows():
         m.execute(insert_dose, (doses))
     except Exception as e:
         print(e)
-        
-mydb.commit()
-mydb.close()
