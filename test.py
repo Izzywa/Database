@@ -142,7 +142,7 @@ class TestMySQL(unittest.TestCase):
         test_prescription = {
             'prescription_date': date.today(),
             'ab': 'AMX',
-            'dose_type': 'standard_dossage',
+            'dose_type': 'standard_dosage',
             'dose_administration': 'oral'
         }
         
@@ -150,9 +150,12 @@ class TestMySQL(unittest.TestCase):
         insert_pt = 'INSERT INTO patients \
             (full_name, email, dial_code_id, phone, birth_date,resident_country_code, birth_country_code)\
             VALUES (?,?,?,?,?,?,?);'
+        insert_allergy = 'INSERT INTO allergies (patient_id, ab) VALUES (?,?);'
+        insert_visit = 'INSERT INTO visits (patient_id, visit_date, note) VALUES (?,?,?);'
+        insert_pres = 'INSERT INTO prescriptions (patient_id, prescription_date, dose_id) VALUES (?,?,?);'
         get_country = 'SELECT code FROM countries WHERE name = ?;'
         get_dial = 'SELECT id FROM dial_codes WHERE dial = ? AND country_code = ?;'
-        insert_allergy = 'INSERT INTO allergies (patient_id, ab) VALUES (?,?);'
+        get_dose = 'SELECT id FROM dosage WHERE ab = ? AND type= ? AND administration = ?;'
         
         
         with mysql.connector.connect(**config) as self.connection:
@@ -208,6 +211,26 @@ class TestMySQL(unittest.TestCase):
             self.duplicates_testing(cursor, insert_allergy, (pt_id, test_prescription['ab']), 'allergies')
             
             # test insertion for visits
+            cursor.execute(
+                insert_visit,
+                (pt_id, test_visit['visit_date'], test_visit['note'])
+            )
+            
+            #test insertion for prescriptions
+            cursor.execute(
+                get_dose,
+                (test_prescription['ab'],test_prescription['dose_type'],test_prescription['dose_administration'])
+            )
+            dose_id = cursor.fetchone()[0]
+            cursor.execute(
+                insert_pres,
+                (pt_id, test_prescription['prescription_date'], dose_id)
+            )
+            pres_id = cursor.lastrowid
+            cursor.execute('SELECT patient_id FROM prescriptions WHERE id = ?;', (pres_id,))
+            test_pt_id = cursor.fetchone()[0]
+            self.assertEqual(test_pt_id, pt_id)
+            
             # clear database
             self.execute_sql_script('drop.sql')
                 
@@ -222,7 +245,7 @@ class TestMySQL(unittest.TestCase):
             if err.errno == -1:
                 pass
             else:
-                raise    
+                raise
                     
 if __name__ == '__main__':
     unittest.main()
