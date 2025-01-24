@@ -7,7 +7,7 @@ jobs:
     Test:
         runs-on: ubuntu-latest
         env: 
-            secret: ${{secrets.ENV_FILE}},
+            ENV_FILE: ${{secrets.ENV_FILE}},
         steps:
             - uses: actions/checkout@v4
             - name: Test database
