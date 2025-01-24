@@ -7,22 +7,21 @@ jobs:
     Test:
         runs-on: ubuntu-latest
         services:
-            mysql:
-                image: mysql:8.0
+         mysql:
+            image: mysql:8.0
             env:
                 MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
                 MYSQL_DATABASE: test_db
             ports:
                 - "3306:3306"
         env: 
-            ENV_FILE: ${{secrets.ENV_FILE}}
+         ENV_FILE: ${{secrets.ENV_FILE}}
         steps:
-            - uses: actions/checkout@v4
-            - name: Test database
-              run: |
-                   pipx install virtualenv
-                   python3 -m venv venv
-                   source venv/bin/activate
-                   python3 -m pip install -r requirements.txt
-                   echo "${{ env.ENV_FILE }}" > database/.env
-                   python3 test.py
+         - uses: actions/checkout@v4
+         - run: |
+            pipx install virtualenv
+            python3 -m venv venv
+            source venv/bin/activate
+            python3 -m pip install -r requirements.txt
+            echo "${{ env.ENV_FILE }}" > database/.env
+            python3 test.py
