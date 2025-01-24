@@ -35,6 +35,9 @@ class TestMySQL(unittest.TestCase):
         cursor.close()
         
         self.assertEqual('Malaysia', country)
+    
+    def test_antibiotics(self):
+        pass
         
     
     def execute_sql_script(self, file_path):
