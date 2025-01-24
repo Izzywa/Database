@@ -16,6 +16,7 @@ config = {
     'user' : env('DB_USER'),
     'password' : env('DB_PASSWORD'),
     'database' : "test_db",
+    'host': env('DB_HOST')
 }
 
 class TestMySQL(unittest.TestCase):
