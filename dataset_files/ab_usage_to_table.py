@@ -3,7 +3,6 @@ import mysql.connector
 import os
 import pandas as pd
 from pathlib import Path
-from common_usage import input_diagnoses_to_table
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -19,8 +18,6 @@ mydb = mysql.connector.connect(
     database = env('DB_NAME'),
 )
 m = mydb.cursor(prepared=True)
-
-diagnosis_err = input_diagnoses_to_table(m)
 
 usage = pd.read_csv('use_misuse.csv')
 insert_usage = 'INSERT INTO `ab_usage` (`use`) VALUES (?);'

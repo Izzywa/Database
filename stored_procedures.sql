@@ -1,12 +1,5 @@
-DELIMITER //
 
-/*
-The patients, visits, and prescriptions table have a column that allows for soft deletion
-the `delete_pt_cascade` TRIGGER functions to alter the deleted column of in all the visits
-and prescriptions table where the patient id is the 'deleted' patient.
-This also work where the 'deleted' status of a patient is reversed.
-*/
-DROP TRIGGER IF EXISTS `delete_pt_cascade`//
+DROP TRIGGER IF EXISTS `delete_pt_cascade`|
 CREATE TRIGGER `delete_pt_cascade`
 AFTER UPDATE ON `patients`
     FOR EACH ROW
@@ -15,10 +8,10 @@ AFTER UPDATE ON `patients`
             UPDATE visits SET deleted = NEW.deleted WHERE patient_id = OLD.id;
             UPDATE prescriptions SET deleted = NEW.deleted WHERE patient_id = OLD.id;
         END IF;
-    END//
+    END|
 
 -- This procedure shows the visits and prescription of the patient grouped by date
-DROP PROCEDURE IF EXISTS `visit_prescription_by_pt_id`//
+DROP PROCEDURE IF EXISTS `visit_prescription_by_pt_id`|
 CREATE PROCEDURE `visit_prescription_by_pt_id` (IN `pt_id` INT)
 BEGIN
     SELECT `visit`.`date` AS `date`,
@@ -66,27 +59,27 @@ BEGIN
     ON `visit`.`date` = `prescription`.`date`
     GROUP BY `visit`.`date`, `prescription`.`date`
     ORDER BY `date` DESC;
-END//
+END|
 
 -- This shows all the trade name of the antibiotic that the patient is allergic to
-DROP PROCEDURE IF EXISTS `allergy_trade_name_by_pt_id`//
+DROP PROCEDURE IF EXISTS `allergy_trade_name_by_pt_id`|
 CREATE PROCEDURE `allergy_trade_name_by_pt_id` (IN `pt_id` INT)
 BEGIN
     SELECT `synonyms`.`synonym` AS `trade_name`
     FROM `allergies`
     JOIN `synonyms` ON `allergies`.`ab` = `synonyms`.`ab`
     WHERE `allergies`.`patient_id` = `pt_id`;
-END//
+END|
 
 -- This procedure shows all the official name of the antibiotic that the patient is allergic to
-DROP PROCEDURE IF EXISTS `allergy_official_name_by_pt_id`//
+DROP PROCEDURE IF EXISTS `allergy_official_name_by_pt_id`|
 CREATE PROCEDURE `allergy_official_name_by_pt_id` (IN `pt_id` INT)
 BEGIN
     SELECT `antibiotics`.`name` AS `official_name`
     FROM `allergies`
     JOIN `antibiotics` ON `allergies`.`ab` = `antibiotics`.`ab`
     WHERE `allergies`.`patient_id` = `pt_id`;
-END//
+END|
 
 /*
 This table functions to show if the antibiotics was prescribed accordingly.
@@ -95,7 +88,7 @@ The diagnosis table will show the diagnosis, if any for why it was prescribed.
 Further evaluation could be done to evaluate if the prescription was appropriate for the diagnosis.
 The compliance should be a follow up of the patient and how they had used the antibiotics.
 */
-DROP PROCEDURE IF EXISTS `diagnosis_compliance_by_pt_id`//
+DROP PROCEDURE IF EXISTS `diagnosis_compliance_by_pt_id`|
 CREATE PROCEDURE `diagnosis_compliance_by_pt_id` (IN `pt_id` INT)
 BEGIN
     SELECT `pr`.`prescription_date` AS `prescription_date`,
@@ -111,13 +104,13 @@ BEGIN
     JOIN `antibiotics` AS `ab` ON `ab`.`ab` = `d`.`ab`
     WHERE `pr`.`patient_id` = `pt_id`
     GROUP BY `pr`.`id`;
-END//
+END|
 
 /*
 Search the official name and the official EARS-Net code of an antibiotic.
 The argument passed could be an abbreviation, a tradename, or part of the official name
 */
-DROP PROCEDURE IF EXISTS `search_ab`//
+DROP PROCEDURE IF EXISTS `search_ab`|
 CREATE PROCEDURE `search_ab` (IN `ab_name` VARCHAR(74))
 BEGIN
     SELECT `ab`, `name`
@@ -130,6 +123,6 @@ BEGIN
         WHERE `abbreviation` LIKE CONCAT('%',`ab_name`,'%')
     )
     OR `name` LIKE CONCAT('%',`ab_name`,'%');
-END //
+END |
 
-DELIMITER ;
+-- DELIMITER ; (removed to run on test.py)

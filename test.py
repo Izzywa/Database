@@ -29,6 +29,9 @@ class TestMySQL(unittest.TestCase):
         
             # Initialise database for testing
             self.execute_sql_script('schema.sql')
+        
+        with mysql.connector.connect(**config) as self.connection:
+            self.execute_stored_procedure('stored_procedures.sql')
     
     def execute_sql_script(self, file_path):
         f = open(file_path, mode='r')
@@ -41,9 +44,21 @@ class TestMySQL(unittest.TestCase):
                 # Execute non-empty command
             cursor.execute(statement)
         cursor.close()
-        
-        
     
+    def execute_stored_procedure(self, filename):
+        fd = open(filename, 'r')
+        sqlFile = fd.read()
+        fd.close()
+        sqlCommands = sqlFile.split('|')
+        cursor = self.connection.cursor()
+
+        for command in sqlCommands:
+            try:
+                if command.strip() != '':
+                    cursor.execute(command)
+            except IOError as msg:
+                print("Command skipped: ", msg) 
+        
     def test_country_codes(self):
         # sample testing data 
         test_country = {
@@ -215,6 +230,7 @@ class TestMySQL(unittest.TestCase):
                 insert_visit,
                 (pt_id, test_visit['visit_date'], test_visit['note'])
             )
+            visit_id = cursor.lastrowid
             
             #test insertion for prescriptions
             cursor.execute(
@@ -230,6 +246,16 @@ class TestMySQL(unittest.TestCase):
             cursor.execute('SELECT patient_id FROM prescriptions WHERE id = ?;', (pres_id,))
             test_pt_id = cursor.fetchone()[0]
             self.assertEqual(test_pt_id, pt_id)
+            
+            # test delete_pt_cascade TRIGGER
+            cursor.execute('UPDATE patients SET deleted = 1 WHERE id = ?;', (pt_id,))
+            cursor.execute('SELECT deleted FROM prescriptions WHERE id = ?;', (pres_id,))
+            deleted_pres = cursor.fetchone()[0]
+            cursor.execute('SELECT deleted FROM visits WHERE id = ?;', (visit_id,))
+            deleted_visit = cursor.fetchone()[0]
+            
+            self.assertEqual(deleted_pres, 1, 'prescription not set as deleted when patient is deleted')
+            self.assertEqual(deleted_visit, 1, 'visit not set as deleted when patient is deleted')
             
             # clear database
             self.execute_sql_script('drop.sql')
