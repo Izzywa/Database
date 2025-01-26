@@ -10,8 +10,6 @@ env = environ.Env(
 )
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(os.path.join(BASE_DIR, 'database/.env'))
-
 def insert_countries_and_dial_codes(cursor, filename):
     # read the csv and only keep the necessary columns 
     codes = pd.read_csv(os.path.join(BASE_DIR, filename))

@@ -1,4 +1,13 @@
 import pandas as pd
+import environ
+import os
+from pathlib import Path
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 '''
 The following contains 100 of the commonly used antibiotics and their usage
 This dataset is used as a template to populate the diagnosis table of the database, subjected to future change
@@ -35,19 +44,13 @@ def separate_data():
     df.drop_duplicates(inplace=True)
     df.to_csv('common_usage.csv', index=False)
 
-def input_diagnoses_to_table(cursor):
-    diagnoses = pd.read_csv('common_usage.csv')
+def insert_diagnoses_to_table(cursor, filename):
+    diagnoses = pd.read_csv(os.path.join(BASE_DIR, filename))
     insert_diagnoses = 'INSERT INTO diagnoses (diagnosis) VALUES (?);'
-    
-    error = []
+
     for index, row in diagnoses.iterrows():
         diagnosis = row['Usage']
         try:
             cursor.execute(insert_diagnoses, (diagnosis,))
         except Exception as e:
-            error.append(e)
-            
-    if len(error) == 0:
-        return None
-    else:
-        return error
+            pass

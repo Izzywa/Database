@@ -15,8 +15,6 @@ env = environ.Env(
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(os.path.join(BASE_DIR, 'database/.env'))
-
 def insert_antibiotics(cursor, filename1, filename2):
     abx = pd.read_csv(os.path.join(BASE_DIR, filename1))
     abx_columns_to_keep = [

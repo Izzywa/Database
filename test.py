@@ -7,6 +7,8 @@ from pathlib import Path
 from datetime import date
 from dataset_files.country_codes_to_table import insert_countries_and_dial_codes
 from dataset_files.csv_to_table import insert_antibiotics
+from dataset_files.ab_usage_to_table import insert_usage_to_table
+from dataset_files.common_usage import insert_diagnoses_to_table
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -168,6 +170,8 @@ class TestMySQL(unittest.TestCase):
         insert_allergy = 'INSERT INTO allergies (patient_id, ab) VALUES (?,?);'
         insert_visit = 'INSERT INTO visits (patient_id, visit_date, note) VALUES (?,?,?);'
         insert_pres = 'INSERT INTO prescriptions (patient_id, prescription_date, dose_id) VALUES (?,?,?);'
+        insert_pres_diag = 'INSERT INTO prescription_diagnosis (prescription_id, diagnosis_id) VALUES (?,?);'
+        insert_compliance = 'INSERT INTO compliance (prescription_id, use_id) VALUES (?,?);'
         get_country = 'SELECT code FROM countries WHERE name = ?;'
         get_dial = 'SELECT id FROM dial_codes WHERE dial = ? AND country_code = ?;'
         get_dose = 'SELECT id FROM dosage WHERE ab = ? AND type= ? AND administration = ?;'
@@ -179,6 +183,8 @@ class TestMySQL(unittest.TestCase):
             # insert into tables data from dataset files
             insert_countries_and_dial_codes(cursor, 'dataset_files/country-codes.csv')   
             insert_antibiotics(cursor, 'dataset_files/antibiotics.csv', 'dataset_files/dosage.csv')
+            insert_usage_to_table(cursor, 'dataset_files/use_misuse.csv')
+            insert_diagnoses_to_table(cursor, 'dataset_files/common_usage.csv')
             
             cursor.execute(get_country, (test_pt['country'],))
             country_code = cursor.fetchone()[0]
@@ -245,6 +251,7 @@ class TestMySQL(unittest.TestCase):
             pres_id = cursor.lastrowid
             cursor.execute('SELECT patient_id FROM prescriptions WHERE id = ?;', (pres_id,))
             test_pt_id = cursor.fetchone()[0]
+            
             self.assertEqual(test_pt_id, pt_id)
             
             # test delete_pt_cascade TRIGGER
@@ -256,6 +263,34 @@ class TestMySQL(unittest.TestCase):
             
             self.assertEqual(deleted_pres, 1, 'prescription not set as deleted when patient is deleted')
             self.assertEqual(deleted_visit, 1, 'visit not set as deleted when patient is deleted')
+            
+            # test prescription_diagnosis
+            cursor.execute('SELECT id FROM diagnoses WHERE diagnosis LIKE "acne"')
+            diag_id = cursor.fetchone()[0]
+            cursor.execute(
+                insert_pres_diag,
+                (pres_id, diag_id)
+            )
+            
+            cursor.execute('SELECT diagnosis_id FROM prescription_diagnosis WHERE prescription_id = ?;', (pres_id,))
+            test_diag_id = cursor.fetchone()[0]
+            self.assertEqual(test_diag_id, diag_id)
+            
+            self.duplicates_testing(cursor,insert_pres_diag, (pres_id, diag_id),"prescription_diagnosis")
+            
+            # test compliance
+            cursor.execute('SELECT `id` FROM `ab_usage` WHERE `use` LIKE "use as prescribed";')
+            use_id = cursor.fetchone()[0]
+            cursor.execute(
+                insert_compliance,
+                (pres_id, use_id)
+            )
+            
+            cursor.execute('SELECT use_id FROM compliance WHERE prescription_id = ?;', (pres_id,))
+            test_use_id = cursor.fetchone()[0]
+            self.assertEqual(test_use_id, use_id)
+            
+            self.duplicates_testing(cursor, insert_compliance, (pres_id, use_id), "compliance")
             
             # clear database
             self.execute_sql_script('drop.sql')
