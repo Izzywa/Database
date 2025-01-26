@@ -172,6 +172,8 @@ class TestMySQL(unittest.TestCase):
         insert_pres = 'INSERT INTO prescriptions (patient_id, prescription_date, dose_id) VALUES (?,?,?);'
         insert_pres_diag = 'INSERT INTO prescription_diagnosis (prescription_id, diagnosis_id) VALUES (?,?);'
         insert_compliance = 'INSERT INTO compliance (prescription_id, use_id) VALUES (?,?);'
+        insert_usage = 'INSERT INTO ab_usage(`use`) VALUES (?);'
+        insert_diag = 'INSERT INTO diagnoses (diagnosis) VALUES (?);'
         get_country = 'SELECT code FROM countries WHERE name = ?;'
         get_dial = 'SELECT id FROM dial_codes WHERE dial = ? AND country_code = ?;'
         get_dose = 'SELECT id FROM dosage WHERE ab = ? AND type= ? AND administration = ?;'
@@ -264,9 +266,13 @@ class TestMySQL(unittest.TestCase):
             self.assertEqual(deleted_pres, 1, 'prescription not set as deleted when patient is deleted')
             self.assertEqual(deleted_visit, 1, 'visit not set as deleted when patient is deleted')
             
-            # test prescription_diagnosis
-            cursor.execute('SELECT id FROM diagnoses WHERE diagnosis LIKE "acne"')
+            # test diagnoses table
+            test_diag = "acne"
+            cursor.execute('SELECT * FROM diagnoses WHERE diagnosis = ?;', (test_diag,))
             diag_id = cursor.fetchone()[0]
+            self.duplicates_testing(cursor, insert_diag, (test_diag,), "diagnoses")
+            
+           # test prescription_diagnosis 
             cursor.execute(
                 insert_pres_diag,
                 (pres_id, diag_id)
@@ -278,9 +284,13 @@ class TestMySQL(unittest.TestCase):
             
             self.duplicates_testing(cursor,insert_pres_diag, (pres_id, diag_id),"prescription_diagnosis")
             
-            # test compliance
-            cursor.execute('SELECT `id` FROM `ab_usage` WHERE `use` LIKE "use as prescribed";')
+            # test ab_usage table
+            test_usage = "use as prescribed"
+            cursor.execute('SELECT `id` FROM `ab_usage` WHERE `use` = ?;', (test_usage,))
             use_id = cursor.fetchone()[0]
+            self.duplicates_testing(cursor, insert_usage, (test_usage,), "ab_usage")
+            
+            # test compliance
             cursor.execute(
                 insert_compliance,
                 (pres_id, use_id)

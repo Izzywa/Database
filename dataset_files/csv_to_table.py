@@ -4,7 +4,6 @@ the available dataset and insert into the database
 '''
 import environ
 import math
-import mysql.connector
 import os
 import pandas as pd
 from pathlib import Path
