@@ -16,20 +16,20 @@ def login(request):
     else:
         return HttpResponseRedirect(reverse("frontend:index"))
     
-@api_view(['GET', 'POST'])
-def patient_list(request):
+@api_view(['GET'])
+def patient_list(request,pt_id=None):
     if request.method == 'GET':
-        patients = Patients.objects.all()
-        serializer = PatientSerializer(patients, many=True)
-        return Response(serializer.data)
+        if pt_id is None:
+            patients = Patients.objects.all()
+            serializer = PatientSerializer(patients, many=True)
+            return Response(serializer.data)
+        else:
+            try:
+                patient = Patients.objects.get(id=pt_id)
+                serializer = PatientSerializer(patient)
+                return Response(serializer.data)
+            except Patients.DoesNotExist:
+                return JsonResponse({'message':'patient does not exist'}, status=404)
     
-    elif request.method == 'POST':
-        serializer = PatientSerializer(data=request.data)
-        if serializer.is_valid():
-            todo = serializer.save()
-            response_data = {
-                'message': 'Todo created successfully',
-                'data': serializer.data
-            }
-            return Response(response_data, status=201)
-        return Response(serializer.errors, status=400)
+    else:
+        return HttpResponseRedirect(reverse("backend:patients_list"))

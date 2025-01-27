@@ -19,7 +19,7 @@ class Antibiotics(models.Model):
     ab = models.CharField(primary_key=True, max_length=5)
     cid = models.PositiveIntegerField(blank=True, null=True)
     name = models.CharField(unique=True, max_length=64)
-    group = models.ForeignKey(AntibioticGroups, on_delete=models.SET_NULL, blank=True, null=True)
+    group = models.ForeignKey(AntibioticGroups, on_delete=models.SET_NULL, related_name="antibiotics", blank=True, null=True)
 
     class Meta:
         db_table = 'antibiotics'
@@ -27,7 +27,7 @@ class Antibiotics(models.Model):
         
 class Abbreviations(models.Model):
     id = models.SmallAutoField(primary_key=True)
-    ab = models.ForeignKey(Antibiotics, on_delete=models.CASCADE, db_column='ab')
+    ab = models.ForeignKey(Antibiotics, on_delete=models.CASCADE, related_name="abbreviations", db_column='ab')
     abbreviation = models.CharField(max_length=32)
 
     class Meta:
@@ -37,7 +37,7 @@ class Abbreviations(models.Model):
         
 class Synonyms(models.Model):
     id = models.SmallAutoField(primary_key=True)
-    ab = models.ForeignKey(Antibiotics, on_delete=models.CASCADE, db_column='ab')
+    ab = models.ForeignKey(Antibiotics, on_delete=models.CASCADE, related_name="synonyms", db_column='ab')
     synonym = models.CharField(max_length=32)
 
     class Meta:
@@ -46,7 +46,7 @@ class Synonyms(models.Model):
         
         
 class Dosage(models.Model):
-    ab = models.ForeignKey(Antibiotics,on_delete=models.CASCADE, db_column='ab')
+    ab = models.ForeignKey(Antibiotics,on_delete=models.CASCADE, related_name="dosage", db_column='ab')
     type = models.CharField(max_length=17, blank=True, null=True)
     dose = models.CharField(max_length=20)
     dose_times = models.PositiveIntegerField(blank=True, null=True)
@@ -82,7 +82,7 @@ class Countries(models.Model):
 class DialCodes(models.Model):
     id = models.SmallAutoField(primary_key=True)
     dial = models.PositiveSmallIntegerField()
-    country_code = models.ForeignKey(Countries, on_delete=models.CASCADE, db_column='country_code')
+    country_code = models.ForeignKey(Countries, on_delete=models.CASCADE, related_name="dial_codes", db_column='country_code')
 
     class Meta:
         db_table = 'dial_codes'
@@ -103,7 +103,7 @@ class Patients(models.Model):
 
 
 class Allergies(models.Model):
-    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="allergies")
     ab = models.ForeignKey(Antibiotics, on_delete=models.CASCADE, db_column='ab')
 
     class Meta:
@@ -111,7 +111,7 @@ class Allergies(models.Model):
         unique_together = (('ab', 'patient'),)
         
 class Visits(models.Model):
-    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="visits")
     visit_date = models.DateField()
     last_modified = models.DateTimeField(blank=True, null=True)
     note = models.CharField(max_length=5000, blank=True, null=True)
@@ -121,7 +121,7 @@ class Visits(models.Model):
         db_table = 'visits'
         
 class Prescriptions(models.Model):
-    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="prescriptions")
     dose = models.ForeignKey(Dosage, on_delete=models.SET_NULL, blank=True, null=True)
     prescription_date = models.DateField()
     last_modified = models.DateTimeField(blank=True, null=True)
