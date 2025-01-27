@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from .models import Patients
 from .serializers import PatientSerializer
 
-# Create your views here.
 def index(request):
     return JsonResponse({'message': 'index'})
 

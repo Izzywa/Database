@@ -1,10 +1,3 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
 class AntibioticGroups(models.Model):
@@ -79,6 +72,9 @@ class Countries(models.Model):
     class Meta:
         db_table = 'countries'
         
+    def __str__(self):
+        return self.name
+        
 class DialCodes(models.Model):
     id = models.SmallAutoField(primary_key=True)
     dial = models.PositiveSmallIntegerField()
@@ -87,15 +83,16 @@ class DialCodes(models.Model):
     class Meta:
         db_table = 'dial_codes'
         unique_together = (('dial', 'country_code'),)
+    
         
 class Patients(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100, blank=True, null=True)
-    dial_code = models.ForeignKey(DialCodes, on_delete=models.SET_NULL, blank=True, null=True)
+    dial_code = models.ForeignKey(DialCodes, on_delete=models.SET_NULL, related_name="dial_code", blank=True, null=True)
     phone = models.CharField(max_length=15, blank=True, null=True)
     birth_date = models.DateField()
-    resident_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='resident_country_code')
-    birth_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='birth_country_code', related_name='patients_birth_country_code_set')
+    resident_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='resident_country_code', related_name='resident_country')
+    birth_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='birth_country_code', related_name='birth_country')
     deleted = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
