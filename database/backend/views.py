@@ -1,4 +1,6 @@
-from django.shortcuts import render
+import json
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from rest_framework.decorators import api_view
@@ -10,11 +12,31 @@ from .serializers import PatientSerializer
 def index(request):
     return JsonResponse({'message': 'index'})
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
-        return JsonResponse({"message":"success"}, status=200)
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return JsonResponse({
+                'error': False,
+                'message': 'Successfully logged in'
+            })
+        else:
+            return JsonResponse({
+                'error': True,
+                'message': 'Invalid username and/or password'
+            }, status=409)
     else:
         return HttpResponseRedirect(reverse("frontend:index"))
+    
+@login_required
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("frontend:index"))
     
 def auth_check(request):
     if request.user.is_authenticated:

@@ -1,10 +1,12 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [authenticated ,setAuthenticated] = useState(false)
+    const nav = useNavigate();
 
     const checkAuth = useCallback(() => {
         setIsLoading(true)
@@ -22,8 +24,20 @@ export const AuthProvider = ({children}) => {
         })
     }, [authenticated])
 
+    const logout = () => {
+        fetch('backend/logout')
+        .then(response => {
+            if (response.ok) {
+                console.log("logout successful");
+                nav("/login")
+            } else {
+                throw new error("error logging out")
+            }
+        })
+    }
+
     return(
-        <AuthContext.Provider value={{ authenticated, checkAuth, isLoading }}>
+        <AuthContext.Provider value={{ authenticated, setAuthenticated, checkAuth, isLoading, logout }}>
             {children}
         </AuthContext.Provider>
     );
