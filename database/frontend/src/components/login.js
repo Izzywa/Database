@@ -1,7 +1,11 @@
 import React from "react";
 import csrftoken from "./CSRFToken";
+import { useAuth } from "./AuthContext";
 
 export default function Login(props) {
+
+    const {authenticated} = useAuth();
+
     function handleLogin() {
         const requestOptions = {
             method: ('POST'),
@@ -25,6 +29,7 @@ export default function Login(props) {
         <div className="container d-flex justify-content-center align-items-center login-container">
             <div className="login-form">
                 <h1>LOGIN</h1>
+                <h2>{authenticated ? "authenticated": "NOT"}</h2>
                 <input 
                 className="m-2"
                 type="text"

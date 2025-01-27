@@ -16,6 +16,12 @@ def login(request):
     else:
         return HttpResponseRedirect(reverse("frontend:index"))
     
+def auth_check(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'authenticated': True}, status=200)
+    else:
+        return JsonResponse({'authenticated': False}, status=200)
+    
 @api_view(['GET'])
 def patient_list(request,pt_id=None):
     if request.method == 'GET':
