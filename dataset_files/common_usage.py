@@ -49,7 +49,7 @@ def insert_diagnoses_to_table(cursor, filename):
     insert_diagnoses = 'INSERT INTO diagnoses (diagnosis) VALUES (?);'
 
     for index, row in diagnoses.iterrows():
-        diagnosis = row['Usage']
+        diagnosis = row['Usage'].lower()
         try:
             cursor.execute(insert_diagnoses, (diagnosis,))
         except Exception as e:
