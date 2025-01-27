@@ -2,3 +2,10 @@ According to The World Health Organisation (WHO), AMR is one of the top global p
 
 The misuse and overuse of antimicrobials in humans, animals, and plants are the main drivers in the development of drug-resistant pathogens.
 # The database design [here](DESIGN.md)
+
+## importing mysql to Django
+```
+python3 manage.py inspectdb > backend/models.py
+```
+
+The above command `inspectdb` maps the database structure to the file `models.py`
