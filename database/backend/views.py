@@ -32,7 +32,7 @@ def login_view(request):
     else:
         return HttpResponseRedirect(reverse("frontend:index"))
     
-@login_required
+@login_required(login_url="/login")
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("frontend:index"))
@@ -43,20 +43,31 @@ def auth_check(request):
     else:
         return JsonResponse({'authenticated': False}, status=200)
     
+@login_required(login_url="/login")
 @api_view(['GET'])
 def patient_list(request,pt_id=None):
     if request.method == 'GET':
         if pt_id is None:
             patients = Patients.objects.all()
+            if not request.user.is_staff:
+                patients = patients.filter(deleted=0)
+                
             serializer = PatientSerializer(patients, many=True)
             return Response(serializer.data)
         else:
             try:
-                patient = Patients.objects.get(id=pt_id)
+                if request.user.is_staff:
+                    patient = Patients.objects.get(id=pt_id)
+                else:
+                    patient = Patients.objects.get(id=pt_id, deleted=0)
                 serializer = PatientSerializer(patient)
+                
                 return Response(serializer.data)
             except Patients.DoesNotExist:
-                return JsonResponse({'message':'patient does not exist'}, status=404)
+                return Response({
+                    'error': True,
+                    'message':'patient does not exist'
+                    }, status=404)
     
     else:
         return HttpResponseRedirect(reverse("backend:patients_list"))

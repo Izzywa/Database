@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import csrftoken from "./CSRFToken";
 import { useAuth } from "./AuthContext";
 
@@ -6,6 +6,10 @@ export default function Login(props) {
     const { setAuthenticated } = useAuth();
     const usernameRef = useRef();
     const passwordRef = useRef();
+    const [error, setError] = useState({
+        error: false,
+        message: ''
+    });
 
     function handleLogin() {
         const requestOptions = {
@@ -29,6 +33,7 @@ export default function Login(props) {
                 setAuthenticated(true)
                 window.location.href = "/"
             } else {
+                setError(result)
                 throw new Error(result.message)
             }
         })
@@ -40,6 +45,9 @@ export default function Login(props) {
         <div className="container d-flex justify-content-center align-items-center login-container">
             <div className="login-form">
                 <h1>LOGIN</h1>
+                {error.error ? 
+                <p style={{color: 'red'}}> {error.message} </p>
+                :null}
                 <input 
                 className="m-2"
                 type="text"
