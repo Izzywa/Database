@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from rest_framework.decorators import api_view
+from rest_framework import status
 from rest_framework.response import Response
 from .models import Patients
 from .serializers import PatientSerializer
@@ -41,7 +42,7 @@ def auth_check(request):
     if request.user.is_authenticated:
         return JsonResponse({'authenticated': True}, status=200)
     else:
-        return JsonResponse({'authenticated': False}, status=200)
+        return JsonResponse({'authenticated': False}, status=status.HTTP_401_UNAUTHORIZED)
     
 @login_required(login_url="/login")
 @api_view(['GET'])

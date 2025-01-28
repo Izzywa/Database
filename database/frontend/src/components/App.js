@@ -4,6 +4,7 @@ import Login from "./login";
 import Home from "./Home";
 import { AuthProvider } from "./AuthContext";
 import PrivateRoute from "./PrivateRoute";
+import ViewPatients from "./ViewPatient";
 
 export default function App() {
     return(
@@ -13,6 +14,7 @@ export default function App() {
                 <Route path="login" element={<Login/>} />
                 <Route element={<PrivateRoute/>}>
                 {" "}
+                <Route path="patient/:id" element={<ViewPatients/>} />
                 <Route path="/" element={<Home/>}/>
                 </Route>
             </Routes>

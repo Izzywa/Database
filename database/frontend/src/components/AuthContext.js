@@ -10,15 +10,20 @@ export const AuthProvider = ({children}) => {
 
     const checkAuth = useCallback(() => {
         setIsLoading(true)
-        fetch('backend/auth_check')
-        .then(response => response.json())
-        .then(result => {
-            setAuthenticated(result.authenticated)
+        fetch('backend/auth_check', {
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+               }
+            })
+        .then(response => {
+            if (response.ok) {
+                setAuthenticated(true)
+            } else {
+                setAuthenticated(false)
+            }
         })
-        .catch(error => {
-            console.log(error)
-            setAuthenticated(false)
-        })
+        .catch(error => alert(error))
         .finally(() => {
             setIsLoading(false)
         })
