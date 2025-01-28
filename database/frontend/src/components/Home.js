@@ -6,7 +6,6 @@ export default function Home(props) {
     return (
         <div>
             <NavBar/>
-            Home
         </div>
     )
 }

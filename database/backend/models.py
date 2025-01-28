@@ -89,7 +89,7 @@ class Patients(models.Model):
     full_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100, blank=True, null=True)
     dial_code = models.ForeignKey(DialCodes, on_delete=models.SET_NULL, related_name="dial_code", blank=True, null=True)
-    phone = models.CharField(max_length=15, blank=True, null=True)
+    phone = models.IntegerField(blank=True, null=True)
     birth_date = models.DateField()
     resident_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='resident_country_code', related_name='resident_country')
     birth_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='birth_country_code', related_name='birth_country')
@@ -97,6 +97,16 @@ class Patients(models.Model):
 
     class Meta:
         db_table = 'patients'
+        
+    def birth_country(self):
+        return self.birth_country_code.name
+    
+    def resident_country(self):
+        return self.resident_country_code.name
+    
+    def phone_number(self):
+        if self.phone != None:
+            return str(self.dial_code.dial) + " " + str(self.phone)
 
 
 class Allergies(models.Model):
