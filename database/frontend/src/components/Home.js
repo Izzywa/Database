@@ -29,6 +29,7 @@ export default function Home(props) {
                 { patientList == null ? null :
                 <Table tableOrder={tableOrder} tableList={patientList}/>
                 }
+                <h4>Search Patient</h4>
             </div>
         </div>
     )
