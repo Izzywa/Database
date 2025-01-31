@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import Table from "./Table";
+import { useNavigate } from "react-router-dom";
 
 export default function Home(props) {
     const [patientList, setPatientList] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('backend/patients')
@@ -21,6 +23,11 @@ export default function Home(props) {
         'phone_number': 'Phone Number',
     }
 
+    function ptClick(e) {
+        const id = (e.target.closest("[data-id]").dataset.id)
+        navigate(`patient/${id}`)
+    }
+
     return (
         <div>
             <NavBar/>
@@ -29,7 +36,7 @@ export default function Home(props) {
                 <h3>Patients List</h3>
                 <div className="table-container">
                 { patientList == null ? null :
-                <Table tableOrder={tableOrder} tableList={patientList}/>
+                <Table tableOrder={tableOrder} tableList={patientList} rowClickEvent={ptClick}/>
                 }
                 </div>
             </div>

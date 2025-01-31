@@ -15,7 +15,6 @@ export default function PrivateRoute(){
         return <CircularProgress/>
     }
     else {
-        console.log(authenticated)
         return authenticated ? <Outlet /> : <Navigate to="/login"/>
     }
 }

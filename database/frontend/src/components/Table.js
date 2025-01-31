@@ -27,7 +27,7 @@ export default function Table(props) {
                     {
                         props.tableList.map((item, key) => {
                             return (
-                                <tr key={key}>
+                                <tr key={key} onClick={props.rowClickEvent} data-id={item.id}>
                                     <TableRow item={item}/>
                                 </tr>
                             )
