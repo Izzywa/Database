@@ -67,12 +67,9 @@ def patient_list(request,pt_id=None):
             except Patients.DoesNotExist:
                 return JsonResponse({
                     'error': True,
-                    'message':'patient does not exist'
+                    'message':f'Patient with id {pt_id} does not exist'
                     }, status=404)
     
     else:
         return HttpResponseRedirect(reverse("backend:patients_list"))
     
-@login_required(login_url="/login")
-def patient(request, pt_id=None):
-    return JsonResponse({'foo':pt_id})

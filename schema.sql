@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `abbreviations` (
     `full_name` VARCHAR(100) NOT NULL,
     `email` VARCHAR(100),
     `dial_code_id` SMALLINT UNSIGNED,
-    `phone` VARCHAR(15),
+    `phone` INT UNSIGNED,
     `birth_date` DATE NOT NULL,
     `resident_country_code` CHAR(3) NOT NULL,
     `birth_country_code` CHAR(3) NOT NULL,
@@ -121,11 +121,13 @@ CREATE TABLE IF NOT EXISTS `prescriptions` (
 );
 
 CREATE TABLE IF NOT EXISTS `prescription_diagnosis` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `diagnosis_id` SMALLINT UNSIGNED NOT NULL,
     `prescription_id` INT UNSIGNED NOT NULL,
     FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnoses`(`id`),
     FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions`(`id`),
-    PRIMARY KEY (`diagnosis_id`, `prescription_id`)
+    PRIMARY KEY (`id`),
+    UNIQUE `unique_together` (`diagnosis_id`, `prescription_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `ab_usage` (
@@ -135,9 +137,13 @@ CREATE TABLE IF NOT EXISTS `ab_usage` (
 );
 
 CREATE TABLE IF NOT EXISTS `compliance` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `prescription_id` INT UNSIGNED NOT NULL,
     `use_id` SMALLINT UNSIGNED NOT NULL,
-    PRIMARY KEY (`prescription_id`, `use_id`)
+    PRIMARY KEY (`id`),
+    FOREIGN KEY(`prescription_id`) REFERENCES `prescriptions`(`id`),
+    FOREIGN KEY (`use_id`) REFERENCES `ab_usage`(`id`),
+    UNIQUE `unique_together` (`prescription_id`,`use_id`)
 );
 
 -- view of patients that was not marked as deleted
@@ -154,7 +160,7 @@ FROM `patients` AS `p`
 LEFT JOIN `countries` AS `c1` ON `p`.`resident_country_code` = `c1`.`code`
 LEFT JOIN `countries` AS `c2` ON `p`.`birth_country_code` = `c2`.`code`
 LEFT JOIN `dial_codes` AS `d` ON `d`.`id` = `p`.`dial_code_id`
-WHERE `p`.`deleted` = 0
+WHERE `p`.`deleted` = 0;
 
 -- View of visits not marked as deleted
 CREATE VIEW `current_visits` AS
@@ -163,7 +169,7 @@ SELECT `v`.`id` AS `id`,
 `v`.`visit_date` AS `visit_date`,
 `v`.`note` AS `note`
 FROM `visits` AS `v`
-WHERE `v`.`deleted` = 0
+WHERE `v`.`deleted` = 0;
 
 -- View of prescriptions not marked as deleted
 CREATE VIEW `current_prescriptions` AS 
@@ -174,4 +180,4 @@ CONCAT(`ab`.`name`, ' ', `d`.`dose`,' * ',`d`.`dose_times`, ' ', `d`.`administra
 FROM `prescriptions` AS `pr`
 LEFT JOIN `dosage` AS `d` ON `pr`.`dose_id` = `d`.`id`
 JOIN `antibiotics` AS `ab` ON `d`.`ab` = `ab`.`ab`
-WHERE `pr`.`deleted` = 0
+WHERE `pr`.`deleted` = 0;
