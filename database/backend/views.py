@@ -54,7 +54,7 @@ def patient_list(request,pt_id=None):
                 patients = patients.filter(deleted=0)
                 
             serializer = PatientSerializer(patients, many=True)
-            return Response(serializer.data)
+            return Response(serializer.data, status=200)
         else:
             try:
                 if request.user.is_staff:
@@ -63,12 +63,16 @@ def patient_list(request,pt_id=None):
                     patient = Patients.objects.get(id=pt_id, deleted=0)
                 serializer = PatientSerializer(patient)
                 
-                return Response(serializer.data)
+                return Response(serializer.data, status=200)
             except Patients.DoesNotExist:
-                return Response({
+                return JsonResponse({
                     'error': True,
                     'message':'patient does not exist'
                     }, status=404)
     
     else:
         return HttpResponseRedirect(reverse("backend:patients_list"))
+    
+@login_required(login_url="/login")
+def patient(request, pt_id=None):
+    return JsonResponse({'foo':pt_id})

@@ -25,11 +25,13 @@ export default function Home(props) {
         <div>
             <NavBar/>
             <div className="container">
-                <h3>Patient List</h3>
+                <h4>Search Patient</h4>
+                <h3>Patients List</h3>
+                <div className="table-container">
                 { patientList == null ? null :
                 <Table tableOrder={tableOrder} tableList={patientList}/>
                 }
-                <h4>Search Patient</h4>
+                </div>
             </div>
         </div>
     )
