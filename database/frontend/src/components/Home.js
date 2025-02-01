@@ -50,16 +50,20 @@ export default function Home(props) {
     }
 
     function handleSearch() {
-        const id = (idRef.current.value == '' ? null : "q=" + idRef.current.value)
+        const id = (idRef.current.value == '' ? null : "id=" + idRef.current.value)
         const name = (fullNameRef.current.value == '' ? null : "name=" + fullNameRef.current.value)
-        const email = (emailRef.current.value == '' ? null : "q=" + emailRef.current.value)
+        const email = (emailRef.current.value == '' ? null : "email=" + emailRef.current.value)
         let bd = null
         if (birthDate != null) {
             let new_date = new Date(birthDate)
             bd = "bd=" + new_date
         }
 
-        fetch('backend/patients/search?' + name + "&" + bd )
+        fetch('backend/patients/search?' 
+            + name 
+            + "&" + id
+            + "&" + email
+            + "&" + bd )
         .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.log(error))

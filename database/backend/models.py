@@ -106,7 +106,7 @@ class Patients(models.Model):
     
     def phone_number(self):
         if self.phone != None:
-            return "+" + str(self.dial_code.dial) + " " + str(self.phone)
+            return "+" + str(self.dial_code.dial) + str(self.phone)
 
 
 class Allergies(models.Model):

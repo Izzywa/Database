@@ -92,12 +92,19 @@ def dial_code_list(request):
 @api_view(['GET'])
 def search_patients(request):
     name = request.GET.get('name', '')
+    id = request.GET.get('id', None)
     birth_date = request.GET.get('bd', None)
-    patients = Patients.objects.filter(full_name__icontains=name)
+    email = request.GET.get('email', '')
+    
+    patients = Patients.objects.filter(full_name__icontains=name, email__icontains=email)
+    patients = patients.filter(id=int(id))
+    
     searilizer = PatientSerializer(patients, many=True)
         
     return Response({
         'name': name,
+        'email': email,
+        'id': id,
         'birth_date': birth_date,
         'patients': searilizer.data
         },status=200)
