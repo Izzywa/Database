@@ -1,7 +1,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from .models import Patients
+from .models import Patients, Countries
         
 class PatientSerializer(serializers.ModelSerializer):
     resident_country = serializers.ReadOnlyField()
@@ -29,3 +29,19 @@ class PatientSerializer(serializers.ModelSerializer):
             return f"{age} years"
         else:
             return f"{relativedelta(today, obj.birth_date).months} months"
+        
+class CountrySerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
+    value = serializers.SerializerMethodField()
+    class Meta:
+        model = Countries
+        fields = [
+            'label',
+            'value'
+        ]
+        
+    def get_label(self, obj):
+        return obj.name
+    
+    def get_value(self, obj):
+        return obj.code

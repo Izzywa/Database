@@ -7,6 +7,7 @@ import Collapse from '@mui/material/Collapse';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Grid2 as Grid } from "@mui/material";
 import TextInputField from "./TextInputField";
+import CountrySelect from "./CountrySelect";
 
 export default function Home(props) {
     const [patientList, setPatientList] = useState(null);
@@ -43,6 +44,7 @@ export default function Home(props) {
 
     function handleSearch() {
         console.log(idRef.current.value)
+        console.log(ResidentRef.current)
     }
     return (
         <div>
@@ -85,10 +87,10 @@ export default function Home(props) {
                                 birth date
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
-                                resident country
+                                <CountrySelect label={"Resident Country"}/>
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
-                                birth country
+                                <CountrySelect label={"Birth Country"}/>
                             </Grid>
                         </Grid>
                         <button 
