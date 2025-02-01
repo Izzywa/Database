@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('auth_check', views.auth_check, name="auth_check"),
     path('logout', views.logout_view, name="logout"),
     path('countries', views.country_list, name="countries"),
-    path('dial_codes', views.dial_code_list, name="dial_codes")
+    path('dial_codes', views.dial_code_list, name="dial_codes"),
+    re_path(r'^patients/search$', views.search_patients, name="search_patients")
 ]

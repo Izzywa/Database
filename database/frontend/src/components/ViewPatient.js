@@ -25,12 +25,29 @@ export default function ViewPatients() {
     }, [pathname])
 
     function PtInfromation() {
+        const viewList = {
+            'full_name': 'full name',
+            'id': 'patient id',
+            'email': 'email',
+            'phone_number': 'phone number',
+            'birth_date': 'birth date',
+            'age': 'age',
+            'birth_country': 'birth country',
+            'resident_country': 'resident country'
+        }
         return(
             <div className="containter">
                 <Grid container spacing={1}>
-                    <Grid size={12}>
-                        <p>Full name : {ptDetails.full_name}</p>
-                    </Grid>
+                        {
+                            Object.entries(viewList)
+                            .map( ([key, value]) => 
+                                <Grid key={key} size={{xs: 12, md: 6}}>
+                                <p><strong>{value.toUpperCase()} : </strong>
+                                {ptDetails[key]}
+                                </p>
+                             </Grid>
+                             )
+                        }
                 </Grid>
             </div>
         )

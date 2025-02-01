@@ -1,4 +1,5 @@
 import json
+import dateutil.parser as dt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect
@@ -86,3 +87,17 @@ def dial_code_list(request):
         dial_codes = DialCodes.objects.all()
         serializer = DialCodeSerializer(dial_codes, many=True)
         return Response(serializer.data, status=200)
+    
+@login_required(login_url="/login")
+@api_view(['GET'])
+def search_patients(request):
+    name = request.GET.get('name', '')
+    birth_date = request.GET.get('bd', None)
+    patients = Patients.objects.filter(full_name__icontains=name)
+    searilizer = PatientSerializer(patients, many=True)
+        
+    return Response({
+        'name': name,
+        'birth_date': birth_date,
+        'patients': searilizer.data
+        },status=200)
