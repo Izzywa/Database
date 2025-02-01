@@ -12,6 +12,8 @@ export default function DateInput(props) {
         adapterLocale={'en-gb'}>
         <DemoContainer components={['DatePicker']}>
             <DatePicker label={props.label} 
+            slotProps={{field: {clearable: true}}}
+            value={props.Date}
             onChange={(date) => props.setDate(date.$d)}/>
         </DemoContainer>
         </LocalizationProvider>

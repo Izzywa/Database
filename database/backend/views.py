@@ -97,7 +97,8 @@ def search_patients(request):
     email = request.GET.get('email', '')
     
     patients = Patients.objects.filter(full_name__icontains=name, email__icontains=email)
-    patients = patients.filter(id=int(id))
+    if id is not None:
+        patients = patients.filter(id=int(id))
     
     searilizer = PatientSerializer(patients, many=True)
         

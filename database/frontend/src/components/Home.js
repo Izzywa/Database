@@ -14,7 +14,7 @@ import DateInput from "./DateInput";
 export default function Home(props) {
     const [patientList, setPatientList] = useState(null);
     const navigate = useNavigate();
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(true);
     const idRef = useRef();
     const fullNameRef = useRef();
     const emailRef = useRef();
@@ -65,10 +65,15 @@ export default function Home(props) {
             + "&" + email
             + "&" + bd )
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => {
+            console.log(result)
+            setPatientList(result.patients)
+        })
         .catch(error => console.log(error))
 
-        console.log(bd)
+    }
+
+    function handleResetSearch() {
 
     }
 
@@ -114,6 +119,7 @@ export default function Home(props) {
                             <Grid size={{ xs: 12, md:6}}>
                                 <DateInput
                                 label={"Birth date"}
+                                Date={birthDate}
                                 setDate={setBirthDate}/>
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
@@ -128,10 +134,16 @@ export default function Home(props) {
                             </Grid>
                         </Grid>
                         <button 
-                        className="btn btn-info my-1"
+                        className="btn btn-info m-1"
                         onClick={handleSearch}
                         >
                             Search
+                        </button>
+                        <button 
+                        className="btn btn-secondary m-1"
+                        onClick={handleResetSearch}
+                        >
+                            Reset Search
                         </button>
                     </div>
                 </Collapse>
