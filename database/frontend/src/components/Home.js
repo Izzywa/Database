@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { Grid2 as Grid } from "@mui/material";
 import TextInputField from "./TextInputField";
 import CountrySelect from "./CountrySelect";
+import PhoneInput from "./PhoneInput";
 
 export default function Home(props) {
     const [patientList, setPatientList] = useState(null);
@@ -18,6 +19,8 @@ export default function Home(props) {
     const emailRef = useRef();
     const [residentCountry, setResidentCountry] = useState(null);
     const [birthCountry, setBirthCountry] = useState(null);
+    const [dialCode, setDialCode] = useState(null);
+    const phoneRef = useRef();
 
     useEffect(() => {
         fetch('backend/patients')
@@ -45,8 +48,7 @@ export default function Home(props) {
     }
 
     function handleSearch() {
-        console.log('resident ' + residentCountry)
-        console.log('birth ' + birthCountry)
+        console.log(dialCode + phoneRef.current.value)
     }
 
     return (
@@ -62,7 +64,7 @@ export default function Home(props) {
                 <Collapse in={checked}>
                     <div className="my-2">
                         <Grid container>
-                            <Grid size={{ xs: 12, md:3}}>
+                            <Grid size={{ xs: 12, md:4}}>
                             
                             <TextInputField 
                             label={"Pateint ID"} 
@@ -76,15 +78,17 @@ export default function Home(props) {
                             type={"text"}
                             />
                             </Grid>
-                            <Grid size={{ xs: 12, md:4}}>
+                            <Grid size={{ xs: 12, md:5}}>
                             <TextInputField 
                             label={"email"}
                             inputRef={emailRef}
                             type={"email"}
                             />
                             </Grid>
-                            <Grid size={{ xs: 12, md:4}}>
-                                phone_number
+                            <Grid size={{ xs: 12, md:7}}>
+                                <PhoneInput
+                                inputRef={phoneRef}
+                                selection={setDialCode}/>
                             </Grid>
                             <Grid size={{ xs: 12, md:6}}>
                                 birth date

@@ -6,8 +6,8 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries
-from .serializers import PatientSerializer, CountrySerializer
+from .models import Patients, Countries, DialCodes
+from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer
 
 def index(request):
     return JsonResponse({'message': 'index'})
@@ -73,10 +73,16 @@ def patient_list(request,pt_id=None):
     else:
         return HttpResponseRedirect(reverse("backend:patients_list"))
     
-@login_required(login_url="/login")
 @api_view(['GET'])
 def country_list(request):
     if request.method == 'GET':
         countries = Countries.objects.all()
         serializer = CountrySerializer(countries, many=True)
+        return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def dial_code_list(request):
+    if request.method == 'GET':
+        dial_codes = DialCodes.objects.all()
+        serializer = DialCodeSerializer(dial_codes, many=True)
         return Response(serializer.data, status=200)
