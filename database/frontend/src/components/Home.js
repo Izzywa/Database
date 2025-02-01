@@ -59,7 +59,7 @@ export default function Home(props) {
                 <Collapse in={checked}>
                     <div className="my-2">
                         <Grid container>
-                            <Grid size={{ xs: 6, md:3}}>
+                            <Grid size={{ xs: 12, md:3}}>
                             
                             <TextInputField 
                             label={"Pateint ID"} 
@@ -73,14 +73,14 @@ export default function Home(props) {
                             type={"text"}
                             />
                             </Grid>
-                            <Grid size={{ xs: 8, md:4}}>
+                            <Grid size={{ xs: 12, md:4}}>
                             <TextInputField 
                             label={"email"}
                             inputRef={emailRef}
                             type={"email"}
                             />
                             </Grid>
-                            <Grid size={{ xs: 8, md:4}}>
+                            <Grid size={{ xs: 12, md:4}}>
                                 phone_number
                             </Grid>
                             <Grid size={{ xs: 12, md:6}}>
