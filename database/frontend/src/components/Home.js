@@ -9,6 +9,7 @@ import { Grid2 as Grid } from "@mui/material";
 import TextInputField from "./TextInputField";
 import CountrySelect from "./CountrySelect";
 import PhoneInput from "./PhoneInput";
+import DateInput from "./DateInput";
 
 export default function Home(props) {
     const [patientList, setPatientList] = useState(null);
@@ -21,6 +22,7 @@ export default function Home(props) {
     const [birthCountry, setBirthCountry] = useState(null);
     const [dialCode, setDialCode] = useState(null);
     const phoneRef = useRef();
+    const [birthDate, setBirthDate] = useState(null)
 
     useEffect(() => {
         fetch('backend/patients')
@@ -48,7 +50,7 @@ export default function Home(props) {
     }
 
     function handleSearch() {
-        console.log(dialCode + phoneRef.current.value)
+        console.log(birthDate)
     }
 
     return (
@@ -91,7 +93,9 @@ export default function Home(props) {
                                 selection={setDialCode}/>
                             </Grid>
                             <Grid size={{ xs: 12, md:6}}>
-                                birth date
+                                <DateInput
+                                label={"Birth date"}
+                                setDate={setBirthDate}/>
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
                                 <CountrySelect 

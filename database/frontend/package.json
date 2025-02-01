@@ -25,7 +25,9 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.1",
-    "@mui/material": "^6.3.1",
+    "@mui/material": "^6.4.2",
+    "@mui/x-date-pickers": "^7.25.0",
+    "dayjs": "^1.11.13",
     "js-cookie": "^3.0.5",
     "react-router-dom": "^7.1.1",
     "react-select": "^5.10.0"
