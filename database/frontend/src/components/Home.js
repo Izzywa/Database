@@ -16,6 +16,8 @@ export default function Home(props) {
     const idRef = useRef();
     const fullNameRef = useRef();
     const emailRef = useRef();
+    const [residentCountry, setResidentCountry] = useState(null);
+    const [birthCountry, setBirthCountry] = useState(null);
 
     useEffect(() => {
         fetch('backend/patients')
@@ -43,9 +45,10 @@ export default function Home(props) {
     }
 
     function handleSearch() {
-        console.log(idRef.current.value)
-        console.log(ResidentRef.current)
+        console.log('resident ' + residentCountry)
+        console.log('birth ' + birthCountry)
     }
+
     return (
         <div>
             <NavBar/>
@@ -87,10 +90,14 @@ export default function Home(props) {
                                 birth date
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
-                                <CountrySelect label={"Resident Country"}/>
+                                <CountrySelect 
+                                label={"Resident Country"}
+                                selection={setResidentCountry}/>
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
-                                <CountrySelect label={"Birth Country"}/>
+                                <CountrySelect 
+                                label={"Birth Country"}
+                                selection={setBirthCountry}/>
                             </Grid>
                         </Grid>
                         <button 

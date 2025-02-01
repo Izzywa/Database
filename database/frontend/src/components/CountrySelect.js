@@ -18,7 +18,7 @@ export default function CountrySelect(props) {
         <div>
         <span className="input-group-text" >{props.label}</span>
             <Select options={options}
-            onChange={(choice) => console.log(choice)}/>
+            onChange={(choice) => props.selection(choice.value)}/>
         </div>
         </>
     )
