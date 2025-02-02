@@ -28,8 +28,4 @@ tbody > tr:hover {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
 
-.allergy-ab::first-letter {
-  text-transform: capitalize;
-}
-
 /*# sourceMappingURL=index.css.map */

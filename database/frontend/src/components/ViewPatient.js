@@ -120,13 +120,20 @@ export default function ViewPatients() {
                             :
                             <div className="py-2">
                                 <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
-                                <ul>
+                                <Grid container>
                                     {allergiesList.map((item, index) => {
                                         return(
-                                            <li className="allergy-ab" key={index}>{item}</li>
+                                            <Grid 
+                                            size={{ xs: 12, md: 6}}
+                                            key={index}
+                                            >
+                                                <p className="allergy-ab">
+                                                     - {String(item).charAt(0).toUpperCase()
+                                                     + String(item).slice(1)}</p>
+                                                </Grid>
                                         )
                                     })}
-                                </ul>
+                                </Grid>
                                 <Paginator
                                 count={numPages}
                                 page={page}

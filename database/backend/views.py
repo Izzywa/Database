@@ -193,6 +193,7 @@ def allergies_list(request, pt_id=None, name='official'):
             cursor.callproc('allergy_trade_name_by_pt_id', (pt_id,))
         
         results = cursor.fetchall()
+        results = sorted(results)
         allergies_paginator = Paginator(results, 10)
         page = request.GET.get('page', 1)
         try:
