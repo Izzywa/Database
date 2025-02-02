@@ -14,7 +14,7 @@ import DateInput from "./DateInput";
 export default function Home(props) {
     const [patientList, setPatientList] = useState([]);
     const navigate = useNavigate();
-    const [checked, setChecked] = useState(true);
+    const [checked, setChecked] = useState(false);
     const idRef = useRef();
     const fullNameRef = useRef();
     const emailRef = useRef();

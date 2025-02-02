@@ -7,7 +7,22 @@ export default function Table(props) {
             <>
             {
                 Object.entries(props.tableOrder)
-                .map( ([key, value]) => <td key={key}>{item[key]}</td>)
+                .map( ([key, value]) => {
+                    if (item[key] !== null && item[key].map) {
+                        item[key].map((newitem, key) => {
+                            return (
+                                <tr key={key}>
+                                    <td>{newitem}</td>
+                                </tr>
+                            )
+                        })
+                        
+                    } else {
+                        return(
+                        <td key={key}>{item[key]}</td>
+                        )
+                    }
+            })
             }
             </>
         )

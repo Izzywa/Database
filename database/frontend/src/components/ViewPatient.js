@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -10,12 +10,18 @@ export default function ViewPatients() {
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(0)
+    const [radio, setRadio] = useState(1)
+    const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
         'Visits and prescriptions',
         'Compliance'
     ]
+    const VisitPrescriptionOrder = {
+        'date':'Date',
+        'visit_note': 'Visit Notes',
+        'prescriptions': 'Prescriptions'
+    }
 
     useEffect(() => {
         setIsLoading(true)
@@ -50,6 +56,32 @@ export default function ViewPatients() {
                 {item}
             </label>
             </>
+        )
+    }
+
+    function DisplayPage() {
+        const radioChecked = useCallback(() => {
+            switch(radio) {
+                case 0:
+                    return(
+                        <h1>allergies page</h1>
+                    )
+                case 1:
+                    return(
+                        <h1>visit and  page</h1>
+                    )
+                case 2:
+                    return(
+                        <h1>compliance page</h1>
+                    )
+                default:
+                    return <p>default</p>
+            }
+        },[radio])
+        return(
+            <div>
+                {radioChecked()}
+            </div>
         )
     }
 
@@ -91,6 +123,7 @@ export default function ViewPatients() {
                         }
 
                     </div>
+                    <DisplayPage/>
                 </div>
             </div>
         )
