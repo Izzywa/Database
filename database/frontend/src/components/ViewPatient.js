@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid2';
+import Table from "./Table";
 
 export default function ViewPatients() {
     const { id } = useParams();
@@ -34,6 +35,11 @@ export default function ViewPatients() {
         .finally(() => {
             setIsLoading(false)
         })
+
+        fetch('/backend/vp/' + id)
+            .then(response => response.json())
+            .then(result => setVP(result))
+            .catch(error => console.log(error))
     }, [pathname])
 
     function handleRadio(value) {
@@ -68,16 +74,18 @@ export default function ViewPatients() {
                     )
                 case 1:
                     return(
-                        <h1>visit and  page</h1>
+                        <Table tableOrder={VisitPrescriptionOrder} 
+                        tableList={vp} 
+                        rowClickEvent={null}/>
                     )
                 case 2:
                     return(
                         <h1>compliance page</h1>
                     )
                 default:
-                    return <p>default</p>
+                    return null
             }
-        },[radio])
+        },[])
         return(
             <div>
                 {radioChecked()}
