@@ -13,5 +13,6 @@ urlpatterns = [
     path('logout', views.logout_view, name="logout"),
     path('countries', views.country_list, name="countries"),
     path('dial_codes', views.dial_code_list, name="dial_codes"),
-    re_path(r'^patients/search$', views.search_patients, name="search_patients")
+    re_path(r'^patients/search$', views.search_patients, name="search_patients"),
+    path('vp/<int:pt_id>', views.visit_prescription_list, name="vp")
 ]

@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from django.db import connection
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect
@@ -129,3 +130,34 @@ def search_patients(request):
     return Response({
         'patients': searilizer.data
         },status=200)
+    
+@login_required(login_url="/login")
+@api_view(['GET'])
+def visit_prescription_list(request, pt_id=None):
+    with connection.cursor() as cursor:
+        cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
+        results = cursor.fetchall()
+        
+        visit_and_prescriptions = []
+        if len(results) != 0:
+            for result in results:
+                try:
+                    visit_note = result[1].split('<><>')
+                except:
+                    visit_note = result[1]
+                
+                try:
+                    prescriptions = result[2].split(',')
+                except:
+                    prescriptions = result[2]
+                    
+                visit_and_prescriptions.append(
+                    {
+                        'date': result[0],
+                        'visit_note': visit_note,
+                        'prescriptions': prescriptions
+                    }
+                )
+    
+    return Response(visit_and_prescriptions, status=200)
+    

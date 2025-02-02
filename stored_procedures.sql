@@ -39,7 +39,7 @@ DROP PROCEDURE IF EXISTS `visit_prescription_by_pt_id`|
 CREATE PROCEDURE `visit_prescription_by_pt_id` (IN `pt_id` INT)
 BEGIN
     SELECT `visit`.`date` AS `date`,
-    GROUP_CONCAT(DISTINCT `visit`.`note`) AS `note`,
+    GROUP_CONCAT(DISTINCT `visit`.`note` SEPARATOR '<><>') AS `note`,
     GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `prescription`
     FROM
     (
@@ -62,7 +62,7 @@ BEGIN
     UNION
     SELECT
     `prescription`.`date` AS `date`,
-    GROUP_CONCAT(DISTINCT `visit`.`note`) AS `note`,
+    GROUP_CONCAT(DISTINCT `visit`.`note` SEPARATOR '<><>') AS `note`,
     GROUP_CONCAT(DISTINCT `prescription`.`dose`) AS `prescription`
     FROM
     (
