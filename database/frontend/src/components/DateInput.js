@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/en-gb';
 
 export default function DateInput(props) {
+    const dayjs = require('dayjs')
     return(
         <>
         <LocalizationProvider dateAdapter={AdapterDayjs}
@@ -20,7 +21,7 @@ export default function DateInput(props) {
             }}
             onChange={(date) => {
                 if (date != null) {
-                    props.setDate(date.$d)
+                    props.setDate(dayjs(date.$d).format('DD/MM/YYYY'))
                 } else {
                     props.setDate(null)
                 }

@@ -1,5 +1,5 @@
 import json
-import dateutil.parser as dt
+from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect
@@ -99,6 +99,10 @@ def search_patients(request):
     patients = Patients.objects.filter(full_name__icontains=name, email__icontains=email)
     if id is not None:
         patients = patients.filter(id=int(id))
+    
+    if birth_date is not None:
+        birth_date = datetime.strptime(birth_date, '%d/%m/%Y')
+        patients = patients.filter(birth_date=birth_date)
     
     searilizer = PatientSerializer(patients, many=True)
         
