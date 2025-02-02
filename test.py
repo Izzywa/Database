@@ -303,7 +303,7 @@ class TestMySQL(unittest.TestCase):
             self.duplicates_testing(cursor, insert_compliance, (pres_id, use_id), "compliance")
             
             # clear database
-            #self.execute_sql_script('drop.sql')
+            self.execute_sql_script('drop.sql')
                 
     def duplicates_testing(self, cursor, query, argument, table_name):
         try:
