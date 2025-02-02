@@ -10,6 +10,12 @@ export default function ViewPatients() {
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
+    const [radio, setRadio] = useState(1)
+    const radioList = [
+        'Allergies',
+        'Visits and prescriptions',
+        'Compliance'
+    ]
 
     useEffect(() => {
         setIsLoading(true)
@@ -24,6 +30,10 @@ export default function ViewPatients() {
         })
     }, [pathname])
 
+    function handleRadio(value) {
+        setRadio(value)
+    }
+
     function PtInfromation() {
         const viewList = {
             'full_name': 'full name',
@@ -37,7 +47,7 @@ export default function ViewPatients() {
         }
         return(
             <div className="containter">
-                <Grid container spacing={1}>
+                <Grid container spacing={0}>
                         {
                             Object.entries(viewList)
                             .map( ([key, value]) => 
@@ -49,6 +59,25 @@ export default function ViewPatients() {
                              )
                         }
                 </Grid>
+                <div>
+                    <div className="btn-group" role="group" aria-label="toggle button group">
+                    <input type="radio" className="btn-check" name="vbtn-radio" id="vbtn-radio1" autoComplete="off" 
+                    checked={radio == 1 ? true:false}
+                    onChange={() => handleRadio(1)}/>
+                    <label className="btn btn-outline-dark" htmlFor="vbtn-radio1">Radio 1</label>
+                    <input type="radio" className="btn-check" name="vbtn-radio" id="vbtn-radio2" 
+                    autoComplete="off" 
+                    checked={radio == 2 ? true:false}
+                    onChange={() => handleRadio(2)}/>
+                    <label className="btn btn-outline-dark" htmlFor="vbtn-radio2">Radio 2</label>
+                    <input type="radio" className="btn-check" name="vbtn-radio" id="vbtn-radio3" 
+                    checked={radio == 3 ? true:false}
+                    autoComplete="off" 
+                    onChange={() => handleRadio(3)}/>
+                    <label className="btn btn-outline-dark" htmlFor="vbtn-radio3">Radio 3</label>
+
+                    </div>
+                </div>
             </div>
         )
     }
