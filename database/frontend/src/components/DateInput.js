@@ -12,9 +12,19 @@ export default function DateInput(props) {
         adapterLocale={'en-gb'}>
         <DemoContainer components={['DatePicker']}>
             <DatePicker label={props.label} 
-            slotProps={{field: {clearable: true}}}
-            value={props.Date}
-            onChange={(date) => props.setDate(date.$d)}/>
+            slotProps={{
+                field: { clearable: true } ,
+                actionBar: {
+                    actions: ['accept', 'cancel', 'clear']
+                }
+            }}
+            onChange={(date) => {
+                if (date != null) {
+                    props.setDate(date.$d)
+                } else {
+                    props.setDate(null)
+                }
+                }}/>
         </DemoContainer>
         </LocalizationProvider>
         </>

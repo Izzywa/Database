@@ -53,11 +53,7 @@ export default function Home(props) {
         const id = (idRef.current.value == '' ? null : "id=" + idRef.current.value)
         const name = (fullNameRef.current.value == '' ? null : "name=" + fullNameRef.current.value)
         const email = (emailRef.current.value == '' ? null : "email=" + emailRef.current.value)
-        let bd = null
-        if (birthDate != null) {
-            let new_date = new Date(birthDate)
-            bd = "bd=" + new_date
-        }
+        const bd = (birthDate == null ? null : "bd=" + birthDate)
 
         fetch('backend/patients/search?' 
             + name 
@@ -74,7 +70,7 @@ export default function Home(props) {
     }
 
     function handleResetSearch() {
-
+        console.log(DatePickerRef)
     }
 
     return (
@@ -119,7 +115,6 @@ export default function Home(props) {
                             <Grid size={{ xs: 12, md:6}}>
                                 <DateInput
                                 label={"Birth date"}
-                                Date={birthDate}
                                 setDate={setBirthDate}/>
                             </Grid>
                             <Grid size={{ xs: 6, md:3}}>
@@ -138,12 +133,6 @@ export default function Home(props) {
                         onClick={handleSearch}
                         >
                             Search
-                        </button>
-                        <button 
-                        className="btn btn-secondary m-1"
-                        onClick={handleResetSearch}
-                        >
-                            Reset Search
                         </button>
                     </div>
                 </Collapse>
