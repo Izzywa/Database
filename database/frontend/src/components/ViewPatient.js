@@ -94,7 +94,7 @@ export default function ViewPatients() {
                             <ul>
                                 {allergiesList.map((item, index) => {
                                     return(
-                                        <li key={index}>{item}</li>
+                                        <li className="allergy-ab" key={index}>{item}</li>
                                     )
                                 })}
                             </ul>

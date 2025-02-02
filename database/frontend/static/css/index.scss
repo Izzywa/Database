@@ -19,10 +19,14 @@ html, body {
 }
 tbody>tr {
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     border-radius: 2px;
     &:hover {
         cursor: pointer;
         border: 1px solid rgba(0,0,0,.6);
     }
+}
+
+.allergy-ab::first-letter {
+    text-transform: capitalize;
 }
