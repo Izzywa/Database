@@ -11,7 +11,7 @@ export default function ViewPatients() {
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(1)
+    const [radio, setRadio] = useState(0)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
@@ -65,12 +65,45 @@ export default function ViewPatients() {
         )
     }
 
+    const [OfficialName, setOfficialName] = useState(true)
+    const [allergiesList, setAllergiesList] = useState([])
+
+    function handleAllergyName() {
+        setOfficialName((prev) => !prev)
+    }
+
+    useEffect(() => {
+        fetch('/backend/allergies/' + id + (OfficialName ? '/official' : '/trade'))
+        .then(response => response.json())
+        .then(result => setAllergiesList(result))
+        .catch(error => console.log(error))
+    },[OfficialName])
+
     function DisplayPage() {
+
         const radioChecked = useCallback(() => {
             switch(radio) {
                 case 0:
                     return(
-                        <h1>allergies page</h1>
+                        <div className="py-2">
+                            {
+                                allergiesList.length == 0 ? <p>No allergies</p>
+                                : null
+                            }
+                            <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
+                            <ul>
+                                {allergiesList.map((item, index) => {
+                                    return(
+                                        <li key={index}>{item}</li>
+                                    )
+                                })}
+                            </ul>
+                            <button 
+                            onClick={handleAllergyName}
+                            className="btn btn-info">
+                                {OfficialName ? 'Trade Name': 'Official Name'}
+                            </button>
+                        </div>
                     )
                 case 1:
                     return(

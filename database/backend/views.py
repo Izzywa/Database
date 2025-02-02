@@ -143,7 +143,7 @@ def visit_prescription_list(request, pt_id=None):
         return Response({
             'error': True,
             'message': 'Patient id does not exist'
-        })
+        }, status=404)
     with connection.cursor() as cursor:
         cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
         results = cursor.fetchall()
@@ -170,4 +170,27 @@ def visit_prescription_list(request, pt_id=None):
                 )
     
     return Response(visit_and_prescriptions, status=200)
-    
+
+@login_required(login_url="/login")
+@api_view(['GET'])
+def allergies_list(request, pt_id=None, name='official'):
+    try:
+        if request.user.is_staff:
+            patient = Patients.objects.get(id=pt_id)
+        else:
+            patient = Patients.objects.get(id=pt_id, deleted=0)
+    except Patients.DoesNotExist:
+        return Response({
+            'error': True,
+            'message': 'Patient id does not exist'
+        }, status=404)
+        
+    with connection.cursor() as cursor:
+        if name == 'official':
+            cursor.callproc('allergy_official_name_by_pt_id', (pt_id,))
+        else:
+            cursor.callproc('allergy_trade_name_by_pt_id', (pt_id,))
+        
+        results = cursor.fetchall()
+            
+        return Response(results, status=200)
