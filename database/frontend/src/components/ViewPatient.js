@@ -11,7 +11,7 @@ export default function ViewPatients() {
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(0)
+    const [radio, setRadio] = useState(2)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',

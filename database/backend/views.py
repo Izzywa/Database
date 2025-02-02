@@ -194,3 +194,42 @@ def allergies_list(request, pt_id=None, name='official'):
         results = cursor.fetchall()
             
         return Response(results, status=200)
+
+@login_required(login_url="/login")
+@api_view(['GET'])
+def compliance_list(request, pt_id):
+    try:
+        if request.user.is_staff:
+            patient = Patients.objects.get(id=pt_id)
+        else:
+            patient = Patients.objects.get(id=pt_id, deleted=0)
+    except Patients.DoesNotExist:
+        return Response({
+            'error': True,
+            'message': 'Patient id does not exist'
+        }, status=404)
+        
+    with connection.cursor() as cursor:
+        cursor.callproc('diagnosis_compliance_by_pt_id', (pt_id,))
+        
+        results = cursor.fetchall()
+        comp_list = []
+        for result in results:
+            try:
+                diagnoses = result[2].split(',')
+            except:
+                diagnoses = result[2]
+            
+            try:
+                usage = result[3].split(',')
+            except:
+                usage = result[3]
+            comp_list.append({
+                'date': result[0],
+                'ab': result[1],
+                'diagnoses': diagnoses,
+                'usage': usage
+                
+            })
+            
+        return Response(comp_list, status=200)
