@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import NavBar from "./NavBar";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -45,7 +45,10 @@ export default function ViewPatients() {
             checked={radio == index ? true:false}
             onChange={() => handleRadio(index)}/>
             <label className="btn btn-outline-dark" 
-            htmlFor={id}>{item}</label>
+            htmlFor={id}
+            >
+                {item}
+            </label>
             </>
         )
     }
@@ -79,11 +82,14 @@ export default function ViewPatients() {
                     <div className="btn-group" role="group" aria-label="toggle button group">
                         {
                             radioList.map((item, index) => {
-                                return (
-                                <RadioBtnGroup item={item} index={index}/>
+                                return(
+                                    <Fragment key={index}>
+                                    <RadioBtnGroup item={item} index={index}/>
+                                    </Fragment>
                                 )
                             })
                         }
+
                     </div>
                 </div>
             </div>
