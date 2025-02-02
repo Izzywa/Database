@@ -61,6 +61,7 @@ export default function ViewPatients() {
 
     function handleRadio(value) {
         setRadio(value)
+        setPage(1)
     }
 
     function RadioBtnGroup({index, item}) {
@@ -126,18 +127,18 @@ export default function ViewPatients() {
                                         )
                                     })}
                                 </ul>
-                                <button 
-                                onClick={handleAllergyName}
-                                className="btn btn-info my-1">
-                                    {OfficialName ? 'Trade Name': 'Official Name'}
-                                </button>
                                 <Paginator
                                 count={numPages}
                                 page={page}
                                 changeHandler={handlePaginationChange}
                                 />
                             </div>
-                }
+                        }
+                        <button 
+                        onClick={handleAllergyName}
+                        className="btn btn-info my-1">
+                            {OfficialName ? 'Trade Name': 'Official Name'}
+                        </button>
                         </>
                     )
                 case 1:
