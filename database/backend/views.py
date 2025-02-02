@@ -97,6 +97,8 @@ def search_patients(request):
     email = request.GET.get('email', '')
     resident_country = request.GET.get('rc', None)
     birth_country = request.GET.get('bc', None)
+    dial_code = request.GET.get('dc', None)
+    phone_number = request.GET.get('phone', None)
     
     patients = Patients.objects.filter(
         full_name__icontains=name, 
@@ -114,6 +116,13 @@ def search_patients(request):
     
     if birth_country is not None:
         patients = patients.filter(birth_country_code = birth_country)
+    
+    if dial_code is not None:
+        patients = patients.filter(dial_code = dial_code)
+    
+    if phone_number is not None:
+        phone_number = int(phone_number)
+        patients = patients.filter(phone = phone_number)
     
     searilizer = PatientSerializer(patients, many=True)
         

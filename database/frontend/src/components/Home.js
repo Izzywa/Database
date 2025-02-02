@@ -12,7 +12,7 @@ import PhoneInput from "./PhoneInput";
 import DateInput from "./DateInput";
 
 export default function Home(props) {
-    const [patientList, setPatientList] = useState(null);
+    const [patientList, setPatientList] = useState([]);
     const navigate = useNavigate();
     const [checked, setChecked] = useState(true);
     const idRef = useRef();
@@ -50,20 +50,24 @@ export default function Home(props) {
     }
 
     function handleSearch() {
-        const id = (idRef.current.value == '' ? null : "&id=" + idRef.current.value)
+        const id = (idRef.current.value == '' ? null : "id=" + idRef.current.value)
         const name = (fullNameRef.current.value == '' ? null : "name=" + fullNameRef.current.value)
-        const email = (emailRef.current.value == '' ? null : "&email=" + emailRef.current.value)
-        const bd = (birthDate == null ? null : "&bd=" + birthDate)
-        const rc = (residentCountry == null ? null : "&rc=" + residentCountry)
-        const bc = (birthCountry == null ? null : "&bc=" + birthCountry)
+        const email = (emailRef.current.value == '' ? null : "email=" + emailRef.current.value)
+        const bd = (birthDate == null ? null : "bd=" + birthDate)
+        const rc = (residentCountry == null ? null : "rc=" + residentCountry)
+        const bc = (birthCountry == null ? null : "bc=" + birthCountry)
+        const dc = (dialCode == null ? null : "dc=" + dialCode)
+        const phone = (phoneRef.current.value == '' ? null : "phone=" + phoneRef.current.value)
 
         fetch('backend/patients/search?' 
             + name 
-            + id
-            + email
-            + bd 
-            + rc
-            + bc
+            + "&" + id
+            + "&" +  email
+            + "&" +  bd 
+            + "&" +  rc
+            + "&" + bc
+            + "&" + dc
+            + "&" + phone
         )
         .then(response => response.json())
         .then(result => {
@@ -140,7 +144,7 @@ export default function Home(props) {
                 </div>
                 <h3>Patients List</h3>
                 <div className="table-container">
-                { patientList == null ? null :
+                { patientList.length == 0 ? <p>No patients</p> :
                 <Table tableOrder={tableOrder} tableList={patientList} rowClickEvent={ptClick}/>
                 }
                 </div>
