@@ -95,8 +95,13 @@ def search_patients(request):
     id = request.GET.get('id', None)
     birth_date = request.GET.get('bd', None)
     email = request.GET.get('email', '')
+    resident_country = request.GET.get('rc', None)
+    birth_country = request.GET.get('bc', None)
     
-    patients = Patients.objects.filter(full_name__icontains=name, email__icontains=email)
+    patients = Patients.objects.filter(
+        full_name__icontains=name, 
+        email__icontains=email
+        )
     if id is not None:
         patients = patients.filter(id=int(id))
     
@@ -104,12 +109,14 @@ def search_patients(request):
         birth_date = datetime.strptime(birth_date, '%d/%m/%Y')
         patients = patients.filter(birth_date=birth_date)
     
+    if resident_country is not None:
+        patients = patients.filter(resident_country_code = resident_country)
+    
+    if birth_country is not None:
+        patients = patients.filter(birth_country_code = birth_country)
+    
     searilizer = PatientSerializer(patients, many=True)
         
     return Response({
-        'name': name,
-        'email': email,
-        'id': id,
-        'birth_date': birth_date,
         'patients': searilizer.data
         },status=200)

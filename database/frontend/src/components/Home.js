@@ -50,16 +50,21 @@ export default function Home(props) {
     }
 
     function handleSearch() {
-        const id = (idRef.current.value == '' ? null : "id=" + idRef.current.value)
+        const id = (idRef.current.value == '' ? null : "&id=" + idRef.current.value)
         const name = (fullNameRef.current.value == '' ? null : "name=" + fullNameRef.current.value)
-        const email = (emailRef.current.value == '' ? null : "email=" + emailRef.current.value)
-        const bd = (birthDate == null ? null : "bd=" + birthDate)
+        const email = (emailRef.current.value == '' ? null : "&email=" + emailRef.current.value)
+        const bd = (birthDate == null ? null : "&bd=" + birthDate)
+        const rc = (residentCountry == null ? null : "&rc=" + residentCountry)
+        const bc = (birthCountry == null ? null : "&bc=" + birthCountry)
 
         fetch('backend/patients/search?' 
             + name 
-            + "&" + id
-            + "&" + email
-            + "&" + bd )
+            + id
+            + email
+            + bd 
+            + rc
+            + bc
+        )
         .then(response => response.json())
         .then(result => {
             console.log(result)
@@ -67,10 +72,6 @@ export default function Home(props) {
         })
         .catch(error => console.log(error))
 
-    }
-
-    function handleResetSearch() {
-        console.log(DatePickerRef)
     }
 
     return (
