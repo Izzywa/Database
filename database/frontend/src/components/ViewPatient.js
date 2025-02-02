@@ -5,13 +5,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid2';
 import Table from "./Table";
+import Paginator from "./Paginator";
 
 export default function ViewPatients() {
     const { id } = useParams();
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(2)
+    const [radio, setRadio] = useState(0)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
@@ -32,6 +33,8 @@ export default function ViewPatients() {
         'usage': 'Usage'
     }
     const [complianceList, setComplianceList] = useState([])
+    const [page, setPage] = useState(1)
+    const [numPages, setNumPaes] = useState(1)
 
     useEffect(() => {
         setIsLoading(true)
@@ -81,14 +84,28 @@ export default function ViewPatients() {
 
     function handleAllergyName() {
         setOfficialName((prev) => !prev)
+        setPage(1)
     }
 
     useEffect(() => {
-        fetch('/backend/allergies/' + id + (OfficialName ? '/official' : '/trade'))
-        .then(response => response.json())
-        .then(result => setAllergiesList(result))
+        fetch('/backend/allergies/' 
+            + id 
+            + (OfficialName ? '/official' : '/trade')
+            + "?page=" + page
+        )
+        .then(response => {
+            return response.json()
+        })
+        .then(result => {
+            setAllergiesList(result.result)
+            setNumPaes(result.num_pages)
+        })
         .catch(error => console.log(error))
-    },[OfficialName])
+    },[OfficialName, page])
+
+    function handlePaginationChange(event, value) {
+        setPage(value)
+    }
 
     function DisplayPage() {
 
@@ -111,9 +128,14 @@ export default function ViewPatients() {
                                 </ul>
                                 <button 
                                 onClick={handleAllergyName}
-                                className="btn btn-info">
+                                className="btn btn-info my-1">
                                     {OfficialName ? 'Trade Name': 'Official Name'}
                                 </button>
+                                <Paginator
+                                count={numPages}
+                                page={page}
+                                changeHandler={handlePaginationChange}
+                                />
                             </div>
                 }
                         </>

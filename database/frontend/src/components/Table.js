@@ -1,5 +1,6 @@
 import React from "react";
 
+
 export default function Table(props) {
 
     function TableRow({item}){
@@ -52,7 +53,9 @@ export default function Table(props) {
                     {
                         props.tableList.map((item, key) => {
                             return (
-                                <tr key={key} onClick={props.rowClickEvent} data-id={item.id}>
+                                <tr key={key} 
+                                onClick={props.rowClickEvent} 
+                                data-id={item.id}>
                                     <TableRow item={item}/>
                                 </tr>
                             )

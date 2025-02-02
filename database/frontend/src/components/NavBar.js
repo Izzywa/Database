@@ -10,7 +10,7 @@ export default function NavBar(props) {
     return (
         <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div className="container-fluid">
-            <a className="navbar-brand" href="#">Navbar</a>
+            <a className="navbar-brand" href="/">Home</a>
             <button
             className="navbar-toggler" 
             type="button" 

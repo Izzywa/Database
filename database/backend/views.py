@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from django.db import connection
 from django.contrib.auth import authenticate, login, logout
+from django.core.paginator import Paginator, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -192,8 +193,16 @@ def allergies_list(request, pt_id=None, name='official'):
             cursor.callproc('allergy_trade_name_by_pt_id', (pt_id,))
         
         results = cursor.fetchall()
-            
-        return Response(results, status=200)
+        allergies_paginator = Paginator(results, 10)
+        page = request.GET.get('page', 1)
+        try:
+            result_by_page = allergies_paginator.page(page).object_list
+        except:
+            result_by_page = []
+        return Response({
+            'num_pages': allergies_paginator.num_pages,
+            'result': result_by_page
+            }, status=200)
 
 @login_required(login_url="/login")
 @api_view(['GET'])
