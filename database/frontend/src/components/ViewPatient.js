@@ -23,6 +23,15 @@ export default function ViewPatients() {
         'visit_note': 'Visit Notes',
         'prescriptions': 'Prescriptions'
     }
+    const [OfficialName, setOfficialName] = useState(true)
+    const [allergiesList, setAllergiesList] = useState([])
+    const ComplianceOrder = {
+        'date': 'Date',
+        'ab': 'Antibiotic',
+        'diagnoses': 'Diagnoses',
+        'usage': 'Usage'
+    }
+    const [complianceList, setComplianceList] = useState([])
 
     useEffect(() => {
         setIsLoading(true)
@@ -40,6 +49,11 @@ export default function ViewPatients() {
             .then(response => response.json())
             .then(result => setVP(result))
             .catch(error => console.log(error))
+
+        fetch('/backend/compliance/' + id)
+        .then(response => response.json())
+        .then(result => setComplianceList(result))
+        .catch(error => console.log(error))
     }, [pathname])
 
     function handleRadio(value) {
@@ -65,9 +79,6 @@ export default function ViewPatients() {
         )
     }
 
-    const [OfficialName, setOfficialName] = useState(true)
-    const [allergiesList, setAllergiesList] = useState([])
-
     function handleAllergyName() {
         setOfficialName((prev) => !prev)
     }
@@ -85,36 +96,56 @@ export default function ViewPatients() {
             switch(radio) {
                 case 0:
                     return(
-                        <div className="py-2">
-                            {
-                                allergiesList.length == 0 ? <p>No allergies</p>
-                                : null
-                            }
-                            <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
-                            <ul>
-                                {allergiesList.map((item, index) => {
-                                    return(
-                                        <li className="allergy-ab" key={index}>{item}</li>
-                                    )
-                                })}
-                            </ul>
-                            <button 
-                            onClick={handleAllergyName}
-                            className="btn btn-info">
-                                {OfficialName ? 'Trade Name': 'Official Name'}
-                            </button>
-                        </div>
+                        <>
+                        {
+                            allergiesList.length == 0 ? <p>No Allergies</p>
+                            :
+                            <div className="py-2">
+                                <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
+                                <ul>
+                                    {allergiesList.map((item, index) => {
+                                        return(
+                                            <li className="allergy-ab" key={index}>{item}</li>
+                                        )
+                                    })}
+                                </ul>
+                                <button 
+                                onClick={handleAllergyName}
+                                className="btn btn-info">
+                                    {OfficialName ? 'Trade Name': 'Official Name'}
+                                </button>
+                            </div>
+                }
+                        </>
                     )
                 case 1:
-                    return(
-                        <Table tableOrder={VisitPrescriptionOrder} 
-                        tableList={vp} 
-                        rowClickEvent={null}/>
-                    )
+                    if (vp.length == 0) {
+                        return(
+                            <p>No Visits and Prescriptions</p>
+                        )
+                    } else {
+                        return(
+                            <div className="table-container">
+                            <Table tableOrder={VisitPrescriptionOrder} 
+                            tableList={vp} 
+                            rowClickEvent={null}/>
+                            </div>
+                        )
+                    }
                 case 2:
-                    return(
-                        <h1>compliance page</h1>
-                    )
+                    if (complianceList.length == 0) {
+                        return(
+                            <p>No prescriptions</p>
+                        )
+                    } else {
+                        return(
+                            <div className="table-container">
+                            <Table tableOrder={ComplianceOrder} 
+                            tableList={complianceList} 
+                            rowClickEvent={null}/>
+                            </div>
+                        )
+                    }
                 default:
                     return null
             }

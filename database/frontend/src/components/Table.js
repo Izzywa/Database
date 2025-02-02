@@ -11,7 +11,7 @@ export default function Table(props) {
                     if (item[key] !== null && item[key].map) {
                         return (
                             <td key={key}>
-                            <table>
+                            <table className="table table-sm">
                                 <tbody>
                             {
                                 item[key].map((newitem, newkey) => {
