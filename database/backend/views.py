@@ -134,6 +134,16 @@ def search_patients(request):
 @login_required(login_url="/login")
 @api_view(['GET'])
 def visit_prescription_list(request, pt_id=None):
+    try:
+        if request.user.is_staff:
+            patient = Patients.objects.get(id=pt_id)
+        else:
+            patient = Patients.objects.get(id=pt_id, deleted=0)
+    except Patients.DoesNotExist:
+        return Response({
+            'error': True,
+            'message': 'Patient id does not exist'
+        })
     with connection.cursor() as cursor:
         cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
         results = cursor.fetchall()
