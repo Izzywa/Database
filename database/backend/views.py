@@ -9,8 +9,8 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes
-from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer
+from .models import Patients, Countries, DialCodes, Prescriptions
+from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer
 
 def index(request):
     return JsonResponse({'message': 'index'})
@@ -243,3 +243,10 @@ def compliance_list(request, pt_id):
             })
             
         return Response(comp_list, status=200)
+    
+@api_view(['GET'])
+def test(request):
+    patient = Patients.objects.get(id=1)
+    prescription = patient.prescriptions.all()
+    serializer = PrescriptionSerializer(prescription, many=True)
+    return Response (serializer.data, status=200)

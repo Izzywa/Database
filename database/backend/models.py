@@ -136,18 +136,26 @@ class Prescriptions(models.Model):
 
     class Meta:
         db_table = 'prescriptions'
+    
+    def dose_str(self):
+        ab = self.dose.ab.name
+        dose = self.dose.dose
+        dose_times = self.dose.dose_times
+        administration = self.dose.administration
+        return f"{ab} {dose} x {dose_times}, {administration}"
 
 
 class PrescriptionDiagnosis(models.Model):
     diagnosis = models.ForeignKey(Diagnoses, on_delete=models.CASCADE)
-    prescription = models.ForeignKey(Prescriptions, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Prescriptions, related_name="diagnosis", on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'prescription_diagnosis'
         unique_together = (('diagnosis', 'prescription'),)
         
+        
 class Compliance(models.Model):
-    prescription = models.ForeignKey(Prescriptions, on_delete=models.CASCADE)
+    prescription = models.ForeignKey(Prescriptions, related_name="compliance", on_delete=models.CASCADE)
     use = models.ForeignKey(AbUsage, on_delete=models.CASCADE)
 
     class Meta:
