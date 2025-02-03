@@ -7,24 +7,19 @@ import Grid from '@mui/material/Grid2';
 import Table from "./Table";
 import AllergiesList from "./AllergiesList";
 import ComplianceList from "./ComplianceList";
+import VisitsAndPrescriptionList from "./VisitsAndPrescriptionList";
 
 export default function ViewPatients() {
     const { id } = useParams();
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(2)
-    const [vp, setVP] = useState([])
+    const [radio, setRadio] = useState(1)
     const radioList = [
         'Allergies',
         'Visits and prescriptions',
         'Compliance'
     ]
-    const VisitPrescriptionOrder = {
-        'date':'Date',
-        'visit_note': 'Visit Notes',
-        'prescriptions': 'Prescriptions'
-    }
 
     useEffect(() => {
         setIsLoading(true)
@@ -38,10 +33,6 @@ export default function ViewPatients() {
             setIsLoading(false)
         })
 
-        fetch('/backend/vp/' + id)
-            .then(response => response.json())
-            .then(result => setVP(result))
-            .catch(error => console.log(error))
     }, [pathname])
 
     function handleRadio(value) {
@@ -76,19 +67,9 @@ export default function ViewPatients() {
                         <AllergiesList id={id}/>
                     )
                 case 1:
-                    if (vp.length == 0) {
-                        return(
-                            <p>No Visits and Prescriptions</p>
-                        )
-                    } else {
-                        return(
-                            <div className="table-container">
-                            <Table tableOrder={VisitPrescriptionOrder} 
-                            tableList={vp} 
-                            rowClickEvent={null}/>
-                            </div>
-                        )
-                    }
+                    return(
+                        <VisitsAndPrescriptionList id={id}/>
+                    )
                 case 2:
                     return (
                         <ComplianceList id={id}/>

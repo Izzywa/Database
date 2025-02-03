@@ -147,30 +147,25 @@ def visit_prescription_list(request, pt_id=None):
         }, status=404)
     with connection.cursor() as cursor:
         cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
-        results = cursor.fetchall()
+        dates = cursor.fetchall()
         
-        visit_and_prescriptions = []
-        if len(results) != 0:
-            for result in results:
-                try:
-                    visit_note = result[1].split('<><>')
-                except:
-                    visit_note = result[1]
-                
-                try:
-                    prescriptions = result[2].split(',')
-                except:
-                    prescriptions = result[2]
-                    
-                visit_and_prescriptions.append(
-                    {
-                        'date': result[0],
-                        'visit_note': visit_note,
-                        'prescriptions': prescriptions
-                    }
-                )
+    if dates:
+        dates = [date[0] for date in dates]
+    else:
+        dates = []
+    serializer = VisitPrescriptionSerializer(patient, context={'dates':dates})
     
-    return Response(visit_and_prescriptions, status=200)
+    vp_pagination = Paginator(serializer.data['dates'],2)
+    page = request.GET.get('page', 1)
+    try:
+        vp_by_page = vp_pagination.page(page).object_list
+    except:
+        vp_by_page = []
+    
+    return Response ({
+        'num_pages': vp_pagination.num_pages,
+        'result': vp_by_page
+        }, status=200)
 
 @login_required(login_url="/login")
 @api_view(['GET'])
@@ -235,7 +230,7 @@ def compliance_list(request, pt_id):
     
 @api_view(['GET'])
 def test(request):
-    pt_id = 1
+    pt_id = 3
     patient = Patients.objects.get(id=pt_id)
     with connection.cursor() as cursor:
         cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
