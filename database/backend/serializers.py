@@ -1,7 +1,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from .models import Patients, Countries, DialCodes, Prescriptions, Diagnoses, Compliance
+from .models import Patients, Countries, DialCodes, Prescriptions, Visits
         
 class PatientSerializer(serializers.ModelSerializer):
     resident_country = serializers.ReadOnlyField()
@@ -62,28 +62,6 @@ class DialCodeSerializer(serializers.ModelSerializer):
     def get_value(self, obj):
         return obj.id
     
-class DiagnosisSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField()
-    class Meta:
-        model = Diagnoses
-        fields = [
-            'id',
-            'name'
-        ]
-        
-    def get_name(self, obj):
-        return obj.diagnosis.diagnosis
-        
-class ComplianceSerializer(serializers.ModelSerializer):
-    usage = serializers.SerializerMethodField()
-    class Meta:
-        model = Compliance
-        fields = [
-            'usage'
-        ]
-    
-    def get_usage(self, obj):
-        return obj.use.use
     
 class PrescriptionSerializer(serializers.ModelSerializer):
     dose_str = serializers.ReadOnlyField()
@@ -116,3 +94,37 @@ class PrescriptionSerializer(serializers.ModelSerializer):
             compliance = []
             
         return compliance
+    
+class VisitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Visits
+        fields = '__all__'
+        
+class VisitPrescriptionSerializer(serializers.ModelSerializer):
+    dates = serializers.SerializerMethodField()
+    class Meta:
+        model = Patients
+        fields = [
+            'id',
+            'dates'
+        ]
+        
+    def get_dates(self, obj):
+        date_list = self.context.get('dates')
+        vp_list = []
+        for date in date_list:
+            date_str = date.strftime('%Y-%m-%d')
+            
+            visits = obj.visits.filter(visit_date=date)
+            visits_data = VisitSerializer(visits, many=True).data
+            prescriptions = obj.prescriptions.filter(prescription_date=date)
+            prescriptions_data = PrescriptionSerializer(prescriptions, many=True).data
+            
+            new_dict = {
+                'date': date_str,
+                'visits': visits_data,
+                'prescription': prescriptions_data
+            }
+            vp_list.append(new_dict)
+            
+        return vp_list

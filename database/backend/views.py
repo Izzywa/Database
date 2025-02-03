@@ -9,8 +9,8 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Prescriptions
-from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer
+from .models import Patients, Countries, DialCodes
+from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer
 
 def index(request):
     return JsonResponse({'message': 'index'})
@@ -221,7 +221,7 @@ def compliance_list(request, pt_id):
         
     prescription = patient.prescriptions.all().order_by('-prescription_date')
     serializer = PrescriptionSerializer(prescription, many=True)
-    prescription_paginator = Paginator(serializer.data, 2)
+    prescription_paginator = Paginator(serializer.data, 5)
     page = request.GET.get('page', 1)
     try:
         prescription_by_page = prescription_paginator.page(page).object_list
@@ -235,7 +235,15 @@ def compliance_list(request, pt_id):
     
 @api_view(['GET'])
 def test(request):
-    patient = Patients.objects.get(id=1)
-    prescription = patient.prescriptions.all().order_by('-prescription_date')
-    serializer = PrescriptionSerializer(prescription, many=True)
+    pt_id = 1
+    patient = Patients.objects.get(id=pt_id)
+    with connection.cursor() as cursor:
+        cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
+        dates = cursor.fetchall()
+    if dates:
+        dates = [date[0] for date in dates]
+    else:
+        dates = []
+    print(dates)
+    serializer = VisitPrescriptionSerializer(patient, context={'dates':dates})
     return Response (serializer.data, status=200)
