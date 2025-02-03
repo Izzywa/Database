@@ -155,7 +155,7 @@ def visit_prescription_list(request, pt_id=None):
         dates = []
     serializer = VisitPrescriptionSerializer(patient, context={'dates':dates})
     
-    vp_pagination = Paginator(serializer.data['dates'],2)
+    vp_pagination = Paginator(serializer.data['dates'],5)
     page = request.GET.get('page', 1)
     try:
         vp_by_page = vp_pagination.page(page).object_list

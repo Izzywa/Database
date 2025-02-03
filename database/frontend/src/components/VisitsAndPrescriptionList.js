@@ -16,16 +16,67 @@ export default function VisitsAndPrescriptionList(props) {
         }).catch(error => console.log(error))
     }, [page])
 
+    function NestedRow({item, row}) {
+        if (item.length != 0) {
+            return(
+                <>
+                <td>
+                <table className="table table-sm">
+                    <tbody>
+                            {
+                                item.map((newitem, newindex) => {
+                                    return(
+                                        <tr
+                                        key={newindex}>
+                                        <td>{newitem[row]}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                    </tbody>
+                </table>
+                </td>
+                </>
+            )
+        } else {
+            return <td>None</td>
+        }
+    }
+
+    function handleMainRowClick(e) {
+        const date = (e.target.closest("[data-date]").dataset.date)
+        console.log(date)
+    }
+
     return (
         <>
         <div className="table-container">
-        {
-            vpList.map((item, index) => {
-                return(
-                    <p key={index}> {item.date}</p>
-                )
-            })
-        }
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Visits</th>
+                        <th>Prescriptions</th>
+                    </tr>
+                </thead>
+                <tbody className="tbody-vp">
+                    {
+                        vpList.map((item, index) => {
+                            return(
+                            <tr 
+                            key={index}
+                            data-date={item.date} 
+                            onClick={handleMainRowClick}>
+                                <td>
+                                {item.date}</td>
+                                <NestedRow item={item.visits} row={'note'}/>
+                                <NestedRow item={item.prescription} row={'dose_str'}/>
+                            </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
         </div>
         <Paginator page={page}
         count={numPages}
