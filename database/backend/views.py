@@ -219,34 +219,14 @@ def compliance_list(request, pt_id):
             'message': 'Patient id does not exist'
         }, status=404)
         
-    with connection.cursor() as cursor:
-        cursor.callproc('diagnosis_compliance_by_pt_id', (pt_id,))
-        
-        results = cursor.fetchall()
-        comp_list = []
-        for result in results:
-            try:
-                diagnoses = result[2].split(',')
-            except:
-                diagnoses = result[2]
+    prescription = patient.prescriptions.all().order_by('-prescription_date')
+    serializer = PrescriptionSerializer(prescription, many=True)
             
-            try:
-                usage = result[3].split(',')
-            except:
-                usage = result[3]
-            comp_list.append({
-                'date': result[0],
-                'ab': result[1],
-                'diagnoses': diagnoses,
-                'usage': usage
-                
-            })
-            
-        return Response(comp_list, status=200)
+    return Response(serializer.data, status=200)
     
 @api_view(['GET'])
 def test(request):
     patient = Patients.objects.get(id=1)
-    prescription = patient.prescriptions.all()
+    prescription = patient.prescriptions.all().order_by('-prescription_date')
     serializer = PrescriptionSerializer(prescription, many=True)
     return Response (serializer.data, status=200)

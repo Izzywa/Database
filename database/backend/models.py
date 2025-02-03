@@ -64,6 +64,9 @@ class Diagnoses(models.Model):
     class Meta:
         db_table = 'diagnoses'
         
+    def __str__(self):
+        return self.diagnosis
+        
 
 class Countries(models.Model):
     code = models.CharField(primary_key=True, max_length=3)
@@ -153,6 +156,8 @@ class PrescriptionDiagnosis(models.Model):
         db_table = 'prescription_diagnosis'
         unique_together = (('diagnosis', 'prescription'),)
         
+    def get_diagnosis(self):
+        return self.diagnosis
         
 class Compliance(models.Model):
     prescription = models.ForeignKey(Prescriptions, related_name="compliance", on_delete=models.CASCADE)
@@ -161,3 +166,6 @@ class Compliance(models.Model):
     class Meta:
         db_table = 'compliance'
         unique_together = (('prescription', 'use'),)
+        
+    def get_use(self):
+        return self.use.use

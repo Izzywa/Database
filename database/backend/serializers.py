@@ -87,8 +87,8 @@ class ComplianceSerializer(serializers.ModelSerializer):
     
 class PrescriptionSerializer(serializers.ModelSerializer):
     dose_str = serializers.ReadOnlyField()
-    diagnosis = DiagnosisSerializer(many=True, read_only=True)
-    compliance = ComplianceSerializer(many=True, read_only=True)
+    diagnosis = serializers.SerializerMethodField()
+    compliance = serializers.SerializerMethodField()
     class Meta:
         model = Prescriptions
         fields = [
@@ -99,4 +99,20 @@ class PrescriptionSerializer(serializers.ModelSerializer):
             'diagnosis',
             'compliance'
         ]
-        
+    
+    def get_diagnosis(self, obj):
+        diagnoses = obj.diagnosis.all()
+        if diagnoses:
+            diagnoses = [diagnosis.diagnosis.diagnosis for diagnosis in diagnoses]
+        else: 
+            diagnoses = []
+        return diagnoses
+
+    def get_compliance(self, obj):
+        compliance = obj.compliance.all()
+        if compliance:
+            compliance = [c.use.use for c in compliance]
+        else:
+            compliance = []
+            
+        return compliance

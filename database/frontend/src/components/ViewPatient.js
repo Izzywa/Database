@@ -12,7 +12,7 @@ export default function ViewPatients() {
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(0)
+    const [radio, setRadio] = useState(2)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
@@ -27,10 +27,10 @@ export default function ViewPatients() {
     const [OfficialName, setOfficialName] = useState(true)
     const [allergiesList, setAllergiesList] = useState([])
     const ComplianceOrder = {
-        'date': 'Date',
-        'ab': 'Antibiotic',
-        'diagnoses': 'Diagnoses',
-        'usage': 'Usage'
+        'prescription_date': 'Date',
+        'dose_str': 'Antibiotic',
+        'diagnosis': 'Diagnoses',
+        'compliance': 'Usage'
     }
     const [complianceList, setComplianceList] = useState([])
     const [page, setPage] = useState(1)
@@ -62,6 +62,11 @@ export default function ViewPatients() {
     function handleRadio(value) {
         setRadio(value)
         setPage(1)
+    }
+
+    function handleComplianceClick(e) {
+        const prescription_id = (e.target.closest("[data-id]").dataset.id)
+        console.log('prescription id  ' + prescription_id)
     }
 
     function RadioBtnGroup({index, item}) {
@@ -163,19 +168,13 @@ export default function ViewPatients() {
                         )
                     }
                 case 2:
-                    if (complianceList.length == 0) {
-                        return(
-                            <p>No prescriptions</p>
-                        )
-                    } else {
-                        return(
-                            <div className="table-container">
+                    return (
+                        <div className="table-container">
                             <Table tableOrder={ComplianceOrder} 
                             tableList={complianceList} 
-                            rowClickEvent={null}/>
+                            rowClickEvent={handleComplianceClick}/>
                             </div>
-                        )
-                    }
+                    )
                 default:
                     return null
             }
