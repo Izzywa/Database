@@ -5,14 +5,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid2';
 import Table from "./Table";
-import Paginator from "./Paginator";
+import AllergiesList from "./AllergiesList";
 
 export default function ViewPatients() {
     const { id } = useParams();
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(1)
+    const [radio, setRadio] = useState(0)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
@@ -24,8 +24,6 @@ export default function ViewPatients() {
         'visit_note': 'Visit Notes',
         'prescriptions': 'Prescriptions'
     }
-    const [OfficialName, setOfficialName] = useState(true)
-    const [allergiesList, setAllergiesList] = useState([])
     const ComplianceOrder = {
         'prescription_date': 'Date',
         'dose_str': 'Antibiotic',
@@ -33,8 +31,6 @@ export default function ViewPatients() {
         'compliance': 'Usage'
     }
     const [complianceList, setComplianceList] = useState([])
-    const [page, setPage] = useState(1)
-    const [numPages, setNumPaes] = useState(1)
 
     useEffect(() => {
         setIsLoading(true)
@@ -61,7 +57,6 @@ export default function ViewPatients() {
 
     function handleRadio(value) {
         setRadio(value)
-        setPage(1)
     }
 
     function handleComplianceClick(e) {
@@ -88,70 +83,13 @@ export default function ViewPatients() {
         )
     }
 
-    function handleAllergyName() {
-        setOfficialName((prev) => !prev)
-        setPage(1)
-    }
-
-    useEffect(() => {
-        fetch('/backend/allergies/' 
-            + id 
-            + (OfficialName ? '/official' : '/trade')
-            + "?page=" + page
-        )
-        .then(response => {
-            return response.json()
-        })
-        .then(result => {
-            setAllergiesList(result.result)
-            setNumPaes(result.num_pages)
-        })
-        .catch(error => console.log(error))
-    },[OfficialName, page])
-
-    function handlePaginationChange(event, value) {
-        setPage(value)
-    }
-
     function DisplayPage() {
 
         const radioChecked = useCallback(() => {
             switch(radio) {
                 case 0:
                     return(
-                        <>
-                        {
-                            allergiesList.length == 0 ? <p>No Allergies</p>
-                            :
-                            <div className="py-2">
-                                <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
-                                <Grid container>
-                                    {allergiesList.map((item, index) => {
-                                        return(
-                                            <Grid 
-                                            size={{ xs: 12, md: 6}}
-                                            key={index}
-                                            >
-                                                <p className="allergy-ab">
-                                                     - {String(item).charAt(0).toUpperCase()
-                                                     + String(item).slice(1)}</p>
-                                                </Grid>
-                                        )
-                                    })}
-                                </Grid>
-                                <Paginator
-                                count={numPages}
-                                page={page}
-                                changeHandler={handlePaginationChange}
-                                />
-                            </div>
-                        }
-                        <button 
-                        onClick={handleAllergyName}
-                        className="btn btn-info my-1">
-                            {OfficialName ? 'Trade Name': 'Official Name'}
-                        </button>
-                        </>
+                        <AllergiesList id={id}/>
                     )
                 case 1:
                     if (vp.length == 0) {

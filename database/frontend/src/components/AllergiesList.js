@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Grid from '@mui/material/Grid2';
+import Paginator from "./Paginator";
 
-export default function allergiesList(props) {
+export default function AllergiesList(props) {
     const [OfficialName, setOfficialName] = useState(true)
+    const [page, setPage] = useState(1)
+    const [numPages, setNumPaes] = useState(1)
+    const [allergiesList, setAllergiesList] = useState([]);
+
+    useEffect(() => {
+            fetch('/backend/allergies/' 
+                + props.id 
+                + (OfficialName ? '/official' : '/trade')
+                + "?page=" + page
+            )
+            .then(response => {
+                return response.json()
+            })
+            .then(result => {
+                setAllergiesList(result.result)
+                setNumPaes(result.num_pages)
+            })
+            .catch(error => console.log(error))
+        },[OfficialName, page])
+    
+    function handleAllergyName() {
+        setOfficialName((prev) => !prev)
+        setPage(1)
+    }
+    function handlePaginationChange(event, value) {
+        setPage(value)
+    }
+
     return (
         <>
         {
