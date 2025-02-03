@@ -5,7 +5,7 @@ import Paginator from "./Paginator";
 export default function AllergiesList(props) {
     const [OfficialName, setOfficialName] = useState(true)
     const [page, setPage] = useState(1)
-    const [numPages, setNumPaes] = useState(1)
+    const [numPages, setNumPages] = useState(1)
     const [allergiesList, setAllergiesList] = useState([]);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function AllergiesList(props) {
             })
             .then(result => {
                 setAllergiesList(result.result)
-                setNumPaes(result.num_pages)
+                setNumPages(result.num_pages)
             })
             .catch(error => console.log(error))
         },[OfficialName, page])
@@ -28,14 +28,11 @@ export default function AllergiesList(props) {
         setOfficialName((prev) => !prev)
         setPage(1)
     }
-    function handlePaginationChange(event, value) {
-        setPage(value)
-    }
 
     return (
         <>
         {
-            allergiesList.length == 0 ? <p>No Allergies</p>
+            allergiesList.length == 0 ? <h6>No Allergies</h6>
             :
             <div className="py-2">
                 <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
@@ -56,7 +53,7 @@ export default function AllergiesList(props) {
                 <Paginator
                 count={numPages}
                 page={page}
-                changeHandler={handlePaginationChange}
+                setPage={setPage}
                 />
             </div>
         }

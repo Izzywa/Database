@@ -6,13 +6,14 @@ import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid2';
 import Table from "./Table";
 import AllergiesList from "./AllergiesList";
+import ComplianceList from "./ComplianceList";
 
 export default function ViewPatients() {
     const { id } = useParams();
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(0)
+    const [radio, setRadio] = useState(2)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
@@ -24,13 +25,6 @@ export default function ViewPatients() {
         'visit_note': 'Visit Notes',
         'prescriptions': 'Prescriptions'
     }
-    const ComplianceOrder = {
-        'prescription_date': 'Date',
-        'dose_str': 'Antibiotic',
-        'diagnosis': 'Diagnoses',
-        'compliance': 'Usage'
-    }
-    const [complianceList, setComplianceList] = useState([])
 
     useEffect(() => {
         setIsLoading(true)
@@ -48,20 +42,10 @@ export default function ViewPatients() {
             .then(response => response.json())
             .then(result => setVP(result))
             .catch(error => console.log(error))
-
-        fetch('/backend/compliance/' + id)
-        .then(response => response.json())
-        .then(result => setComplianceList(result.result))
-        .catch(error => console.log(error))
     }, [pathname])
 
     function handleRadio(value) {
         setRadio(value)
-    }
-
-    function handleComplianceClick(e) {
-        const prescription_id = (e.target.closest("[data-id]").dataset.id)
-        console.log('prescription id  ' + prescription_id)
     }
 
     function RadioBtnGroup({index, item}) {
@@ -107,11 +91,7 @@ export default function ViewPatients() {
                     }
                 case 2:
                     return (
-                        <div className="table-container">
-                            <Table tableOrder={ComplianceOrder} 
-                            tableList={complianceList} 
-                            rowClickEvent={handleComplianceClick}/>
-                            </div>
+                        <ComplianceList id={id}/>
                     )
                 default:
                     return null
