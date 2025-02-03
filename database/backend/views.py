@@ -221,8 +221,17 @@ def compliance_list(request, pt_id):
         
     prescription = patient.prescriptions.all().order_by('-prescription_date')
     serializer = PrescriptionSerializer(prescription, many=True)
+    prescription_paginator = Paginator(serializer.data, 2)
+    page = request.GET.get('page', 1)
+    try:
+        prescription_by_page = prescription_paginator.page(page).object_list
+    except:
+        prescription_by_page = []
             
-    return Response(serializer.data, status=200)
+    return Response({
+        'num_pages': prescription_paginator.num_pages,
+        'result': prescription_by_page
+        }, status=200)
     
 @api_view(['GET'])
 def test(request):

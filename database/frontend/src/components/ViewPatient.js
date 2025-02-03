@@ -12,7 +12,7 @@ export default function ViewPatients() {
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
     const [ptDetails, setPtDetails] = useState(null)
-    const [radio, setRadio] = useState(2)
+    const [radio, setRadio] = useState(1)
     const [vp, setVP] = useState([])
     const radioList = [
         'Allergies',
@@ -55,7 +55,7 @@ export default function ViewPatients() {
 
         fetch('/backend/compliance/' + id)
         .then(response => response.json())
-        .then(result => setComplianceList(result))
+        .then(result => setComplianceList(result.result))
         .catch(error => console.log(error))
     }, [pathname])
 
