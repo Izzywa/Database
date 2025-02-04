@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "./Table";
 import Paginator from "./Paginator";
+import PrescriptionModal from "./PrescriptionModal";
 
 export default function ComplianceList(props) {
     const ComplianceOrder = {
@@ -12,10 +13,21 @@ export default function ComplianceList(props) {
     const [complianceList, setComplianceList] = useState([])
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
+    const [open, setOpen] = useState(false)
+    const [prescription, setPrescription] = useState(null)
+
+    function handleClose() {
+        setOpen(false)
+        setPrescription(null)
+    }
 
     function handleComplianceClick(e) {
         const prescription_id = (e.target.closest("[data-id]").dataset.id)
-        console.log('prescription id  ' + prescription_id)
+        complianceList.map((item,index) => {
+            if (item.id == prescription_id)
+                setPrescription(item)
+        })
+        setOpen(true)
     }
 
     useEffect(() => {
@@ -38,9 +50,13 @@ export default function ComplianceList(props) {
         )
     } else {
         return (
+            <>
+            <PrescriptionModal openModal={open} 
+            handleClose={handleClose}
+            prescription={prescription}/>
             <div className="table-container">
                 <Table tableOrder={ComplianceOrder} 
-                tableList={complianceList} 
+                tableList={complianceList}
                 rowClickEvent={handleComplianceClick}/>
                 <Paginator
                 page={page}
@@ -48,6 +64,7 @@ export default function ComplianceList(props) {
                 count={numPages}
                 />
             </div>
+            </>
         )
     }
 }

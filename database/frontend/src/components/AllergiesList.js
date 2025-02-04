@@ -11,7 +11,7 @@ export default function AllergiesList(props) {
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [allergiesList, setAllergiesList] = useState([]);
-    const [viewOnly, setViewOnly] = useState(false)
+    const [viewOnly, setViewOnly] = useState(true)
     const [options, setOptions] = useState([])
     const [alert, setAlert] = useState([])
     const [count, setCount] = useState(0)
@@ -171,6 +171,7 @@ export default function AllergiesList(props) {
         {
             viewOnly ? null : <AddAllergies/>
         }
+        <div className="py-2">
         <button 
         onClick={handleAllergyName}
         className="btn btn-info my-1">
@@ -179,8 +180,9 @@ export default function AllergiesList(props) {
         <button 
         onClick={handleEditAllergies}
         className="btn btn-dark mx-1" >
-            {viewOnly ? "Edit Allergies": "Cancel"}
+            {viewOnly ? "Edit Allergies": "Cancel Edit"}
         </button>
+        </div>
         </>
     )
 }
