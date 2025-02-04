@@ -1,9 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from '@mui/material/Modal';
 import { Grid2 as Grid } from "@mui/material";
-
+import Select from 'react-select';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function PrescriptionModal(props) {
+    const [diagnosisOptions, setDiagnosisOptions] = useState([
+        {'label': 'a', 'value': 'a'}
+    ])
+    const [complianceOptions, setComplianceOptions] = useState([])
+    const [diagnosisList, setDiagnosisList] = useState(props.prescription.diagnosis ? props.prescription.diagnosis: [])
+    const [complianceList , setComplianceList] = useState(props.prescription.compliance ? props.prescription.compliance: [])
+    
+    function handleDiagnosisChange(choice) {
+        setDiagnosisList(diagnosisList => [...diagnosisList, choice.label])
+    }
+
+    function handleDeleteDiagnosis(diagnosis) {
+        setDiagnosisList(list => list.filter(item => item != diagnosis))
+    }
+
+    function handleComplianceChange(choice) {
+        setComplianceList(diagnosisList => [...diagnosisList, choice.label])
+    }
+
+    function handleDeleteCompliance(compliance) {
+        setComplianceList(list => list.filter(item => item != compliance))
+    }
 
     function ShowPrescription() {
         return (
@@ -20,20 +43,41 @@ export default function PrescriptionModal(props) {
                 <Grid size={12}>
                     <p>
                         <strong>Diagnoses: </strong>
-                        {
-                            props.prescription.diagnosis.join(', ')
-                        }
-
                     </p>
+                    <ul>
+                    {
+                        diagnosisList.map((item, index) => {
+                            return(
+                                <li key={index}>
+                                    {item} 
+                                    <DeleteForeverIcon color="secondary"
+                                    onClick={() => handleDeleteDiagnosis(item)}/>
+                                    </li>
+                            )
+                        })
+                    }
+                    </ul>
+                    <Select options={diagnosisOptions}
+                    onChange={(choice) => handleDiagnosisChange(choice)}/>
                 </Grid>
                 <Grid size={12}>
                     <p>
                         <strong>Usage: </strong>
-                        {
-                            props.prescription.compliance.join(', ')
-                        }
-
                     </p>
+                    <ul>
+                    {
+                        complianceList.map((item, index) => {
+                            return(
+                                <li key={index}>
+                                    {item}
+                                    <DeleteForeverIcon color="secondary"
+                                    onClick={() => handleDeleteCompliance(item)}/>
+                                </li>
+                            )
+                        })
+                    }
+                    </ul>
+                    <Select options={complianceOptions}/>
                 </Grid>
             </Grid>
         )
@@ -54,7 +98,7 @@ export default function PrescriptionModal(props) {
                 <ShowPrescription/>
                 : <p>No prescription selected</p>
             }
-            <button className="btn btn-info"
+            <button className="btn btn-info my-2"
             onClick={props.handleClose}>close</button>
             </div>
         </div>

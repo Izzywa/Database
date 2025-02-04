@@ -51,9 +51,11 @@ export default function ComplianceList(props) {
     } else {
         return (
             <>
+            {prescription ?
             <PrescriptionModal openModal={open} 
             handleClose={handleClose}
             prescription={prescription}/>
+            : null }
             <div className="table-container">
                 <Table tableOrder={ComplianceOrder} 
                 tableList={complianceList}
