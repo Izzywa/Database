@@ -10,6 +10,7 @@ export default function AllergiesList(props) {
     const [allergiesList, setAllergiesList] = useState([]);
     const [viewOnly, setViewOnly] = useState(true)
     const [options, setOptions] = useState([])
+    const [selection, setSelection] = useState(null)
 
     useEffect(() => {
             fetch('/backend/allergies/' 
@@ -41,7 +42,7 @@ export default function AllergiesList(props) {
         setPage(1)
     }
 
-    function handleAddAllergies() {
+    function handleEditAllergies() {
         setViewOnly((prev) => !prev)
     }
 
@@ -81,10 +82,20 @@ export default function AllergiesList(props) {
         )
     }
 
+    function handleAddAllergies(){
+        console.log(selection)
+    }
+
     function AddAllergies() {
         return (
             <div>
-                <Select options={options}/>
+                <Select options={options}
+                onChange={(choice) => setSelection(choice.value)}/>
+                <button className="btn btn-dark m-1"
+                onClick={handleAddAllergies}
+                >
+                    Add
+                </button>
             </div>
         )
     }
@@ -101,7 +112,7 @@ export default function AllergiesList(props) {
             {OfficialName ? 'Trade Name': 'Official Name'}
         </button>
         <button 
-        onClick={handleAddAllergies}
+        onClick={handleEditAllergies}
         className="btn btn-dark mx-1" >
             {viewOnly ? "Edit Allergies": "Cancel"}
         </button>
