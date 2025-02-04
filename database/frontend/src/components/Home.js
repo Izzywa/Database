@@ -10,6 +10,8 @@ import TextInputField from "./TextInputField";
 import CountrySelect from "./CountrySelect";
 import PhoneInput from "./PhoneInput";
 import DateInput from "./DateInput";
+import csrftoken from "./CSRFToken";
+import Alert from '@mui/material/Alert';
 
 export default function Home(props) {
     const [patientList, setPatientList] = useState([]);
@@ -24,6 +26,7 @@ export default function Home(props) {
     const [dialCode, setDialCode] = useState(null);
     const phoneRef = useRef();
     const [birthDate, setBirthDate] = useState(null)
+    const [error, setError] = useState([])
 
     useEffect(() => {
         fetch('backend/patients')
@@ -51,6 +54,7 @@ export default function Home(props) {
         if (createChecked) {
             setCreateChecked(false)
         }
+        setError([])
     }
 
     function createSwitch() {
@@ -58,31 +62,81 @@ export default function Home(props) {
         if (checked) {
             setChecked(false)
         }
+        setError([])
     }
 
     function handleSubmit() {
-        const id = idRef.current.value
+        let id = null
+        if (idRef.current) {
+            id = idRef.current.value
+        }
         const name = fullNameRef.current.value
         const email = emailRef.current.value
         const phone = phoneRef.current.value
 
-        fetch('backend/patients/search?' 
-            + ('name=' + name)
-            + "&" + (id ? 'id=' + id : null)
-            + "&" +  ('email=' + email)
-            + "&" + (birthDate ? 'bd=' + birthDate : null)
-            + "&" +  (residentCountry ? 'rc=' + residentCountry : null)
-            + "&" + (birthCountry ? 'bc=' + birthCountry : null)
-            + "&" + (dialCode ? 'dc=' + dialCode : null)
-            + "&" + (phone ? 'phone=' + phone : null)
-        )
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-            setPatientList(result.patients)
-        })
-        .catch(error => console.log(error))
+        if (checked) {
+            fetch('backend/patients/search?' 
+                + ('name=' + name)
+                + "&" + (id ? 'id=' + id : null)
+                + "&" +  ('email=' + email)
+                + "&" + (birthDate ? 'bd=' + birthDate : null)
+                + "&" +  (residentCountry ? 'rc=' + residentCountry : null)
+                + "&" + (birthCountry ? 'bc=' + birthCountry : null)
+                + "&" + (dialCode ? 'dc=' + dialCode : null)
+                + "&" + (phone ? 'phone=' + phone : null)
+            )
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setPatientList(result.patients)
+            })
+            .catch(error => console.log(error))
+        } else {
+            const requestOptions = {
+                method: ('POST'),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken()
+                },
+                mode: 'same-origin',
+                body: JSON.stringify({
+                    full_name: name,
+                    email: email,
+                    phone: (phone ? phone: null),
+                    dial_code: dialCode,
+                    birth_date: birthDate,
+                    resident_country_code: residentCountry,
+                    birth_country_code: birthCountry
+                })
+            }
 
+            fetch('backend/patients', requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.errors) {
+                    setError(result.errors)
+                } else {
+                    navigate(`patient/${result.patient_id}`)
+                    setError([])
+                }
+            })
+            .catch(error => console.log(error))
+        }
+
+    }
+    function AlertComponent({error}) {
+        return(
+            <Alert severity="error">
+                {
+                    Object.entries(error).map( ([key, value]) => {
+                        const newKey = key.split('_').join(' ')
+                        return (
+                            <div key={key}>{newKey} : {value}</div>
+                        )
+                    })
+                }
+            </Alert>
+        )
     }
 
     return (
@@ -102,6 +156,11 @@ export default function Home(props) {
                 />
                 <Collapse in={checked || createChecked}>
                     <div className="my-2">
+                        {
+                            error.length != 0 ?
+                            <AlertComponent error={error}/>
+                            : null
+                        }
                         <Grid container>
                             <Grid size={{ xs: 12, md:4}}>
                             {!createChecked && checked ?

@@ -21,7 +21,7 @@ export default function DateInput(props) {
             }}
             onChange={(date) => {
                 if (date != null) {
-                    props.setDate(dayjs(date.$d).format('DD/MM/YYYY'))
+                    props.setDate(dayjs(date.$d).format('YYYY-MM-DD'))
                 } else {
                     props.setDate(null)
                 }

@@ -48,7 +48,7 @@ def auth_check(request):
         return JsonResponse({'authenticated': False}, status=status.HTTP_401_UNAUTHORIZED)
     
 @login_required(login_url="/login")
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def patient_list(request,pt_id=None):
     if request.method == 'GET':
         if pt_id is None:
@@ -72,6 +72,20 @@ def patient_list(request,pt_id=None):
                     'error': True,
                     'message':f'Patient with id {pt_id} does not exist'
                     }, status=404)
+    elif request.method == 'POST':
+        data = request.data
+        serializer = PatientPostSerializer(data=data)
+        if serializer.is_valid():
+            patient = serializer.save()
+            return Response({
+                'message': 'Patient Registered',
+                'patient_id': patient.id
+                }, status=200)
+            
+        return Response ({
+            'errors': serializer.errors,
+            'data': data
+            }, status=400)
     
     else:
         return HttpResponseRedirect(reverse("backend:patients_list"))
@@ -93,44 +107,45 @@ def dial_code_list(request):
 @login_required(login_url="/login")
 @api_view(['GET'])
 def search_patients(request):
-    name = request.GET.get('name', '')
-    id = request.GET.get('id', None)
-    birth_date = request.GET.get('bd', None)
-    email = request.GET.get('email', '')
-    resident_country = request.GET.get('rc', None)
-    birth_country = request.GET.get('bc', None)
-    dial_code = request.GET.get('dc', None)
-    phone_number = request.GET.get('phone', None)
-    
-    patients = Patients.objects.filter(
-        full_name__icontains=name, 
-        email__icontains=email
-        )
-    if id is not None:
-        patients = patients.filter(id=int(id))
-    
-    if birth_date is not None:
-        birth_date = datetime.strptime(birth_date, '%d/%m/%Y')
-        patients = patients.filter(birth_date=birth_date)
-    
-    if resident_country is not None:
-        patients = patients.filter(resident_country_code = resident_country)
-    
-    if birth_country is not None:
-        patients = patients.filter(birth_country_code = birth_country)
-    
-    if dial_code is not None:
-        patients = patients.filter(dial_code = dial_code)
-    
-    if phone_number is not None:
-        phone_number = int(phone_number)
-        patients = patients.filter(phone = phone_number)
-    
-    searilizer = PatientSerializer(patients, many=True)
+    if request.method == 'GET':
+        name = request.GET.get('name', '')
+        id = request.GET.get('id', None)
+        birth_date = request.GET.get('bd', None)
+        email = request.GET.get('email', '')
+        resident_country = request.GET.get('rc', None)
+        birth_country = request.GET.get('bc', None)
+        dial_code = request.GET.get('dc', None)
+        phone_number = request.GET.get('phone', None)
         
-    return Response({
-        'patients': searilizer.data
-        },status=200)
+        patients = Patients.objects.filter(
+            full_name__icontains=name, 
+            email__icontains=email
+            )
+        if id is not None:
+            patients = patients.filter(id=int(id))
+        
+        if birth_date is not None:
+            birth_date = datetime.strptime(birth_date, '%Y-%m-%d')
+            patients = patients.filter(birth_date=birth_date)
+        
+        if resident_country is not None:
+            patients = patients.filter(resident_country_code = resident_country)
+        
+        if birth_country is not None:
+            patients = patients.filter(birth_country_code = birth_country)
+        
+        if dial_code is not None:
+            patients = patients.filter(dial_code = dial_code)
+        
+        if phone_number is not None:
+            phone_number = int(phone_number)
+            patients = patients.filter(phone = phone_number)
+        
+        searilizer = PatientSerializer(patients, many=True)
+            
+        return Response({
+            'patients': searilizer.data
+            },status=200)
     
 @login_required(login_url="/login")
 @api_view(['GET'])

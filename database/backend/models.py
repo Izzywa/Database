@@ -91,7 +91,7 @@ class DialCodes(models.Model):
         
 class Patients(models.Model):
     full_name = models.CharField(max_length=100)
-    email = models.EmailField(blank=True, null=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
     dial_code = models.ForeignKey(DialCodes, on_delete=models.SET_NULL, related_name="dial_code", blank=True, null=True)
     phone = models.IntegerField(blank=True, null=True)
     birth_date = models.DateField()
