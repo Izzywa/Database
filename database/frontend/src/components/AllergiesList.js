@@ -50,6 +50,31 @@ export default function AllergiesList(props) {
         setViewOnly((prev) => !prev)
     }
 
+    function handleDelete(e) {
+        const ab = (e.target.closest("[data-ab]").dataset.ab)
+        const requestOptions = {
+            method: ('DELETE'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+                ab: ab
+            })
+        }
+
+        fetch('/backend/allergies/' + props.id, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            setAlert(result)
+            if (!result.error){
+                setAlert([])
+                setCount(count + 1)
+            }
+        }).catch(error => console.log(error))
+    }
+
     function ViewOnly() {
         return (
             <div className="py-2">
@@ -69,12 +94,15 @@ export default function AllergiesList(props) {
                             padding={1}
                             >
                                 <span className="allergy-ab">
-                                    - {String(item).charAt(0).toUpperCase()
-                                    + String(item).slice(1)}
+                                    - {String(item.name).charAt(0).toUpperCase()
+                                    + String(item.name).slice(1)}
                                 </span>
                                 { viewOnly ? null : 
-                                <span className="px-2"
-                                ><DeleteForeverIcon color="secondary"/></span>
+                                <span className="px-2">
+                                    <DeleteForeverIcon color="secondary"
+                                    data-ab={item.ab} onClick={handleDelete}
+                                    />
+                                    </span>
                                 }
                                 </Grid>
                         )
@@ -92,36 +120,36 @@ export default function AllergiesList(props) {
         )
     }
 
-    function handleAddAllergies(){
-        const requestOptions = {
-            method: ('POST'),
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken()
-            },
-            mode: 'same-origin',
-            body: JSON.stringify({
-                ab: selection
-            })
-        }
-        
-        if (selection){
-
-            fetch('/backend/allergies/' 
-                    + props.id , requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                setAlert(result)
-                if (!result.error) {
-                    setAlert([])
-                    setCount(count + 1)
-                }
-            }).catch(error => console.log(error))
-        }
-    }
-
     function AddAllergies() {
         const [selection, setSelection] = useState(null)
+
+        function handleAddAllergies(){
+            const requestOptions = {
+                method: ('POST'),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken()
+                },
+                mode: 'same-origin',
+                body: JSON.stringify({
+                    ab: selection
+                })
+            }
+            
+            if (selection){
+    
+                fetch('/backend/allergies/' 
+                        + props.id , requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setAlert(result)
+                    if (!result.error) {
+                        setAlert([])
+                        setCount(count + 1)
+                    }
+                }).catch(error => console.log(error))
+            }
+        }
 
         return (
             <div>

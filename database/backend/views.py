@@ -9,7 +9,7 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies
 from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer, PatientPostSerializer, AntibioticSerializer, SynonymsSerializer
 
 def index(request):
@@ -183,7 +183,7 @@ def visit_prescription_list(request, pt_id=None):
         }, status=200)
 
 @login_required(login_url="/login")
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 def allergies_list(request, pt_id=None, name='official'):
     try:
         if request.user.is_staff:
@@ -197,24 +197,27 @@ def allergies_list(request, pt_id=None, name='official'):
         }, status=404)
         
     if request.method == 'GET':
-        with connection.cursor() as cursor:
-            if name == 'official':
-                cursor.callproc('allergy_official_name_by_pt_id', (pt_id,))
-            else:
-                cursor.callproc('allergy_trade_name_by_pt_id', (pt_id,))
+        allergies = patient.allergies.all().order_by('ab')
+        if name == 'official':
+            results = [allergy.ab.serialize() for allergy in allergies]
+        else:
+            results = []
+            for allergy in allergies:
+                ab_synonyms = allergy.ab.synonyms.all()
+                for ab_synonym in ab_synonyms:
+                    results.append(ab_synonym.serialize())
+                    
+        allergies_paginator = Paginator(results, 10)
+        page = request.GET.get('page', 1)
+        try:
+            result_by_page = allergies_paginator.page(page).object_list
+        except:
+            result_by_page = []
+        return Response({
+            'num_pages': allergies_paginator.num_pages,
+            'result': result_by_page
+            }, status=200)
             
-            results = cursor.fetchall()
-            results = sorted(results)
-            allergies_paginator = Paginator(results, 10)
-            page = request.GET.get('page', 1)
-            try:
-                result_by_page = allergies_paginator.page(page).object_list
-            except:
-                result_by_page = []
-            return Response({
-                'num_pages': allergies_paginator.num_pages,
-                'result': result_by_page
-                }, status=200)
     elif request.method == 'POST':
         ab = request.data["ab"]
         try:
@@ -235,6 +238,21 @@ def allergies_list(request, pt_id=None, name='official'):
         return Response({
             "error": False,
             "message": f"Allergy of antibiotic {antibiotic.name} successfuly added"
+            }, status=200)
+    
+    elif request.method == 'DELETE':
+        ab = request.data['ab']
+        try:
+            allergy_obj = patient.allergies.get(ab=ab)
+        except Allergies.DoesNotExist:
+                return Response({
+                    'error': True,
+                    'message': f'Patient has no allergy of {ab}'
+                })
+        allergy_obj.delete()
+        return Response ({
+            'error': False,
+            'message': f'Allergy of {allergy_obj.ab.name} deleted'
             }, status=200)
 
 @login_required(login_url="/login")
@@ -279,24 +297,15 @@ def antibiotics_list(request):
     
 @api_view(['GET', 'POST'])
 def test(request):
-    if request.method == 'POST':
-        patient = Patients.objects.get(id=1)
-        ab = request.data["ab"]
-        try:
-            antibiotic = Antibiotics.objects.get(ab=ab)
-        except Antibiotics.DoesNotExist:
-            return Response({
-                'error': True,
-                'message': 'Antibiotic does not exist'
-            }, status=400)
-            
-        try:
-            patient.allergies.create(patient=patient, ab=antibiotic)
-        except IntegrityError:
-            return Response({
-                "error": True,
-                'message': 'Patient already has allergy listed'
-            })
-        return Response({"result": f"Allergy {antibiotic.name} added"}, status=200)
-    else:
-        return Response({'message': 'n'}, status=200)
+    patient = Patients.objects.get(id=1)
+    allergies = patient.allergies.all().order_by('ab')
+    ab = [allergy.ab.serialize() for allergy in allergies]
+    synonyms = []
+    for allergy in allergies:
+        ab_synonyms = allergy.ab.synonyms.all()
+        for ab_synonym in ab_synonyms:
+            synonyms.append(ab_synonym.serialize())
+    return Response({
+        'ab': ab,
+        'synonym': synonyms
+        }, status=200)

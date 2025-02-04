@@ -18,6 +18,12 @@ class Antibiotics(models.Model):
     class Meta:
         db_table = 'antibiotics'
         
+    def serialize(self):
+        return({
+            'ab': self.ab,
+            'name': self.name
+        })
+        
         
 class Abbreviations(models.Model):
     id = models.SmallAutoField(primary_key=True)
@@ -38,6 +44,11 @@ class Synonyms(models.Model):
         db_table = 'synonyms'
         unique_together = (('ab', 'synonym'),)
         
+    def serialize(self):
+        return({
+            'ab': self.ab.ab,
+            'name': self.synonym
+        })
         
 class Dosage(models.Model):
     ab = models.ForeignKey(Antibiotics,on_delete=models.CASCADE, related_name="dosage", db_column='ab')
