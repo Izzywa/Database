@@ -15,6 +15,7 @@ export default function Home(props) {
     const [patientList, setPatientList] = useState([]);
     const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
+    const [createChecked, setCreateChecked] = useState(false)
     const idRef = useRef();
     const fullNameRef = useRef();
     const emailRef = useRef();
@@ -47,27 +48,33 @@ export default function Home(props) {
 
     function searchSwitch(){
         setChecked((prev) => !prev)
+        if (createChecked) {
+            setCreateChecked(false)
+        }
     }
 
-    function handleSearch() {
-        const id = (idRef.current.value == '' ? null : "id=" + idRef.current.value)
-        const name = (fullNameRef.current.value == '' ? null : "name=" + fullNameRef.current.value)
-        const email = (emailRef.current.value == '' ? null : "email=" + emailRef.current.value)
-        const bd = (birthDate == null ? null : "bd=" + birthDate)
-        const rc = (residentCountry == null ? null : "rc=" + residentCountry)
-        const bc = (birthCountry == null ? null : "bc=" + birthCountry)
-        const dc = (dialCode == null ? null : "dc=" + dialCode)
-        const phone = (phoneRef.current.value == '' ? null : "phone=" + phoneRef.current.value)
+    function createSwitch() {
+        setCreateChecked((prev) => !prev)
+        if (checked) {
+            setChecked(false)
+        }
+    }
+
+    function handleSubmit() {
+        const id = idRef.current.value
+        const name = fullNameRef.current.value
+        const email = emailRef.current.value
+        const phone = phoneRef.current.value
 
         fetch('backend/patients/search?' 
-            + name 
-            + "&" + id
-            + "&" +  email
-            + "&" +  bd 
-            + "&" +  rc
-            + "&" + bc
-            + "&" + dc
-            + "&" + phone
+            + ('name=' + name)
+            + "&" + (id ? 'id=' + id : null)
+            + "&" +  ('email=' + email)
+            + "&" + (birthDate ? 'bd=' + birthDate : null)
+            + "&" +  (residentCountry ? 'rc=' + residentCountry : null)
+            + "&" + (birthCountry ? 'bc=' + birthCountry : null)
+            + "&" + (dialCode ? 'dc=' + dialCode : null)
+            + "&" + (phone ? 'phone=' + phone : null)
         )
         .then(response => response.json())
         .then(result => {
@@ -88,15 +95,22 @@ export default function Home(props) {
                     onChange={searchSwitch} />}
                     label="Search Patient"
                 />
-                <Collapse in={checked}>
+                 <FormControlLabel
+                    control={<Switch checked={createChecked} 
+                    onChange={createSwitch} />}
+                    label="Register Patient"
+                />
+                <Collapse in={checked || createChecked}>
                     <div className="my-2">
                         <Grid container>
                             <Grid size={{ xs: 12, md:4}}>
-                            
+                            {!createChecked && checked ?
                             <TextInputField 
                             label={"Pateint ID"} 
                             inputRef={idRef}
                             type={"number"}/>
+                            : null
+                            }
                             </Grid>
                             <Grid size={{ xs: 12, md:8}}>
                             <TextInputField 
@@ -135,9 +149,9 @@ export default function Home(props) {
                         </Grid>
                         <button 
                         className="btn btn-info m-1"
-                        onClick={handleSearch}
+                        onClick={handleSubmit}
                         >
-                            Search
+                            {checked ? 'Search': 'Register'}
                         </button>
                     </div>
                 </Collapse>

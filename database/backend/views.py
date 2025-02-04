@@ -241,7 +241,7 @@ def test(request):
         return Response ({
             'message': serializer.errors,
             'data': data
-            }, status=200)
+            }, status=400)
     
     elif request.method == 'GET':
         pt = Patients.objects.get(id=1)
