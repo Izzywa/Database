@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 class AntibioticGroups(models.Model):
     id = models.SmallAutoField(primary_key=True)
@@ -90,7 +91,7 @@ class DialCodes(models.Model):
         
 class Patients(models.Model):
     full_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
     dial_code = models.ForeignKey(DialCodes, on_delete=models.SET_NULL, related_name="dial_code", blank=True, null=True)
     phone = models.IntegerField(blank=True, null=True)
     birth_date = models.DateField()
@@ -100,7 +101,14 @@ class Patients(models.Model):
 
     class Meta:
         db_table = 'patients'
-        
+    
+        constraints = [
+            models.CheckConstraint(
+                check=Q(dial_code__isnull=False, phone__isnull=False) | Q(dial_code__isnull=True, phone__isnull=True),
+                name="Phone and dial code must both be either empty or filled"
+            )
+            ] 
+            
     def birth_country(self):
         return self.birth_country_code.name
     

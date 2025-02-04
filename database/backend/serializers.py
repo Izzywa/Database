@@ -128,3 +128,29 @@ class VisitPrescriptionSerializer(serializers.ModelSerializer):
             vp_list.append(new_dict)
             
         return vp_list
+    
+class PatientPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Patients
+        fields = '__all__'
+        
+    def validate(self, obj):
+        try:
+            dial = obj['dial_code']
+        except KeyError:
+            dial = None
+            
+        try:
+            phone = obj['phone']
+        except KeyError:
+            phone = None
+            
+        if (dial == None and phone != None) or (dial != None and phone == None):
+            raise serializers.ValidationError('Phone and Dial code must both be empty or filled')
+        
+        return obj
+    
+    def validate_birth_date(self, value):
+        if value > date.today():
+            raise serializers.ValidationError("Birth date must not be in the future")
+        return value

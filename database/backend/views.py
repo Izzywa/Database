@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Patients, Countries, DialCodes
-from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer
+from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer, PatientPostSerializer
 
 def index(request):
     return JsonResponse({'message': 'index'})
@@ -228,17 +228,22 @@ def compliance_list(request, pt_id):
         'result': prescription_by_page
         }, status=200)
     
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def test(request):
-    pt_id = 3
-    patient = Patients.objects.get(id=pt_id)
-    with connection.cursor() as cursor:
-        cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
-        dates = cursor.fetchall()
-    if dates:
-        dates = [date[0] for date in dates]
-    else:
-        dates = []
-    print(dates)
-    serializer = VisitPrescriptionSerializer(patient, context={'dates':dates})
-    return Response (serializer.data, status=200)
+    if request.method == 'POST':
+        data = request.data
+        serializer = PatientPostSerializer(data=data)
+        if serializer.is_valid():
+            return Response({
+                'message': 'valid post',
+                'data': data
+                }, status=200)
+        return Response ({
+            'message': serializer.errors,
+            'data': data
+            }, status=200)
+    
+    elif request.method == 'GET':
+        pt = Patients.objects.get(id=1)
+        serializer = PatientPostSerializer(pt)
+        return Response(serializer.data, status=200)
