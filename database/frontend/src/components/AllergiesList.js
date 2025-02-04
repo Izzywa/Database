@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Grid from '@mui/material/Grid2';
 import Paginator from "./Paginator";
 import Select from 'react-select';
+import csrftoken from "./CSRFToken";
+import { Alert } from "@mui/material";
 
 export default function AllergiesList(props) {
     const [OfficialName, setOfficialName] = useState(true)
@@ -11,6 +13,8 @@ export default function AllergiesList(props) {
     const [viewOnly, setViewOnly] = useState(true)
     const [options, setOptions] = useState([])
     const [selection, setSelection] = useState(null)
+    const [alert, setAlert] = useState([])
+    const [count, setCount] = useState(0)
 
     useEffect(() => {
             fetch('/backend/allergies/' 
@@ -26,7 +30,7 @@ export default function AllergiesList(props) {
                 setNumPages(result.num_pages)
             })
             .catch(error => console.log(error))
-        },[OfficialName, page])
+        },[OfficialName, page, count])
 
     useEffect(() => {
         fetch('/backend/ab_list?'
@@ -83,7 +87,31 @@ export default function AllergiesList(props) {
     }
 
     function handleAddAllergies(){
-        console.log(selection)
+        const requestOptions = {
+            method: ('POST'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+                ab: selection
+            })
+        }
+        
+        if (selection){
+
+            fetch('/backend/allergies/' 
+                    + props.id , requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                setAlert(result)
+                if (!result.error) {
+                    setAlert([])
+                    setCount(count + 1)
+                }
+            }).catch(error => console.log(error))
+        }
     }
 
     function AddAllergies() {
@@ -91,6 +119,7 @@ export default function AllergiesList(props) {
             <div>
                 <Select options={options}
                 onChange={(choice) => setSelection(choice.value)}/>
+                { alert.length == 0 ? null : <Alert severity="warning">{alert.message}</Alert>}
                 <button className="btn btn-dark m-1"
                 onClick={handleAddAllergies}
                 >

@@ -16,6 +16,7 @@ urlpatterns = [
     re_path(r'^patients/search$', views.search_patients, name="search_patients"),
     path('vp/<int:pt_id>', views.visit_prescription_list, name="vp"),
     path('allergies/<int:pt_id>/<str:name>', views.allergies_list, name="allergies_list"),
+    path('allergies/<int:pt_id>', views.allergies_list, name="edit_allergies"),
     path('compliance/<int:pt_id>', views.compliance_list, name="compliance_list"),
     path('test', views.test, name="test"),
     path('ab_list', views.antibiotics_list, name="ab_list")
