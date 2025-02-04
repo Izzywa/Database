@@ -4,6 +4,7 @@ import Paginator from "./Paginator";
 import Select from 'react-select';
 import csrftoken from "./CSRFToken";
 import { Alert } from "@mui/material";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function AllergiesList(props) {
     const [OfficialName, setOfficialName] = useState(true)
@@ -65,10 +66,16 @@ export default function AllergiesList(props) {
                             <Grid 
                             size={{ xs: 12, md: 6}}
                             key={index}
+                            padding={1}
                             >
-                                <p className="allergy-ab">
-                                        - {String(item).charAt(0).toUpperCase()
-                                        + String(item).slice(1)}</p>
+                                <span className="allergy-ab">
+                                    - {String(item).charAt(0).toUpperCase()
+                                    + String(item).slice(1)}
+                                </span>
+                                { viewOnly ? null : 
+                                <span className="px-2"
+                                ><DeleteForeverIcon color="secondary"/></span>
+                                }
                                 </Grid>
                         )
                     })}
