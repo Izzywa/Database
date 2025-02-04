@@ -9,8 +9,8 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes
-from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer, PatientPostSerializer
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms
+from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer, PatientPostSerializer, AntibioticSerializer, SynonymsSerializer
 
 def index(request):
     return JsonResponse({'message': 'index'})
@@ -52,9 +52,9 @@ def auth_check(request):
 def patient_list(request,pt_id=None):
     if request.method == 'GET':
         if pt_id is None:
-            patients = Patients.objects.all()
+            patients = Patients.objects.all().order_by('-id')
             if not request.user.is_staff:
-                patients = patients.filter(deleted=0)
+                patients = patients.filter(deleted=0).order_by('-id')
                 
             serializer = PatientSerializer(patients, many=True)
             return Response(serializer.data, status=200)
@@ -243,22 +243,26 @@ def compliance_list(request, pt_id):
         'result': prescription_by_page
         }, status=200)
     
+@api_view(['GET'])
+def antibiotics_list(request):
+    name = request.GET.get('name', 'official')
+    if name == 'official':
+        antibiotics = Antibiotics.objects.all()
+        serializer = AntibioticSerializer(antibiotics, many=True)
+    else:
+        antibiotics = Synonyms.objects.all().order_by('ab')
+        serializer = SynonymsSerializer(antibiotics, many=True)
+        
+    return Response(serializer.data, status=200)
+    
 @api_view(['GET', 'POST'])
 def test(request):
-    if request.method == 'POST':
-        data = request.data
-        serializer = PatientPostSerializer(data=data)
-        if serializer.is_valid():
-            return Response({
-                'message': 'valid post',
-                'data': data
-                }, status=200)
-        return Response ({
-            'message': serializer.errors,
-            'data': data
-            }, status=400)
-    
-    elif request.method == 'GET':
-        pt = Patients.objects.get(id=1)
-        serializer = PatientPostSerializer(pt)
-        return Response(serializer.data, status=200)
+    name = request.GET.get('name', 'trade')
+    if name == 'official':
+        antibiotics = Antibiotics.objects.all()
+        serializer = AntibioticSerializer(antibiotics, many=True)
+    else:
+        antibiotics = Synonyms.objects.all().order_by('ab')
+        serializer = SynonymsSerializer(antibiotics, many=True)
+        
+    return Response(serializer.data, status=200)

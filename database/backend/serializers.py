@@ -1,7 +1,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from .models import Patients, Countries, DialCodes, Prescriptions, Visits
+from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Synonyms
         
 class PatientSerializer(serializers.ModelSerializer):
     resident_country = serializers.ReadOnlyField()
@@ -154,3 +154,37 @@ class PatientPostSerializer(serializers.ModelSerializer):
         if value > date.today():
             raise serializers.ValidationError("Birth date must not be in the future")
         return value
+
+class AntibioticSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
+    value = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Antibiotics
+        fields = [
+            'label',
+            'value'
+        ]
+    
+    def get_label(self, obj):
+        return obj.name
+        
+    def get_value(self, obj):
+        return obj.ab
+
+class SynonymsSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
+    value = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Antibiotics
+        fields = [
+            'label',
+            'value'
+        ]
+    
+    def get_label(self, obj):
+        return obj.synonym
+        
+    def get_value(self, obj):
+        return obj.ab.ab

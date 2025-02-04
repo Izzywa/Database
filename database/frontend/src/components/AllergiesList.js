@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Grid from '@mui/material/Grid2';
 import Paginator from "./Paginator";
+import Select from 'react-select';
 
 export default function AllergiesList(props) {
     const [OfficialName, setOfficialName] = useState(true)
@@ -8,6 +9,7 @@ export default function AllergiesList(props) {
     const [numPages, setNumPages] = useState(1)
     const [allergiesList, setAllergiesList] = useState([]);
     const [viewOnly, setViewOnly] = useState(true)
+    const [options, setOptions] = useState([])
 
     useEffect(() => {
             fetch('/backend/allergies/' 
@@ -24,6 +26,15 @@ export default function AllergiesList(props) {
             })
             .catch(error => console.log(error))
         },[OfficialName, page])
+
+    useEffect(() => {
+        fetch('/backend/ab_list?'
+            + (OfficialName ? "name=official" : "name=trade")
+        )
+        .then(response => response.json())
+        .then(result => setOptions(result))
+        .catch(error => console.log(error))
+    },[OfficialName])
     
     function handleAllergyName() {
         setOfficialName((prev) => !prev)
@@ -36,12 +47,14 @@ export default function AllergiesList(props) {
 
     function ViewOnly() {
         return (
-            <>
+            <div className="py-2">
+            <h6 className="text-decoration-underline">
+                Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}
+                </h6>
             {
             allergiesList.length == 0 ? <h6>No Allergies</h6>
             :
-            <div className="py-2">
-                <h6>Antibiotic {OfficialName ? 'Official Name' : 'Trade Name'}</h6>
+            <div>
                 <Grid container>
                     {allergiesList.map((item, index) => {
                         return(
@@ -61,16 +74,26 @@ export default function AllergiesList(props) {
                 page={page}
                 setPage={setPage}
                 />
-            </div>
+                </div>
+            
         }
-            </>
+            </div>
+        )
+    }
+
+    function AddAllergies() {
+        return (
+            <div>
+                <Select options={options}/>
+            </div>
         )
     }
 
     return (
         <>
+        <ViewOnly/>
         {
-            viewOnly ? <ViewOnly/> : <p>insert allergies</p>
+            viewOnly ? null : <AddAllergies/>
         }
         <button 
         onClick={handleAllergyName}
@@ -80,7 +103,7 @@ export default function AllergiesList(props) {
         <button 
         onClick={handleAddAllergies}
         className="btn btn-dark mx-1" >
-            {viewOnly ? "Add Allergies": "View Allergies"}
+            {viewOnly ? "Edit Allergies": "Cancel"}
         </button>
         </>
     )
