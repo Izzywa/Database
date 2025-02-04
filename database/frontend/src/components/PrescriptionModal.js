@@ -28,6 +28,16 @@ export default function PrescriptionModal(props) {
         setComplianceList(list => list.filter(item => item != compliance))
     }
 
+    function handleSaveChanges() {
+        let dl = new Set(diagnosisList)
+        dl = [...dl]
+
+        let cl = new Set(complianceList)
+        cl = [...cl]
+        console.log(dl)
+        console.log(cl)
+    }
+
     function ShowPrescription() {
         return (
             <Grid container spacing={1}>
@@ -77,7 +87,8 @@ export default function PrescriptionModal(props) {
                         })
                     }
                     </ul>
-                    <Select options={complianceOptions}/>
+                    <Select options={complianceOptions}
+                    onChange={(choice) => handleComplianceChange(choice)}/>
                 </Grid>
             </Grid>
         )
@@ -98,8 +109,14 @@ export default function PrescriptionModal(props) {
                 <ShowPrescription/>
                 : <p>No prescription selected</p>
             }
-            <button className="btn btn-info my-2"
-            onClick={props.handleClose}>close</button>
+            <div className="my-2">
+            <button className="btn btn-info"
+            onClick={props.handleClose}>Close</button>
+            <button className="btn btn-dark mx-1"
+            onClick={handleSaveChanges}>
+                Save Changes
+            </button>
+            </div>
             </div>
         </div>
       </Modal>
