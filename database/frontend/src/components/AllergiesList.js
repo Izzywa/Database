@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Grid from '@mui/material/Grid2';
 import Paginator from "./Paginator";
 import Select from 'react-select';
@@ -10,9 +10,8 @@ export default function AllergiesList(props) {
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [allergiesList, setAllergiesList] = useState([]);
-    const [viewOnly, setViewOnly] = useState(true)
+    const [viewOnly, setViewOnly] = useState(false)
     const [options, setOptions] = useState([])
-    const [selection, setSelection] = useState(null)
     const [alert, setAlert] = useState([])
     const [count, setCount] = useState(0)
 
@@ -115,6 +114,8 @@ export default function AllergiesList(props) {
     }
 
     function AddAllergies() {
+        const [selection, setSelection] = useState(null)
+
         return (
             <div>
                 <Select options={options}
