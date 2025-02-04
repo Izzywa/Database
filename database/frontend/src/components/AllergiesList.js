@@ -7,6 +7,7 @@ export default function AllergiesList(props) {
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [allergiesList, setAllergiesList] = useState([]);
+    const [viewOnly, setViewOnly] = useState(true)
 
     useEffect(() => {
             fetch('/backend/allergies/' 
@@ -29,9 +30,14 @@ export default function AllergiesList(props) {
         setPage(1)
     }
 
-    return (
-        <>
-        {
+    function handleAddAllergies() {
+        setViewOnly((prev) => !prev)
+    }
+
+    function ViewOnly() {
+        return (
+            <>
+            {
             allergiesList.length == 0 ? <h6>No Allergies</h6>
             :
             <div className="py-2">
@@ -57,10 +63,24 @@ export default function AllergiesList(props) {
                 />
             </div>
         }
+            </>
+        )
+    }
+
+    return (
+        <>
+        {
+            viewOnly ? <ViewOnly/> : <p>insert allergies</p>
+        }
         <button 
         onClick={handleAllergyName}
         className="btn btn-info my-1">
             {OfficialName ? 'Trade Name': 'Official Name'}
+        </button>
+        <button 
+        onClick={handleAddAllergies}
+        className="btn btn-dark mx-1" >
+            {viewOnly ? "Add Allergies": "View Allergies"}
         </button>
         </>
     )
