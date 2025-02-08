@@ -9,7 +9,7 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage
 from .serializers import *
 
 def index(request):
@@ -314,4 +314,10 @@ def test(request):
 def diagnoses_list(request):
     diagnoses = Diagnoses.objects.all()
     serializer = DiagnosesSerializer(diagnoses, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def abusage_list(request):
+    abusage = AbUsage.objects.all()
+    serializer = AbUsageSerializer(abusage, many=True)
     return Response(serializer.data, status=200)

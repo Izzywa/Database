@@ -20,5 +20,6 @@ urlpatterns = [
     path('compliance/<int:pt_id>', views.compliance_list, name="compliance_list"),
     path('test', views.test, name="test"),
     path('ab_list', views.antibiotics_list, name="ab_list"),
-    path('diagnoses', views.diagnoses_list, name="diagnoses_list")
+    path('diagnoses', views.diagnoses_list, name="diagnoses_list"),
+    path('abusage', views.abusage_list, name="abusage_list")
 ]

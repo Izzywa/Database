@@ -14,11 +14,19 @@ export default function PrescriptionModal(props) {
         fetch('/backend/diagnoses')
         .then(response => response.json())
         .then(result => {
-            let fetchresult = result
-            const resultfilter = fetchresult.filter(({label}) => !diagnosisList.includes(label))
+            const resultfilter = result.filter(({label}) => !diagnosisList.includes(label))
             setDiagnosisOptions(resultfilter)
         }).catch(error => console.log(error))
     },[diagnosisList])
+
+    useEffect(() => {
+        fetch('/backend/abusage')
+        .then(response => response.json())
+        .then(result => {
+            const resultfilter = result.filter(({label}) => !complianceList.includes(label))
+            setComplianceOptions(resultfilter)
+        }).catch(error => console.log(error))
+    }, [complianceList])
     
     function handleDiagnosisChange(choice) {
         setDiagnosisList(diagnosisList => [...diagnosisList, choice.label])

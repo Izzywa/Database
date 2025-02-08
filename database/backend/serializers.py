@@ -1,7 +1,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Diagnoses
+from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Diagnoses, AbUsage
         
 class PatientSerializer(serializers.ModelSerializer):
     resident_country = serializers.ReadOnlyField()
@@ -89,7 +89,7 @@ class PrescriptionSerializer(serializers.ModelSerializer):
     def get_compliance(self, obj):
         compliance = obj.compliance.all()
         if compliance:
-            compliance = [c.use.use for c in compliance]
+            compliance = [c.use.use.capitalize() for c in compliance]
         else:
             compliance = []
             
@@ -201,6 +201,22 @@ class DiagnosesSerializer(serializers.ModelSerializer):
         
     def get_label(self, obj):
         return obj.diagnosis.capitalize()
+    
+    def get_value(self, obj):
+        return obj.id
+    
+class AbUsageSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
+    value = serializers.SerializerMethodField()
+    class Meta:
+        model = AbUsage
+        fields = [
+            'label',
+            'value'
+        ]
+        
+    def get_label(self, obj):
+        return obj.use.capitalize()
     
     def get_value(self, obj):
         return obj.id
