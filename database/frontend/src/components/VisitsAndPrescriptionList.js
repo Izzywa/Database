@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Paginator from "./Paginator";
+import { useNavigate } from "react-router-dom";
 
 export default function VisitsAndPrescriptionList(props) {
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [vpList, setVpList] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch('/backend/vp/' + props.id + "?page=" + page)
@@ -45,7 +47,7 @@ export default function VisitsAndPrescriptionList(props) {
 
     function handleMainRowClick(e) {
         const date = (e.target.closest("[data-date]").dataset.date)
-        console.log(date)
+        navigate(`/date/${props.id}/${date}`)
     }
 
     return (
