@@ -168,7 +168,8 @@ def visit_prescription_list(request, pt_id=None):
         dates = [date[0] for date in dates]
     else:
         dates = []
-    serializer = VisitPrescriptionSerializer(patient, context={'dates':dates})
+        
+    serializer = VisitPrescriptionSerializer(patient, context={'dates':dates, 'is_staff': request.user.is_staff})
     
     vp_pagination = Paginator(serializer.data['dates'],5)
     page = request.GET.get('page', 1)
@@ -179,7 +180,7 @@ def visit_prescription_list(request, pt_id=None):
     
     return Response ({
         'num_pages': vp_pagination.num_pages,
-        'result': vp_by_page
+        'result': vp_by_page,
         }, status=200)
 
 @login_required(login_url="/login")

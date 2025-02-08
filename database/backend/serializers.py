@@ -75,7 +75,8 @@ class PrescriptionSerializer(serializers.ModelSerializer):
             'dose_str',
             'dose',
             'diagnosis',
-            'compliance'
+            'compliance',
+            'deleted'
         ]
     
     def get_diagnosis(self, obj):
@@ -102,22 +103,34 @@ class VisitSerializer(serializers.ModelSerializer):
         
 class VisitPrescriptionSerializer(serializers.ModelSerializer):
     dates = serializers.SerializerMethodField()
+    staff = serializers.SerializerMethodField()
     class Meta:
         model = Patients
         fields = [
             'id',
-            'dates'
+            'dates',
+            'staff'
         ]
+        
+    def get_staff(self, obj):
+        is_staff = self.context.get('is_staff')
+        return is_staff
         
     def get_dates(self, obj):
         date_list = self.context.get('dates')
+        is_staff = self.context.get('is_staff')
         vp_list = []
         for date in date_list:
             date_str = date.strftime('%Y-%m-%d')
             
-            visits = obj.visits.filter(visit_date=date)
+            if is_staff:
+                visits = obj.visits.filter(visit_date=date)
+                prescriptions = obj.prescriptions.filter(prescription_date=date)
+            else:
+                visits = obj.visits.filter(visit_date=date, deleted=0)
+                prescriptions = obj.prescriptions.filter(prescription_date=date, deleted=0)    
+            
             visits_data = VisitSerializer(visits, many=True).data
-            prescriptions = obj.prescriptions.filter(prescription_date=date)
             prescriptions_data = PrescriptionSerializer(prescriptions, many=True).data
             
             new_dict = {
