@@ -6,7 +6,8 @@ import Textarea from '@mui/joy/Textarea';
 
 export default function VisitList(props) {
     const visitOrder = {
-        'note': 'Notes'
+        'note': 'Notes',
+        'modified_timestamp': 'Last Modified'
     }
     const [visit, setVisit] = useState(null)
     const [open, setOpen] = useState(false)

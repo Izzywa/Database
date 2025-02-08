@@ -98,9 +98,18 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         return compliance
     
 class VisitSerializer(serializers.ModelSerializer):
+    modified_timestamp = serializers.ReadOnlyField()
+    
     class Meta:
         model = Visits
-        fields = '__all__'
+        fields = [
+            'id',
+            'note',
+            'visit_date',
+            'last_modified',
+            'modified_timestamp',
+            'deleted'
+        ]
         
 class VisitPrescriptionSerializer(serializers.ModelSerializer):
     dates = serializers.SerializerMethodField()

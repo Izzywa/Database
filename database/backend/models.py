@@ -142,12 +142,15 @@ class Allergies(models.Model):
 class Visits(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="visits")
     visit_date = models.DateField()
-    last_modified = models.DateTimeField(blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True)
     note = models.CharField(max_length=5000, blank=True, null=True)
     deleted = models.PositiveIntegerField(blank=False, null=False, default=0)
 
     class Meta:
         db_table = 'visits'
+        
+    def modified_timestamp(self):
+        return self.last_modified.strftime("%Y-%m-%d, %H:%M:%S")
         
 class Prescriptions(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="prescriptions")
