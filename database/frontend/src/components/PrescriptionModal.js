@@ -4,6 +4,7 @@ import { Grid2 as Grid, styled } from "@mui/material";
 import Select from 'react-select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import csrftoken from "./CSRFToken";
+import DateInput from "./DateInput";
 
 export default function PrescriptionModal(props) {
     const [diagnosisOptions, setDiagnosisOptions] = useState([])
@@ -11,6 +12,9 @@ export default function PrescriptionModal(props) {
     const [diagnosisList, setDiagnosisList] = useState(props.prescription.diagnosis ? props.prescription.diagnosis: [])
     const [complianceList , setComplianceList] = useState(props.prescription.compliance ? props.prescription.compliance: [])
     const [openChild, setOpenChild] = useState(false)
+    const [date, setDate] = useState(null)
+    const [abOptions, setAbOptions] = useState([])
+    const [doseOptions, setDoseOptions] = useState([])
 
     const style = {
         height: "100vh",
@@ -148,12 +152,16 @@ export default function PrescriptionModal(props) {
                     <h5>Add new prescription</h5>
                     <Grid size={12}>
                         <p><strong>Date:</strong></p>
+                        <DateInput label={"Prescription Date"}
+                        setDate={setDate}/>
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
                         <p><strong>Antibiotic:</strong></p>
+                        <Select options={abOptions}/>
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
                         <p><strong>Dose:</strong></p>
+                        <Select options={doseOptions}/>
                     </Grid>
                 </Grid>
                 <SelectionButtons/>
@@ -251,7 +259,7 @@ export default function PrescriptionModal(props) {
             onClick={props.handleClose}>Close</button>
             <button className="btn btn-dark mx-1"
             onClick={handleSaveChanges}>
-                Save Changes
+                {props.prescription.add ? "Create Prescription": "Save Changes"}
             </button>
             </div>
             </div>
