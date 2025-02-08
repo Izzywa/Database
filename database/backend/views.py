@@ -363,8 +363,11 @@ def compliance_list(request, pt_id=None, pr_id=None):
         }, status=200)
         
     elif request.method == 'DELETE':
-        prescription.deleted = 1
-        prescription.save()
+        if request.user.is_staff:
+            prescription.delete()
+        else:
+            prescription.deleted = 1
+            prescription.save()
         return Response({
             'message': f"successfully deleted prescription id #{pr_id}"
         })

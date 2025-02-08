@@ -14,10 +14,7 @@ export default function ComplianceList(props) {
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [open, setOpen] = useState(false)
-    const [prescription, setPrescription] = useState({
-        diagnosis: [],
-        compliance: []
-    })
+    const [prescription, setPrescription] = useState(null)
     const [count, setCount] = useState(0)
 
     function handleClose() {
@@ -48,10 +45,6 @@ export default function ComplianceList(props) {
         .catch(error => console.log(error))
     },[page, count])
 
-    function handleAddPrescription() {
-        setOpen(true)
-    }
-
     if (complianceList.length == 0) {
         return (
             <h6>No Prescriptions history</h6>
@@ -59,11 +52,13 @@ export default function ComplianceList(props) {
     } else {
         return (
             <>
+            {prescription ?
             <PrescriptionModal openModal={open} 
             handleClose={handleClose}
             count={count}
             setCount={setCount}
             prescription={prescription}/>
+            : null }
             <div className="table-container">
                 <Table tableOrder={ComplianceOrder} 
                 tableList={complianceList}
@@ -73,12 +68,6 @@ export default function ComplianceList(props) {
                 setPage={setPage}
                 count={numPages}
                 />
-            </div>
-            <div>
-                <button className="btn btn-info m-2"
-                onClick={handleAddPrescription}>
-                    Add Prescription
-                </button>
             </div>
             </>
         )

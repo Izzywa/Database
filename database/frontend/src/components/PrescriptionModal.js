@@ -8,9 +8,10 @@ import csrftoken from "./CSRFToken";
 export default function PrescriptionModal(props) {
     const [diagnosisOptions, setDiagnosisOptions] = useState([])
     const [complianceOptions, setComplianceOptions] = useState([])
-    const [diagnosisList, setDiagnosisList] = useState(props.prescription.diagnosis)
-    const [complianceList , setComplianceList] = useState(props.prescription.compliance)
+    const [diagnosisList, setDiagnosisList] = useState(props.prescription.diagnosis ? props.prescription.diagnosis: [])
+    const [complianceList , setComplianceList] = useState(props.prescription.compliance ? props.prescription.compliance: [])
     const [openChild, setOpenChild] = useState(false)
+
     const style = {
         height: "100vh",
         overflow: "scroll",
@@ -137,7 +138,6 @@ export default function PrescriptionModal(props) {
         )
     }
     function ShowPrescription() {
-
         return (
             <Grid container spacing={1}>
                 <ChildModal/>
@@ -201,12 +201,6 @@ export default function PrescriptionModal(props) {
 
     }
 
-    function AddPrescription() {
-        return (
-            <p>Add prescription</p>
-        )
-    }
-
     return(
         <Modal
         open={props.openModal}
@@ -218,10 +212,9 @@ export default function PrescriptionModal(props) {
             {
                 props.prescription ? 
                 <ShowPrescription/>
-                : <AddPrescription/>
+                : <p>No prescription selected</p>
             }
             <div className="my-2">
-
             <button className="btn btn-info"
             onClick={props.handleClose}>Close</button>
             <button className="btn btn-dark mx-1"
