@@ -29,7 +29,15 @@ tbody > tr:hover {
 }
 
 /*
-{"ab":"AMX"}
+{
+    "diagnoses": [
+    "Acne", 
+    "Infection"
+    ],
+    "compliance" : [
+        "Keeping left-over antibiotics for future use"
+        ]
+}
 */
 
 /*# sourceMappingURL=index.css.map */
