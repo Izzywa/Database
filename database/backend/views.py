@@ -256,8 +256,19 @@ def allergies_list(request, pt_id=None, name='official'):
             }, status=200)
 
 @login_required(login_url="/login")
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 def compliance_list(request, pt_id=None, pr_id=None):
+    if pr_id is not None:
+        try:
+            if request.user.is_staff:
+                prescription = Prescriptions.objects.get(id=pr_id)
+            else:
+                prescription = Prescriptions.objects.get(id=pr_id, deleted=0)
+        except Prescriptions.DoesNotExist:
+            return Response({
+                'error': True,
+                'message': f"Prescription with id #{pr_id} does not exist"
+            })
     if request.method == 'GET':
         try:
             if request.user.is_staff:
@@ -271,6 +282,9 @@ def compliance_list(request, pt_id=None, pr_id=None):
             }, status=404)
             
         prescription = patient.prescriptions.all().order_by('-prescription_date')
+        if not request.user.is_staff:
+            prescription = prescription.filter(deleted=0)
+            
         serializer = PrescriptionSerializer(prescription, many=True)
         prescription_paginator = Paginator(serializer.data, 5)
         page = request.GET.get('page', 1)
@@ -285,7 +299,7 @@ def compliance_list(request, pt_id=None, pr_id=None):
             }, status=200)
     
     elif request.method == 'POST':
-        prescription = Prescriptions.objects.get(id=pr_id)
+        
         serializer = PrescriptionSerializer(prescription)
         
         data = request.data 
@@ -346,6 +360,16 @@ def compliance_list(request, pt_id=None, pr_id=None):
             "c_delete": compliance_to_delete,
             "c_add": compliance_to_add
         }, status=200)
+        
+    elif request.method == 'DELETE':
+        if request.user.is_staff:
+            prescription.delete()
+        else:
+            prescription.deleted = 1
+            prescription.save()
+        return Response({
+            'message': f"successfully deleted prescription id #{pr_id}"
+        })
     
 @api_view(['GET'])
 def antibiotics_list(request):

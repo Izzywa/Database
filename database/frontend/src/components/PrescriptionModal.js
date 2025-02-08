@@ -58,6 +58,27 @@ export default function PrescriptionModal(props) {
         setComplianceList(list => list.filter(item => item != compliance))
     }
 
+    function handleDeletePrescription() {
+        const requestOptions = {
+            method: ('DELETE'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+            })
+        }
+
+        fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            handleCloseChild()
+            props.handleClose()
+            props.setCount(props.count + 1)
+        }).catch(error => console.log(error))
+    }
+
     function handleSaveChanges() {
         let dl = new Set(diagnosisList)
         dl = [...dl]
@@ -108,7 +129,7 @@ export default function PrescriptionModal(props) {
                         Close
                     </button>
                     <button className="btn btn-dark m-1"
-                    onClick={() => console.log('delete prescription')}>
+                    onClick={handleDeletePrescription}>
                         Delete
                     </button>
                 </div>

@@ -106,7 +106,8 @@ export default function Home(props) {
                     dial_code: dialCode,
                     birth_date: birthDate,
                     resident_country_code: residentCountry,
-                    birth_country_code: birthCountry
+                    birth_country_code: birthCountry,
+                    deleted: 0
                 })
             }
 

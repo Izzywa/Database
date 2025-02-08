@@ -154,7 +154,7 @@ class Prescriptions(models.Model):
     dose = models.ForeignKey(Dosage, on_delete=models.SET_NULL, blank=True, null=True)
     prescription_date = models.DateField()
     last_modified = models.DateTimeField(blank=True, null=True)
-    deleted = models.PositiveIntegerField(blank=True, null=True)
+    deleted = models.PositiveIntegerField(default=0)
 
     class Meta:
         db_table = 'prescriptions'
