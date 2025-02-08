@@ -19,11 +19,12 @@ export default function PrescriptionModal(props) {
     const [doseOptions, setDoseOptions] = useState([])
 
     const style = {
-        height: "100vh",
+        minHeight: "100vh",
         overflow: "scroll",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        overflow: "scroll"
         }
 
     function handleCloseChild(){
@@ -162,7 +163,8 @@ export default function PrescriptionModal(props) {
                     <h5>Add new prescription</h5>
                     <Grid size={12}>
                         <p><strong>Date:</strong></p>
-                        <DateInput label={"Prescription Date"}
+                        <p>{date}</p>
+                        <DateInput label={""}
                         setDate={setDate}/>
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
@@ -264,6 +266,7 @@ export default function PrescriptionModal(props) {
         open={props.openModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{overflow: "scroll"}}
       >
         <div style={style}>
             <div className="bg-light text-dark container p-3">
