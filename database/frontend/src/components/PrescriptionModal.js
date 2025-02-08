@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from '@mui/material/Modal';
-import { Grid2 as Grid } from "@mui/material";
+import { Grid2 as Grid, styled } from "@mui/material";
 import Select from 'react-select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import csrftoken from "./CSRFToken";
@@ -10,6 +10,19 @@ export default function PrescriptionModal(props) {
     const [complianceOptions, setComplianceOptions] = useState([])
     const [diagnosisList, setDiagnosisList] = useState(props.prescription.diagnosis ? props.prescription.diagnosis: [])
     const [complianceList , setComplianceList] = useState(props.prescription.compliance ? props.prescription.compliance: [])
+    const [openChild, setOpenChild] = useState(false)
+
+    const style = {
+        height: "100vh",
+        overflow: "scroll",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+        }
+
+    function handleCloseChild(){
+        setOpenChild(false)
+    }
 
     useEffect(() => {
         fetch('/backend/diagnoses')
@@ -78,11 +91,43 @@ export default function PrescriptionModal(props) {
 
     }
 
+    function openChildModal() {
+        setOpenChild(true)
+    }
+
+
+    function ChildModal(){
+        return(
+        <Modal
+        open={openChild}>
+            <div style={style}>
+                <div className="bg-light text-dark container p-3">
+                    <p>Delete prescription (id#{props.prescription.id})?</p>
+                    <button className="btn btn-info"
+                    onClick={handleCloseChild}>
+                        Close
+                    </button>
+                    <button className="btn btn-dark m-1"
+                    onClick={() => console.log('delete prescription')}>
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </Modal>
+        )
+    }
     function ShowPrescription() {
         return (
             <Grid container spacing={1}>
+                <ChildModal/>
                 <Grid size={12}>
-                <h5>Prescription (id #{props.prescription.id})</h5>
+                <h5>
+                    Prescription (id #{props.prescription.id})
+                    <span className="px-2"> 
+                    <DeleteForeverIcon color="secondary"
+                    onClick={openChildModal}/> 
+                    </span>
+                </h5>
                 </Grid>
                 <Grid size={{xs: 12, md: 4}}>
                     <p><strong>Date: </strong>{props.prescription.prescription_date}</p>
@@ -141,8 +186,7 @@ export default function PrescriptionModal(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="d-flex align-items-center justify-content-center"
-        style={{height: "100vh", overflow: "scroll"}}>
+        <div style={style}>
             <div className="bg-light text-dark container p-3">
             {
                 props.prescription ? 
