@@ -108,7 +108,7 @@ class Patients(models.Model):
     birth_date = models.DateField()
     resident_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='resident_country_code', related_name='resident_country')
     birth_country_code = models.ForeignKey(Countries, on_delete=models.PROTECT, db_column='birth_country_code', related_name='birth_country')
-    deleted = models.PositiveIntegerField(blank=True, null=True)
+    deleted = models.PositiveIntegerField(blank=False, null=False, default=0)
 
     class Meta:
         db_table = 'patients'
@@ -144,7 +144,7 @@ class Visits(models.Model):
     visit_date = models.DateField()
     last_modified = models.DateTimeField(blank=True, null=True)
     note = models.CharField(max_length=5000, blank=True, null=True)
-    deleted = models.PositiveIntegerField(blank=True, null=True)
+    deleted = models.PositiveIntegerField(blank=False, null=False, default=0)
 
     class Meta:
         db_table = 'visits'
@@ -153,8 +153,8 @@ class Prescriptions(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="prescriptions")
     dose = models.ForeignKey(Dosage, on_delete=models.SET_NULL, blank=True, null=True)
     prescription_date = models.DateField()
-    last_modified = models.DateTimeField(blank=True, null=True)
-    deleted = models.PositiveIntegerField(default=0)
+    last_modified = models.DateTimeField(auto_now=True)
+    deleted = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta:
         db_table = 'prescriptions'

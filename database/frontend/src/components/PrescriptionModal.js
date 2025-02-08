@@ -108,6 +108,7 @@ export default function PrescriptionModal(props) {
     }
 
     function handleSaveChanges() {
+        let url = ''
         let dl = new Set(diagnosisList)
         dl = [...dl]
 
@@ -115,7 +116,7 @@ export default function PrescriptionModal(props) {
         cl = [...cl]
         
         const requestOptions = {
-            method: ('POST'),
+            method: ('PUT'),
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken()
@@ -128,6 +129,7 @@ export default function PrescriptionModal(props) {
         }
 
         if (props.prescription.add) {
+            url = '/backend/compliance/' + props.ptId
             if (doseSelection == null && date == null) {
                 setError({
                     error: true,
@@ -146,6 +148,7 @@ export default function PrescriptionModal(props) {
             } else {
                 setError(null)
                 const dose = doseSelection.value
+                requestOptions.method = ('POST')
                 requestOptions.body = JSON.stringify({
                     date: date,
                     dose: dose,
@@ -155,17 +158,19 @@ export default function PrescriptionModal(props) {
             }
 
         } else {
-            fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
+            url = '/backend/compliance/edit/' + props.prescription.id
+        }
+
+        fetch(url, requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (!result.error) {
                     props.handleClose()
                     props.setCount(props.count + 1)
                 } else {
-                    alert(result.message)  
+                    setError(result)
                 }
             }).catch(error => console.log(error))
-        }
 
     }
 
@@ -197,15 +202,8 @@ export default function PrescriptionModal(props) {
     
     function AddPrescription() {
         return (
-            <Grid container>
+            <>
                 <Grid size={12}>
-                    {
-                        error ? 
-                        <Alert severity="error">
-                            {error.message}
-                        </Alert>
-                        : null
-                    }
                     <h5>Add new prescription</h5>
                     <Grid size={12}>
                         <p><strong>Date:</strong></p>
@@ -239,7 +237,7 @@ export default function PrescriptionModal(props) {
                     </Grid>
                 </Grid>
                 <SelectionButtons/>
-            </Grid>
+            </>
         )
     }
 
@@ -292,7 +290,7 @@ export default function PrescriptionModal(props) {
 
     function ShowPrescription() {
         return (
-            <Grid container spacing={1}>
+            <>
                 <ChildModal/>
                 <Grid size={12}>
                 <h5>
@@ -310,7 +308,7 @@ export default function PrescriptionModal(props) {
                     <p><strong>Prescription: </strong>{props.prescription.dose_str}</p>
                     </Grid>
                 <SelectionButtons/>
-            </Grid>
+            </>
         )
 
     }
@@ -324,11 +322,20 @@ export default function PrescriptionModal(props) {
       >
         <div style={style}>
             <div className="bg-light text-dark container p-3">
-            {
-                props.prescription.add ? 
-                 <AddPrescription/>:
-                <ShowPrescription/>
-            }
+                <Grid container spacing={1}>
+                {
+                    error ? 
+                    <Alert severity="error">
+                        {error.message}
+                    </Alert>
+                    : null
+                }
+                {
+                    props.prescription.add ? 
+                    <AddPrescription/>:
+                    <ShowPrescription/>
+                }
+            </Grid>
             <div className="my-2">
             <button className="btn btn-info"
             onClick={props.handleClose}>Close</button>

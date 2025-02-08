@@ -67,6 +67,7 @@ export default function ComplianceList(props) {
             handleClose={handleClose}
             count={count}
             setCount={setCount}
+            ptId={props.id}
             prescription={prescription}/>
             : null }
             <div>

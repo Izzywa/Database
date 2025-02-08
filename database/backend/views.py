@@ -257,7 +257,7 @@ def allergies_list(request, pt_id=None, name='official'):
             }, status=200)
 
 @login_required(login_url="/login")
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
 def compliance_list(request, pt_id=None, pr_id=None):
     if pr_id is not None:
         try:
@@ -270,7 +270,7 @@ def compliance_list(request, pt_id=None, pr_id=None):
                 'error': True,
                 'message': f"Prescription with id #{pr_id} does not exist"
             })
-    if request.method == 'GET':
+    if pt_id is not None:
         try:
             if request.user.is_staff:
                 patient = Patients.objects.get(id=pt_id)
@@ -281,7 +281,8 @@ def compliance_list(request, pt_id=None, pr_id=None):
                 'error': True,
                 'message': 'Patient id does not exist'
             }, status=404)
-            
+        
+    if request.method == 'GET':
         prescription = patient.prescriptions.all().order_by('-prescription_date')
         if not request.user.is_staff:
             prescription = prescription.filter(deleted=0)
@@ -298,8 +299,62 @@ def compliance_list(request, pt_id=None, pr_id=None):
             'num_pages': prescription_paginator.num_pages,
             'result': prescription_by_page
             }, status=200)
-    
+        
     elif request.method == 'POST':
+        data = request.data
+        if datetime.strptime(data['date'], '%Y-%m-%d') > datetime.today():
+            return Response({
+                'error': True,
+                'message': 'Prescription date cannot be in the future.'
+            }, status=409)
+        
+        try:
+            dose = Dosage.objects.get(id=data['dose'])
+        except Dosage.DoesNotExist:
+            return Response({
+                'error': True,
+                'message': 'Dose does not exist'
+            }, status=404)
+            
+        
+        try:
+            new_prescription = patient.prescriptions.create(
+                patient=patient,
+                dose=dose,
+                prescription_date=data['date']
+                )
+        except:
+            return Response({
+                'error': True,
+                'message': 'Data submitted not valid'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        for diagnosis in data['diagnoses']:
+            try:
+                diagnosis_obj = Diagnoses.objects.get(diagnosis=diagnosis)
+            except Diagnoses.DoesNotExist:
+                return Response({
+                    'error': True,
+                    'message': f'Diagnosis of {diagnosis} does not exist'
+                }, status=409)
+            new_prescription.diagnosis.create(prescription=new_prescription, diagnosis=diagnosis_obj)
+            
+        for compliance in data['compliance']:
+            try:
+                compliance_obj = AbUsage.objects.get(use=compliance)
+            except AbUsage.DoesNotExist:
+                return Response({
+                    'error': True,
+                    'message': f'Compliance '
+                }, status=409)
+            new_prescription.compliance.create(prescription=new_prescription, use=compliance_obj)
+            
+        return Response({
+            'error': False,
+            'message': f'Successfuly created prescription with id #{new_prescription.id}'
+            }, status=200)
+    
+    elif request.method == 'PUT':
         
         serializer = PrescriptionSerializer(prescription)
         
@@ -341,7 +396,7 @@ def compliance_list(request, pt_id=None, pr_id=None):
             except AbUsage.DoesNotExist:
                 return Response ({
                     "error": True,
-                    "message": f"No diagnosis in list named {diagnosis}"
+                    "message": f"No compliance in list named {compliance}"
                 }, status=400)
                 
         for compliance in compliance_to_add:
@@ -351,15 +406,11 @@ def compliance_list(request, pt_id=None, pr_id=None):
             except AbUsage.DoesNotExist:
                 return Response ({
                     "error": True,
-                    "message": f"No diagnosis in list named {diagnosis}"
+                    "message": f"No compliance in list named {compliance}"
                 }, status=400)
             
         return Response ({
-            "data": f"successfully added and delete for prescription #{pr_id}",
-            "to_delete" : diagnoses_to_delete,
-            "to_add": diagnoses_to_add,
-            "c_delete": compliance_to_delete,
-            "c_add": compliance_to_add
+            "message": f"successfully edited prescription #{pr_id}",
         }, status=200)
         
     elif request.method == 'DELETE':
