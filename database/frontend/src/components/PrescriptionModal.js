@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Modal from '@mui/material/Modal';
 import { Grid2 as Grid, styled } from "@mui/material";
 import Select from 'react-select';
@@ -13,6 +13,8 @@ export default function PrescriptionModal(props) {
     const [complianceList , setComplianceList] = useState(props.prescription.compliance ? props.prescription.compliance: [])
     const [openChild, setOpenChild] = useState(false)
     const [date, setDate] = useState(null)
+    const [abSelection, setAbSelection] = useState(null)
+    const [doseSelection, setDoseSelection] = useState(null)
     const [abOptions, setAbOptions] = useState([])
     const [doseOptions, setDoseOptions] = useState([])
 
@@ -27,6 +29,13 @@ export default function PrescriptionModal(props) {
     function handleCloseChild(){
         setOpenChild(false)
     }
+
+    useEffect(() => {
+        fetch('/backend/ab_list')
+        .then(response => response.json())
+        .then(result => setAbOptions(result))
+        .catch(error => console.log(error))
+    },[])
 
     useEffect(() => {
         fetch('/backend/diagnoses')
@@ -145,6 +154,7 @@ export default function PrescriptionModal(props) {
         </Modal>
         )
     }
+    
     function AddPrescription() {
         return (
             <Grid container>
@@ -157,7 +167,15 @@ export default function PrescriptionModal(props) {
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
                         <p><strong>Antibiotic:</strong></p>
-                        <Select options={abOptions}/>
+                        {
+                            abSelection ? 
+                            <ul>
+                                <li>{abSelection.label}</li>
+                            </ul>
+                            :null
+                        }
+                        <Select options={abOptions}
+                        onChange={(choice) => setAbSelection(choice)}/>
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
                         <p><strong>Dose:</strong></p>
