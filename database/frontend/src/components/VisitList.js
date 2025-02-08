@@ -3,6 +3,7 @@ import Table from "./Table";
 import { Modal } from "@mui/material";
 import {Grid2 as Grid} from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function VisitList(props) {
     const visitOrder = {
@@ -37,6 +38,7 @@ export default function VisitList(props) {
             <div className="modal-div">
                 <div className="container p-3">
                     <Grid container>
+                        <DeleteForeverIcon color="secondary"/>
                         <Grid size={12} >
                             <Textarea className="my-2"
                             slotProps={{textarea: {ref: textRef}}}
