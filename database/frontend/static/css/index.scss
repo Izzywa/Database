@@ -28,6 +28,20 @@ tbody>tr {
     }
 }
 
+.modal-div {
+    min-height: 100vh;
+    overflow: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    div {
+        background-color: white;
+        color: black;
+    }
+
+}
+
 /*
 {
     "diagnoses": [

@@ -26,7 +26,6 @@ export default function PrescriptionModal(props) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        overflow: "scroll"
         }
 
     function handleCloseChild(){
@@ -183,7 +182,7 @@ export default function PrescriptionModal(props) {
         return(
         <Modal
         open={openChild}>
-            <div style={style}>
+            <div className="modal-div">
                 <div className="bg-light text-dark container p-3">
                     <p>Delete prescription (id#{props.prescription.id})?</p>
                     <button className="btn btn-info"
@@ -318,9 +317,8 @@ export default function PrescriptionModal(props) {
         open={props.openModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        style={{overflow: "scroll"}}
       >
-        <div style={style}>
+        <div className="modal-div">
             <div className="bg-light text-dark container p-3">
                 <Grid container spacing={1}>
                 {
