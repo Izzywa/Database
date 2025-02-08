@@ -9,8 +9,8 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies
-from .serializers import PatientSerializer, CountrySerializer, DialCodeSerializer, PrescriptionSerializer, VisitPrescriptionSerializer, PatientPostSerializer, AntibioticSerializer, SynonymsSerializer
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses
+from .serializers import *
 
 def index(request):
     return JsonResponse({'message': 'index'})
@@ -309,3 +309,9 @@ def test(request):
         'ab': ab,
         'synonym': synonyms
         }, status=200)
+    
+@api_view(['GET'])
+def diagnoses_list(request):
+    diagnoses = Diagnoses.objects.all()
+    serializer = DiagnosesSerializer(diagnoses, many=True)
+    return Response(serializer.data, status=200)

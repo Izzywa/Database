@@ -1,7 +1,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Synonyms
+from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Diagnoses
         
 class PatientSerializer(serializers.ModelSerializer):
     resident_country = serializers.ReadOnlyField()
@@ -188,3 +188,19 @@ class SynonymsSerializer(serializers.ModelSerializer):
         
     def get_value(self, obj):
         return obj.ab.ab
+    
+class DiagnosesSerializer(serializers.ModelSerializer):
+    label = serializers.SerializerMethodField()
+    value = serializers.SerializerMethodField()
+    class Meta:
+        model = Diagnoses
+        fields = [
+            'label',
+            'value'
+        ]
+        
+    def get_label(self, obj):
+        return obj.diagnosis.capitalize()
+    
+    def get_value(self, obj):
+        return obj.id
