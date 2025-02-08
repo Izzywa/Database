@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import { useParams } from "react-router-dom";
-import Table from "./Table";
 import ComplianceList from "./ComplianceList";
+import VisitList from "./VisitList";
 
 export default function ViewDateItem(props) {
     const { id, date } = useParams();
@@ -29,6 +29,7 @@ export default function ViewDateItem(props) {
                 <div className="visit-list"
                 style={style}>
                     <h4>Visit Notes</h4>
+                    <VisitList visits={data.data.dates[0].visits}/>
                 </div>
                 <div className="prescription-list"
                 style={style}>
