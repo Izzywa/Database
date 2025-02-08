@@ -99,16 +99,20 @@ export default function PrescriptionModal(props) {
             })
         }
 
-        fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            if (!result.error) {
-                props.handleClose()
-                props.setCount(props.count + 1)
-            } else {
-                alert(result.message)  
-            }
-        }).catch(error => console.log(error))
+        if (props.prescription.add) {
+            console.log('create prescription here')
+        } else {
+            fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (!result.error) {
+                    props.handleClose()
+                    props.setCount(props.count + 1)
+                } else {
+                    alert(result.message)  
+                }
+            }).catch(error => console.log(error))
+        }
 
     }
 
@@ -137,26 +141,30 @@ export default function PrescriptionModal(props) {
         </Modal>
         )
     }
-    function ShowPrescription() {
+    function AddPrescription() {
         return (
-            <Grid container spacing={1}>
-                <ChildModal/>
+            <Grid container>
                 <Grid size={12}>
-                <h5>
-                    Prescription (id #{props.prescription.id})
-                    <span className="px-2"> 
-                    <DeleteForeverIcon color="secondary"
-                    onClick={openChildModal}/> 
-                    </span>
-                </h5>
-                </Grid>
-                <Grid size={{xs: 12, md: 4}}>
-                    <p><strong>Date: </strong>{props.prescription.prescription_date}</p>
-                </Grid>
-                <Grid size={{ xs: 12, md: 8}}>
-                    <p><strong>Prescription: </strong>{props.prescription.dose_str}</p>
+                    <h5>Add new prescription</h5>
+                    <Grid size={12}>
+                        <p><strong>Date:</strong></p>
                     </Grid>
-                <Grid size={12}>
+                    <Grid size={{xs:12, md:6}}>
+                        <p><strong>Antibiotic:</strong></p>
+                    </Grid>
+                    <Grid size={{xs:12, md:6}}>
+                        <p><strong>Dose:</strong></p>
+                    </Grid>
+                </Grid>
+                <SelectionButtons/>
+            </Grid>
+        )
+    }
+
+    function SelectionButtons() {
+        return (
+            <>
+            <Grid size={12}>
                     <p>
                         <strong>Diagnoses: </strong>
                     </p>
@@ -196,6 +204,30 @@ export default function PrescriptionModal(props) {
                     <Select options={complianceOptions}
                     onChange={(choice) => handleComplianceChange(choice)}/>
                 </Grid>
+            </>
+        )
+    }
+
+    function ShowPrescription() {
+        return (
+            <Grid container spacing={1}>
+                <ChildModal/>
+                <Grid size={12}>
+                <h5>
+                    Prescription (id #{props.prescription.id})
+                    <span className="px-2"> 
+                    <DeleteForeverIcon color="secondary"
+                    onClick={openChildModal}/> 
+                    </span>
+                </h5>
+                </Grid>
+                <Grid size={{xs: 12, md: 4}}>
+                    <p><strong>Date: </strong>{props.prescription.prescription_date}</p>
+                </Grid>
+                <Grid size={{ xs: 12, md: 8}}>
+                    <p><strong>Prescription: </strong>{props.prescription.dose_str}</p>
+                    </Grid>
+                <SelectionButtons/>
             </Grid>
         )
 
@@ -211,7 +243,7 @@ export default function PrescriptionModal(props) {
             <div className="bg-light text-dark container p-3">
             {
                 props.prescription.add ? 
-                 <p>Add prescription</p>:
+                 <AddPrescription/>:
                 <ShowPrescription/>
             }
             <div className="my-2">
