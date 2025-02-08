@@ -210,9 +210,9 @@ export default function PrescriptionModal(props) {
         <div style={style}>
             <div className="bg-light text-dark container p-3">
             {
-                props.prescription ? 
+                props.prescription.add ? 
+                 <p>Add prescription</p>:
                 <ShowPrescription/>
-                : <p>No prescription selected</p>
             }
             <div className="my-2">
             <button className="btn btn-info"

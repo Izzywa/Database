@@ -45,6 +45,16 @@ export default function ComplianceList(props) {
         .catch(error => console.log(error))
     },[page, count])
 
+    function handleAddPrescription() {
+        setPrescription({
+            add: true,
+            diagnosis: [],
+            compliance: []
+        })
+
+        setOpen(true)
+    }
+
     if (complianceList.length == 0) {
         return (
             <h6>No Prescriptions history</h6>
@@ -59,6 +69,12 @@ export default function ComplianceList(props) {
             setCount={setCount}
             prescription={prescription}/>
             : null }
+            <div>
+                <button className="btn btn-info m-2"
+                onClick={handleAddPrescription}>
+                    Add Prescription
+                </button>
+            </div>
             <div className="table-container">
                 <Table tableOrder={ComplianceOrder} 
                 tableList={complianceList}
