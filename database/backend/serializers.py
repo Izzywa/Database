@@ -81,7 +81,7 @@ class PrescriptionSerializer(serializers.ModelSerializer):
     def get_diagnosis(self, obj):
         diagnoses = obj.diagnosis.all()
         if diagnoses:
-            diagnoses = [diagnosis.diagnosis.diagnosis for diagnosis in diagnoses]
+            diagnoses = [diagnosis.diagnosis.diagnosis.capitalize() for diagnosis in diagnoses]
         else: 
             diagnoses = []
         return diagnoses

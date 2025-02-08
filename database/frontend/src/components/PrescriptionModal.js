@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from '@mui/material/Modal';
 import { Grid2 as Grid } from "@mui/material";
 import Select from 'react-select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function PrescriptionModal(props) {
-    const [diagnosisOptions, setDiagnosisOptions] = useState([
-        {'label': 'a', 'value': 'a'}
-    ])
+    const [diagnosisOptions, setDiagnosisOptions] = useState([])
     const [complianceOptions, setComplianceOptions] = useState([])
     const [diagnosisList, setDiagnosisList] = useState(props.prescription.diagnosis ? props.prescription.diagnosis: [])
     const [complianceList , setComplianceList] = useState(props.prescription.compliance ? props.prescription.compliance: [])
+
+    useEffect(() => {
+        fetch('/backend/diagnoses')
+        .then(response => response.json())
+        .then(result => {
+            let fetchresult = result
+            const resultfilter = fetchresult.filter(({label}) => !diagnosisList.includes(label))
+            setDiagnosisOptions(resultfilter)
+        }).catch(error => console.log(error))
+    },[diagnosisList])
     
     function handleDiagnosisChange(choice) {
         setDiagnosisList(diagnosisList => [...diagnosisList, choice.label])
