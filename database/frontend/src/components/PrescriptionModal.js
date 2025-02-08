@@ -5,6 +5,7 @@ import Select from 'react-select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import csrftoken from "./CSRFToken";
 import DateInput from "./DateInput";
+import Alert from "@mui/material/Alert";
 
 export default function PrescriptionModal(props) {
     const [diagnosisOptions, setDiagnosisOptions] = useState([])
@@ -17,6 +18,7 @@ export default function PrescriptionModal(props) {
     const [doseSelection, setDoseSelection] = useState(null)
     const [abOptions, setAbOptions] = useState([])
     const [doseOptions, setDoseOptions] = useState([])
+    const [error, setError] = useState(null)
 
     const style = {
         minHeight: "100vh",
@@ -126,8 +128,32 @@ export default function PrescriptionModal(props) {
         }
 
         if (props.prescription.add) {
-            console.log('create prescription here')
-            console.log(abSelection)
+            if (doseSelection == null && date == null) {
+                setError({
+                    error: true,
+                    message: 'Date and dose must not be empty.'
+                })
+            } else if (date == null) {
+                setError({
+                    error: true,
+                    message: 'Date must not be empty.'
+                })
+            } else if (doseSelection == null) {
+                setError({
+                    error: true,
+                    message: 'Dose must not be empty.'
+                })
+            } else {
+                setError(null)
+                const dose = doseSelection.value
+                requestOptions.body = JSON.stringify({
+                    date: date,
+                    dose: dose,
+                    diagnoses: dl,
+                    compliance: cl
+                })
+            }
+
         } else {
             fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
             .then(response => response.json())
@@ -173,6 +199,13 @@ export default function PrescriptionModal(props) {
         return (
             <Grid container>
                 <Grid size={12}>
+                    {
+                        error ? 
+                        <Alert severity="error">
+                            {error.message}
+                        </Alert>
+                        : null
+                    }
                     <h5>Add new prescription</h5>
                     <Grid size={12}>
                         <p><strong>Date:</strong></p>
