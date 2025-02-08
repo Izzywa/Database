@@ -3,6 +3,7 @@ import Modal from '@mui/material/Modal';
 import { Grid2 as Grid } from "@mui/material";
 import Select from 'react-select';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import csrftoken from "./CSRFToken";
 
 export default function PrescriptionModal(props) {
     const [diagnosisOptions, setDiagnosisOptions] = useState([])
@@ -50,8 +51,26 @@ export default function PrescriptionModal(props) {
 
         let cl = new Set(complianceList)
         cl = [...cl]
-        console.log(dl)
-        console.log(cl)
+        
+        const requestOptions = {
+            method: ('POST'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+                diagnoses: dl,
+                compliance: cl
+            })
+        }
+
+        fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+        }).catch(error => console.log(error))
+
     }
 
     function ShowPrescription() {

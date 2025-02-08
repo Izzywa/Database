@@ -256,31 +256,93 @@ def allergies_list(request, pt_id=None, name='official'):
             }, status=200)
 
 @login_required(login_url="/login")
-@api_view(['GET'])
-def compliance_list(request, pt_id):
-    try:
-        if request.user.is_staff:
-            patient = Patients.objects.get(id=pt_id)
-        else:
-            patient = Patients.objects.get(id=pt_id, deleted=0)
-    except Patients.DoesNotExist:
-        return Response({
-            'error': True,
-            'message': 'Patient id does not exist'
-        }, status=404)
-        
-    prescription = patient.prescriptions.all().order_by('-prescription_date')
-    serializer = PrescriptionSerializer(prescription, many=True)
-    prescription_paginator = Paginator(serializer.data, 5)
-    page = request.GET.get('page', 1)
-    try:
-        prescription_by_page = prescription_paginator.page(page).object_list
-    except:
-        prescription_by_page = []
+@api_view(['GET', 'POST'])
+def compliance_list(request, pt_id=None, pr_id=None):
+    if request.method == 'GET':
+        try:
+            if request.user.is_staff:
+                patient = Patients.objects.get(id=pt_id)
+            else:
+                patient = Patients.objects.get(id=pt_id, deleted=0)
+        except Patients.DoesNotExist:
+            return Response({
+                'error': True,
+                'message': 'Patient id does not exist'
+            }, status=404)
             
-    return Response({
-        'num_pages': prescription_paginator.num_pages,
-        'result': prescription_by_page
+        prescription = patient.prescriptions.all().order_by('-prescription_date')
+        serializer = PrescriptionSerializer(prescription, many=True)
+        prescription_paginator = Paginator(serializer.data, 5)
+        page = request.GET.get('page', 1)
+        try:
+            prescription_by_page = prescription_paginator.page(page).object_list
+        except:
+            prescription_by_page = []
+                
+        return Response({
+            'num_pages': prescription_paginator.num_pages,
+            'result': prescription_by_page
+            }, status=200)
+    
+    elif request.method == 'POST':
+        prescription = Prescriptions.objects.get(id=pr_id)
+        serializer = PrescriptionSerializer(prescription)
+        
+        data = request.data 
+        diagnoses = data['diagnoses']
+        compliance = data['compliance']
+        
+        diagnoses_to_delete = set(serializer.data['diagnosis']).difference(set(diagnoses))
+        diagnoses_to_add = set(diagnoses).difference(set(serializer.data['diagnosis']))
+        compliance_to_delete = set(serializer.data['compliance']).difference(set(compliance))
+        compliance_to_add = set(compliance).difference(set(serializer.data['compliance']))
+        
+        for diagnosis in diagnoses_to_delete:
+            try:
+                delete_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
+                # delete the item here
+            except Diagnoses.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+                
+        for diagnosis in diagnoses_to_add:
+            try:
+                add_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
+                # add item here
+            except Diagnoses.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+                
+        for compliance in compliance_to_delete:
+            try:
+                delete_compliance = AbUsage.objects.get(use=compliance)
+                #delete compliance here
+            except AbUsage.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+                
+        for compliance in compliance_to_add:
+            try:
+                add_compliance = AbUsage.objects.get(use=compliance)
+                # add compliance here
+            except AbUsage.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+            
+        return Response ({
+            "data": f"successfully added and delete for prescription #{pr_id}",
+            "to_delete" : diagnoses_to_delete,
+            "to_add": diagnoses_to_add,
+            "c_delete": compliance_to_delete,
+            "c_add": compliance_to_add
         }, status=200)
     
 @api_view(['GET'])
@@ -309,10 +371,51 @@ def test(request):
         diagnoses_to_add = set(diagnoses).difference(set(serializer.data['diagnosis']))
         compliance_to_delete = set(serializer.data['compliance']).difference(set(compliance))
         compliance_to_add = set(compliance).difference(set(serializer.data['compliance']))
+        
+        for diagnosis in diagnoses_to_delete:
+            try:
+                delete_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
+                # delete the item here
+            except Diagnoses.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+                
+        for diagnosis in diagnoses_to_add:
+            try:
+                add_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
+                # add item here
+            except Diagnoses.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+                
+        for compliance in compliance_to_delete:
+            try:
+                delete_compliance = AbUsage.objects.get(use=compliance)
+                #delete compliance here
+            except AbUsage.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+                
+        for compliance in compliance_to_add:
+            try:
+                add_compliance = AbUsage.objects.get(use=compliance)
+                # add compliance here
+            except AbUsage.DoesNotExist:
+                return Response ({
+                    "error": True,
+                    "message": f"No diagnosis in list named {diagnosis}"
+                }, status=400)
+            
         return Response ({
-            "data": data,
+            "data": "successfully added and delete",
             "to_delete" : diagnoses_to_delete,
-            "to_keep": diagnoses_to_add,
+            "to_add": diagnoses_to_add,
             "c_delete": compliance_to_delete,
             "c_add": compliance_to_add
         }, status=200)

@@ -18,6 +18,7 @@ urlpatterns = [
     path('allergies/<int:pt_id>/<str:name>', views.allergies_list, name="allergies_list"),
     path('allergies/<int:pt_id>', views.allergies_list, name="edit_allergies"),
     path('compliance/<int:pt_id>', views.compliance_list, name="compliance_list"),
+    path('compliance/edit/<int:pr_id>', views.compliance_list, name="compliance_edit"),
     path('test', views.test, name="test"),
     path('ab_list', views.antibiotics_list, name="ab_list"),
     path('diagnoses', views.diagnoses_list, name="diagnoses_list"),
