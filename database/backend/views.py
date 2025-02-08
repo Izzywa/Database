@@ -300,7 +300,8 @@ def compliance_list(request, pt_id=None, pr_id=None):
         for diagnosis in diagnoses_to_delete:
             try:
                 delete_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
-                # delete the item here
+                item = prescription.diagnosis.get(diagnosis=delete_diagnosis)
+                item.delete()
             except Diagnoses.DoesNotExist:
                 return Response ({
                     "error": True,
@@ -310,7 +311,7 @@ def compliance_list(request, pt_id=None, pr_id=None):
         for diagnosis in diagnoses_to_add:
             try:
                 add_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
-                # add item here
+                prescription.diagnosis.create(prescription=prescription, diagnosis=add_diagnosis)
             except Diagnoses.DoesNotExist:
                 return Response ({
                     "error": True,
@@ -320,7 +321,8 @@ def compliance_list(request, pt_id=None, pr_id=None):
         for compliance in compliance_to_delete:
             try:
                 delete_compliance = AbUsage.objects.get(use=compliance)
-                #delete compliance here
+                item = prescription.compliance.get(use=delete_compliance)
+                item.delete()
             except AbUsage.DoesNotExist:
                 return Response ({
                     "error": True,
@@ -330,7 +332,7 @@ def compliance_list(request, pt_id=None, pr_id=None):
         for compliance in compliance_to_add:
             try:
                 add_compliance = AbUsage.objects.get(use=compliance)
-                # add compliance here
+                prescription.compliance.create(prescription=prescription, use=add_compliance)
             except AbUsage.DoesNotExist:
                 return Response ({
                     "error": True,

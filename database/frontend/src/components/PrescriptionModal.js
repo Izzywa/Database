@@ -68,7 +68,12 @@ export default function PrescriptionModal(props) {
         fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result)
+            if (!result.error) {
+                props.handleClose()
+                props.setCount(props.count + 1)
+            } else {
+                alert(result.message)  
+            }
         }).catch(error => console.log(error))
 
     }

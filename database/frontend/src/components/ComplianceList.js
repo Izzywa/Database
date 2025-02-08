@@ -15,6 +15,7 @@ export default function ComplianceList(props) {
     const [numPages, setNumPages] = useState(1)
     const [open, setOpen] = useState(false)
     const [prescription, setPrescription] = useState(null)
+    const [count, setCount] = useState(0)
 
     function handleClose() {
         setOpen(false)
@@ -42,7 +43,7 @@ export default function ComplianceList(props) {
             setComplianceList(result.result)
         })
         .catch(error => console.log(error))
-    },[page])
+    },[page, count])
 
     if (complianceList.length == 0) {
         return (
@@ -54,6 +55,8 @@ export default function ComplianceList(props) {
             {prescription ?
             <PrescriptionModal openModal={open} 
             handleClose={handleClose}
+            count={count}
+            setCount={setCount}
             prescription={prescription}/>
             : null }
             <div className="table-container">
