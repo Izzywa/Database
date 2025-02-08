@@ -20,6 +20,7 @@ class PatientSerializer(serializers.ModelSerializer):
             'phone_number',
             'birth_country',
             'resident_country',
+            'deleted'
         ]
     
     def get_age(self, obj):

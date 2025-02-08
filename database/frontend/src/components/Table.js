@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 
 export default function Table(props) {
@@ -52,12 +52,20 @@ export default function Table(props) {
                 <tbody>
                     {
                         props.tableList.map((item, key) => {
+                            const colSpan = Object.keys(props.tableOrder).length
                             return (
-                                <tr key={key} 
+                                <Fragment key={key}>
+                                <tr
                                 onClick={props.rowClickEvent} 
                                 data-id={item.id}>
                                     <TableRow item={item}/>
+                                    {
+                                        item.deleted == 1 ? 
+                                        <td style={{color: "red"}}> Marked as deleted</td>
+                                        :null
+                                    }
                                 </tr>
+                                </Fragment>
                             )
                         })
                     }
