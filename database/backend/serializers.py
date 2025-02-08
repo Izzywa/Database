@@ -104,18 +104,14 @@ class VisitSerializer(serializers.ModelSerializer):
         
 class VisitPrescriptionSerializer(serializers.ModelSerializer):
     dates = serializers.SerializerMethodField()
-    staff = serializers.SerializerMethodField()
     class Meta:
         model = Patients
         fields = [
             'id',
-            'dates',
-            'staff'
+            'full_name',
+            'deleted',
+            'dates'
         ]
-        
-    def get_staff(self, obj):
-        is_staff = self.context.get('is_staff')
-        return is_staff
         
     def get_dates(self, obj):
         date_list = self.context.get('dates')

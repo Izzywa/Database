@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Table from "./Table";
 import Paginator from "./Paginator";
 import PrescriptionModal from "./PrescriptionModal";
@@ -32,17 +32,22 @@ export default function ComplianceList(props) {
     }
 
     useEffect(() => {
-        fetch('/backend/compliance/' + props.id
-            + '?page=' + page
-        )
-        .then(response => {
-            return response.json()
-        })
-        .then(result => {
-            setNumPages(result.num_pages)
-            setComplianceList(result.result)
-        })
-        .catch(error => console.log(error))
+        if (props.visitPrescription) {
+            setComplianceList(props.prescriptionList)
+        } else {
+            fetch('/backend/compliance/' + props.id
+                + '?page=' + page
+            )
+            .then(response => {
+                return response.json()
+            })
+            .then(result => {
+                setNumPages(result.num_pages)
+                setComplianceList(result.result)
+            })
+            .catch(error => console.log(error))
+        }
+        
     },[page, count])
 
     function handleAddPrescription() {
@@ -55,27 +60,10 @@ export default function ComplianceList(props) {
         setOpen(true)
     }
 
-    if (complianceList.length == 0) {
-        return (
-            <h6>No Prescriptions history</h6>
-        )
-    } else {
+    function ComplianceListPrescription() {
+        
         return (
             <>
-            {prescription ?
-            <PrescriptionModal openModal={open} 
-            handleClose={handleClose}
-            count={count}
-            setCount={setCount}
-            ptId={props.id}
-            prescription={prescription}/>
-            : null }
-            <div>
-                <button className="btn btn-info m-2"
-                onClick={handleAddPrescription}>
-                    Add Prescription
-                </button>
-            </div>
             <div className="table-container">
                 <Table tableOrder={ComplianceOrder} 
                 tableList={complianceList}
@@ -89,4 +77,47 @@ export default function ComplianceList(props) {
             </>
         )
     }
+
+    function DatePrescription() {
+        return(
+            <div>
+                <div className="table-container">
+                    <Table tableOrder={ComplianceOrder}
+                    tableList={complianceList}
+                    rowClickEvent={handleComplianceClick}/>
+                </div>
+            </div>
+        )
+    }
+
+    const Render = useCallback(() => {
+        switch (true) {
+            case (props.visitPrescription):
+                return (
+                    <DatePrescription/>
+                )
+            default:
+                return (<ComplianceListPrescription/>)
+        }
+    }, [complianceList])
+    
+    return(
+        <>
+        {prescription ?
+            <PrescriptionModal openModal={open} 
+            handleClose={handleClose}
+            count={props.visitPrescription ? props.count : count}
+            setCount={props.visitPrescription ? props.setCount : setCount}
+            ptId={props.id}
+            prescription={prescription}/>
+            : null }
+         <div>
+                <button className="btn btn-info m-2"
+                onClick={handleAddPrescription}>
+                    Add Prescription
+                </button>
+            </div>
+        {Render()}
+        </>
+    )
 }

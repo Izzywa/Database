@@ -15,6 +15,7 @@ urlpatterns = [
     path('dial_codes', views.dial_code_list, name="dial_codes"),
     re_path(r'^patients/search$', views.search_patients, name="search_patients"),
     path('vp/<int:pt_id>', views.visit_prescription_list, name="vp"),
+    path('vp/<int:pt_id>/<str:date>', views.visit_prescription_list, name="vp_by_date"),
     path('allergies/<int:pt_id>/<str:name>', views.allergies_list, name="allergies_list"),
     path('allergies/<int:pt_id>', views.allergies_list, name="edit_allergies"),
     path('compliance/<int:pt_id>', views.compliance_list, name="compliance_list"),

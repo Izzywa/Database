@@ -149,7 +149,7 @@ def search_patients(request):
     
 @login_required(login_url="/login")
 @api_view(['GET'])
-def visit_prescription_list(request, pt_id=None):
+def visit_prescription_list(request, pt_id=None, date=None):
     try:
         if request.user.is_staff:
             patient = Patients.objects.get(id=pt_id)
@@ -160,16 +160,31 @@ def visit_prescription_list(request, pt_id=None):
             'error': True,
             'message': 'Patient id does not exist'
         }, status=404)
-    with connection.cursor() as cursor:
-        cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
-        dates = cursor.fetchall()
-        
-    if dates:
-        dates = [date[0] for date in dates]
+    
+    if date is None:  
+        with connection.cursor() as cursor:
+            cursor.callproc('visit_prescription_by_pt_id', (pt_id,))
+            dates = cursor.fetchall()
+            
+        if dates:
+            dates = [date[0] for date in dates]
+        else:
+            dates = []
     else:
-        dates = []
+        try:
+            dates = [datetime.strptime(date, '%Y-%m-%d')]
+        except ValueError:
+            return Response({
+                'error': True,
+                'message': 'Not valid date given.'
+            })
         
     serializer = VisitPrescriptionSerializer(patient, context={'dates':dates, 'is_staff': request.user.is_staff})
+    if date is not None:
+        return Response({
+            'data': serializer.data,
+            'is_staff': request.user.is_staff
+        }, status=200)
     
     vp_pagination = Paginator(serializer.data['dates'],5)
     page = request.GET.get('page', 1)
