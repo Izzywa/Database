@@ -384,70 +384,6 @@ def antibiotics_list(request):
         
     return Response(serializer.data, status=200)
     
-@api_view(['GET', 'POST'])
-def test(request):
-    precription = Prescriptions.objects.get(id=1)
-    serializer = PrescriptionSerializer(precription)
-    
-    if request.method == 'POST':
-        data = request.data 
-        diagnoses = data['diagnoses']
-        compliance = data['compliance']
-        
-        diagnoses_to_delete = set(serializer.data['diagnosis']).difference(set(diagnoses))
-        diagnoses_to_add = set(diagnoses).difference(set(serializer.data['diagnosis']))
-        compliance_to_delete = set(serializer.data['compliance']).difference(set(compliance))
-        compliance_to_add = set(compliance).difference(set(serializer.data['compliance']))
-        
-        for diagnosis in diagnoses_to_delete:
-            try:
-                delete_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
-                # delete the item here
-            except Diagnoses.DoesNotExist:
-                return Response ({
-                    "error": True,
-                    "message": f"No diagnosis in list named {diagnosis}"
-                }, status=400)
-                
-        for diagnosis in diagnoses_to_add:
-            try:
-                add_diagnosis = Diagnoses.objects.get(diagnosis=diagnosis)
-                # add item here
-            except Diagnoses.DoesNotExist:
-                return Response ({
-                    "error": True,
-                    "message": f"No diagnosis in list named {diagnosis}"
-                }, status=400)
-                
-        for compliance in compliance_to_delete:
-            try:
-                delete_compliance = AbUsage.objects.get(use=compliance)
-                #delete compliance here
-            except AbUsage.DoesNotExist:
-                return Response ({
-                    "error": True,
-                    "message": f"No diagnosis in list named {diagnosis}"
-                }, status=400)
-                
-        for compliance in compliance_to_add:
-            try:
-                add_compliance = AbUsage.objects.get(use=compliance)
-                # add compliance here
-            except AbUsage.DoesNotExist:
-                return Response ({
-                    "error": True,
-                    "message": f"No diagnosis in list named {diagnosis}"
-                }, status=400)
-            
-        return Response ({
-            "data": "successfully added and delete",
-            "to_delete" : diagnoses_to_delete,
-            "to_add": diagnoses_to_add,
-            "c_delete": compliance_to_delete,
-            "c_add": compliance_to_add
-        }, status=200)
-    return Response(serializer.data, status=200)
-    
 @api_view(['GET'])
 def diagnoses_list(request):
     diagnoses = Diagnoses.objects.all()
@@ -458,4 +394,18 @@ def diagnoses_list(request):
 def abusage_list(request):
     abusage = AbUsage.objects.all()
     serializer = AbUsageSerializer(abusage, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET'])
+def dose_list(request, ab):
+    ab = Antibiotics.objects.get(ab=ab)
+    dosage = ab.dosage.all()
+    serializer = DosageSerializer(dosage, many=True)
+    return Response(serializer.data, status=200)
+
+@api_view(['GET', 'POST'])
+def test(request):
+    ab = Antibiotics.objects.get(ab="AMX")
+    dosage = ab.dosage.all()
+    serializer = DosageSerializer(dosage, many=True)
     return Response(serializer.data, status=200)

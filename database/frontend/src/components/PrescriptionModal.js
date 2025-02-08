@@ -72,6 +72,18 @@ export default function PrescriptionModal(props) {
         setComplianceList(list => list.filter(item => item != compliance))
     }
 
+    useEffect(() => {
+        setDoseSelection(null)
+        if (abSelection != null) {
+            fetch('/backend/dose/' + abSelection.value)
+            .then(response => response.json())
+            .then(result => {
+                setDoseOptions(result)
+            })
+            .catch(error => console.log(error))
+        }
+    }, [abSelection])
+
     function handleDeletePrescription() {
         const requestOptions = {
             method: ('DELETE'),
@@ -115,6 +127,7 @@ export default function PrescriptionModal(props) {
 
         if (props.prescription.add) {
             console.log('create prescription here')
+            console.log(abSelection)
         } else {
             fetch('/backend/compliance/edit/' + props.prescription.id, requestOptions)
             .then(response => response.json())
@@ -181,7 +194,15 @@ export default function PrescriptionModal(props) {
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
                         <p><strong>Dose:</strong></p>
-                        <Select options={doseOptions}/>
+                        {
+                            doseSelection ?
+                            <ul>
+                                <li>{doseSelection.label}</li>
+                            </ul>
+                            : null
+                        }
+                        <Select options={doseOptions}
+                        onChange={(choice) => setDoseSelection(choice)}/>
                     </Grid>
                 </Grid>
                 <SelectionButtons/>
