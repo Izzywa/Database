@@ -15,6 +15,7 @@ export default function VisitList(props) {
     const [open, setOpen] = useState(false)
     const textRef = useRef();
     const [openChild, setOpenChild] = useState(false)
+    const [AddNote, setAddNote] = useState(false)
 
     function handleRowClick(e) {
         const visit_id = (e.target.closest("[data-id]").dataset.id)
@@ -27,6 +28,9 @@ export default function VisitList(props) {
 
     function handleClose() {
         setOpen(false)
+        if (AddNote) {
+            setAddNote(false)
+        }
     }
 
     function handleCloseChild() {
@@ -56,11 +60,15 @@ export default function VisitList(props) {
 
     function handleSaveChanges() {
         console.log(textRef.current.value)
-        console.log("value " +textValue)
     }
 
     function handleDeleteBtn(id) {
         setOpenChild(true)
+    }
+
+    function handleAddBtn() {
+        setAddNote(true)
+        setOpen(true)
     }
     
     function ChildModal() {
@@ -96,12 +104,16 @@ export default function VisitList(props) {
                 <ChildModal />
                 <div className="container p-3 bg-light">
                     <Grid container>
-                        <DeleteForeverIcon color="secondary"
-                        onClick={() => handleDeleteBtn(visit.id)}/>
+                        {
+                            AddNote ? <h5>New Note</h5> :
+                        
+                            <DeleteForeverIcon color="secondary"
+                            onClick={() => handleDeleteBtn(visit.id)}/>
+                        }
                         <Grid size={12} >
                             <Textarea className="my-2"
                             slotProps={{textarea: {ref: textRef}}}
-                            defaultValue={visit.note}/>
+                            defaultValue={AddNote ? '' : visit.note}/>
                         </Grid>
                     </Grid>
                     <div>
@@ -124,10 +136,11 @@ export default function VisitList(props) {
     return (
         <>
         {
-            visit ? <VisitModal/>: null
+            visit || AddNote ? <VisitModal/>: null
         }
         <div>
-            <button className="btn btn-info m-2">
+            <button className="btn btn-info m-2"
+            onClick={handleAddBtn}>
                 Add Note
             </button>
         </div>
