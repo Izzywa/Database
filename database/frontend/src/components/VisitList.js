@@ -1,10 +1,9 @@
 import React, { useRef, useState } from "react";
 import Table from "./Table";
-import { Modal } from "@mui/material";
+import {  Modal } from "@mui/material";
 import {Grid2 as Grid} from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ChildModal from "./DeleteChildModal";
 
 export default function VisitList(props) {
     const visitOrder = {
@@ -39,11 +38,36 @@ export default function VisitList(props) {
 
     function handleSaveChanges() {
         console.log(textRef.current.value)
+        console.log("value " +textValue)
     }
 
     function handleDeleteBtn(id) {
-        console.log('delete note id' + id)
         setOpenChild(true)
+    }
+    
+    function ChildModal() {
+        return (
+        <Modal
+        open={openChild}>
+            <div className="modal-div">
+                <div className="container p-3 bg-light">
+                    <p>
+                Delete Note #{visit ? visit.id : null} ?
+                </p>
+                <div>
+                <button className="btn btn-info"
+                onClick={handleCloseChild}>
+                    Close
+                </button>
+                <button className="btn btn-dark m-1" 
+                onClick={handleDeleteNote}>
+                    Delete
+                </button>
+                </div>
+                </div>
+            </div>
+        </Modal>
+        )
     }
 
     function VisitModal() {
@@ -51,11 +75,7 @@ export default function VisitList(props) {
             <Modal
             open={open}>
             <div className="modal-div">
-                <ChildModal openChild={openChild}
-                label={`visit note with id#${visit.id}`}
-                handleCloseChild={handleCloseChild}
-                handleDelete={handleDeleteNote}
-                />
+                <ChildModal />
                 <div className="container p-3 bg-light">
                     <Grid container>
                         <DeleteForeverIcon color="secondary"
