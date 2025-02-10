@@ -130,11 +130,11 @@ class VisitPrescriptionSerializer(serializers.ModelSerializer):
             date_str = date.strftime('%Y-%m-%d')
             
             if is_staff:
-                visits = obj.visits.filter(visit_date=date)
-                prescriptions = obj.prescriptions.filter(prescription_date=date)
+                visits = obj.visits.filter(visit_date=date).order_by('-last_modified')
+                prescriptions = obj.prescriptions.filter(prescription_date=date).order_by('-last_modified')
             else:
-                visits = obj.visits.filter(visit_date=date, deleted=0)
-                prescriptions = obj.prescriptions.filter(prescription_date=date, deleted=0)    
+                visits = obj.visits.filter(visit_date=date, deleted=0).order_by('-last_modified')
+                prescriptions = obj.prescriptions.filter(prescription_date=date, deleted=0).order_by('-last_modified')   
             
             visits_data = VisitSerializer(visits, many=True).data
             prescriptions_data = PrescriptionSerializer(prescriptions, many=True).data

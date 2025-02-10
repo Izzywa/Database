@@ -81,9 +81,10 @@ export default function VisitList(props) {
             fetch('/backend/visit_note', requestOptions)
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 if (result.error) {
                     setError(result)
+                } else {
+                    props.setCount(props.count + 1)
                 }
             }).catch(error => console.log(error))
         }

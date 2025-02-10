@@ -511,15 +511,14 @@ def visit_note(request, visit_id=None):
             })
         serializers = VisitSerializer(data=data)
         if serializers.is_valid():
-            '''
             try:
-                patient.visits.create(patient=patient, note=data['note'], visit_date=data['date'])
+                patient.visits.create(patient=patient, note=data['note'], visit_date=data['visit_date'])
             except Exception as e:
                 return Response({
                     'error': True,
-                    'message': e
+                    'message': 'Not valid data'
                 })
-                '''
+
                 
             return Response({
                 'error': False,
