@@ -21,11 +21,11 @@ export default function PrescriptionModal(props) {
     const [error, setError] = useState(null)
 
     const style = {
-        minHeight: "100vh",
         overflow: "scroll",
-        display: "flex",
-        alignItems: "center",
+        height: "100vh",
         justifyContent: "center",
+        alignItems: "center",
+        display: "flex"
         }
 
     function handleCloseChild(){
@@ -134,16 +134,19 @@ export default function PrescriptionModal(props) {
                     error: true,
                     message: 'Date and dose must not be empty.'
                 })
+                return null
             } else if (date == null) {
                 setError({
                     error: true,
                     message: 'Date must not be empty.'
                 })
+                return null
             } else if (doseSelection == null) {
                 setError({
                     error: true,
                     message: 'Dose must not be empty.'
                 })
+                return null
             } else {
                 setError(null)
                 const dose = doseSelection.value
@@ -318,7 +321,7 @@ export default function PrescriptionModal(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <div className="modal-div">
+        <div className="modal-div" style={style}>
             <div className="bg-light text-dark container p-3">
                 <Grid container spacing={1}>
                 {
