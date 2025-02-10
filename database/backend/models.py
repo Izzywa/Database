@@ -143,7 +143,7 @@ class Visits(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name="visits")
     visit_date = models.DateField()
     last_modified = models.DateTimeField(auto_now=True)
-    note = models.CharField(max_length=5000, blank=True, null=True)
+    note = models.CharField(max_length=5000, blank=False, null=False)
     deleted = models.PositiveIntegerField(blank=False, null=False, default=0)
 
     class Meta:

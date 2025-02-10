@@ -32,6 +32,7 @@ export default function ViewDateItem(props) {
                     <VisitList visits={data.data.dates[0].visits}
                     id={id}
                     count={count}
+                    date={date}
                     setCount={setCount}/>
                 </div>
                 <div className="prescription-list"

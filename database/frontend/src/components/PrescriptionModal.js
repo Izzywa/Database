@@ -6,6 +6,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import csrftoken from "./CSRFToken";
 import DateInput from "./DateInput";
 import Alert from "@mui/material/Alert";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export default function PrescriptionModal(props) {
     const [diagnosisOptions, setDiagnosisOptions] = useState([])
@@ -19,6 +20,7 @@ export default function PrescriptionModal(props) {
     const [abOptions, setAbOptions] = useState([])
     const [doseOptions, setDoseOptions] = useState([])
     const [error, setError] = useState(null)
+    const dayjs = require('dayjs')
 
     const style = {
         overflow: "scroll",

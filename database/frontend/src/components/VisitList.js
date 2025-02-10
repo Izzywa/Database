@@ -60,6 +60,30 @@ export default function VisitList(props) {
 
     function handleSaveChanges() {
         console.log(textRef.current.value)
+        console.log(AddNote)
+        const note = textRef.current.value
+
+        const requestOptions = {
+            method: ('POST'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+                note: note,
+                visit_date: props.date,
+                patient: props.id
+            })
+        }
+
+        if (AddNote) {
+            fetch('/backend/visit_note', requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+            }).catch(error => console.log(error))
+        }
     }
 
     function handleDeleteBtn(id) {

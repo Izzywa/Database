@@ -477,8 +477,8 @@ def test(request):
     return Response(serializer.data, status=200)
 
 @login_required(login_url="/login")
-@api_view(['DELETE'])
-def visit_note(request, visit_id):
+@api_view(['DELETE', 'POST'])
+def visit_note(request, visit_id=None):
     if request.method == 'DELETE':
         visit = Visits.objects.get(id=visit_id)
         if request.user.is_staff and visit.deleted == 1:
@@ -494,3 +494,35 @@ def visit_note(request, visit_id):
                 'error': False,
                 'message': f'Successfully marked note #{visit_id} as deleted.'
             })
+    
+    if request.method == 'POST':
+        data = request.data
+        patient = Patients.objects.get(id=data['patient'])
+        if not request.user.is_staff and patient.deleted == 1:
+            return Response({
+                'error': True,
+                'message': 'User not authorised to add note to deleted patient'
+            })
+        serializers = VisitSerializer(data=data)
+        if serializers.is_valid():
+            '''
+            try:
+                patient.visits.create(patient=patient, note=data['note'], visit_date=data['date'])
+            except Exception as e:
+                return Response({
+                    'error': True,
+                    'message': e
+                })
+                '''
+                
+            return Response({
+                'error': False,
+                'message': 'Note successfuly created.',
+                'data': data
+            }, status=200)
+        else:
+            return Response({
+                'error': True,
+                'message': serializers.errors
+            }, status=409)
+            
