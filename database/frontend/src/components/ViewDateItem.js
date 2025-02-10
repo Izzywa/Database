@@ -3,19 +3,25 @@ import NavBar from "./NavBar";
 import { useParams } from "react-router-dom";
 import ComplianceList from "./ComplianceList";
 import VisitList from "./VisitList";
+import Alert from "@mui/material/Alert";
 
 export default function ViewDateItem(props) {
     const { id, date } = useParams();
     const [name, setName] = useState('')
     const [data, setData] = useState(null)
     const [count, setCount] = useState(0)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         fetch(`/backend/vp/${id}/${date}`)
         .then(response => response.json())
         .then(result => {
             setData(result)
-            setName(result.data.full_name)
+            if (!result.error) {
+                setName(result.data.full_name)
+            } else {
+                setError(true)
+            }
         }).catch(error => console.log(error))
     }, [count])
 
@@ -52,14 +58,22 @@ export default function ViewDateItem(props) {
         <>
         <NavBar/>
         <div className="container">
-            <h1>Patient (#{id}): {name}</h1>
-            <h3>{date}</h3>
             {
-                data ?
-                <ListItem/>
-                : null
+                error ?
+                <Alert severity="error">
+                    <p>{data.message}</p>
+                </Alert>
+                :
+                <div>
+                    <h1>Patient (#{id}): {name}</h1>
+                    <h3>{date}</h3>
+                    {
+                        data ?
+                        <ListItem/>
+                        : null
+                    }
+                    </div>
             }
-            
         </div>
         </>
     )

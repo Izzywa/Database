@@ -158,7 +158,7 @@ def visit_prescription_list(request, pt_id=None, date=None):
     except Patients.DoesNotExist:
         return Response({
             'error': True,
-            'message': 'Patient id does not exist'
+            'message': f'Patient with id #{pt_id} does not exist'
         }, status=404)
     
     if date is None:  
