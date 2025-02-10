@@ -497,7 +497,13 @@ def visit_note(request, visit_id=None):
     
     if request.method == 'POST':
         data = request.data
-        patient = Patients.objects.get(id=data['patient'])
+        try:
+            patient = Patients.objects.get(id=data['patient'])
+        except Patients.DoesNotExist:
+            return Response({
+                'error': True,
+                'message': f'Patient with id #{data['patient']} does not exist.'
+            })
         if not request.user.is_staff and patient.deleted == 1:
             return Response({
                 'error': True,

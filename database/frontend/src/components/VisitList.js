@@ -5,6 +5,7 @@ import {Grid2 as Grid} from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import csrftoken from "./CSRFToken";
+import Alert from "@mui/material/Alert";
 
 export default function VisitList(props) {
     const visitOrder = {
@@ -16,6 +17,7 @@ export default function VisitList(props) {
     const textRef = useRef();
     const [openChild, setOpenChild] = useState(false)
     const [AddNote, setAddNote] = useState(false)
+    const [error, setError] = useState(null)
 
     function handleRowClick(e) {
         const visit_id = (e.target.closest("[data-id]").dataset.id)
@@ -59,8 +61,6 @@ export default function VisitList(props) {
     }
 
     function handleSaveChanges() {
-        console.log(textRef.current.value)
-        console.log(AddNote)
         const note = textRef.current.value
 
         const requestOptions = {
@@ -82,6 +82,9 @@ export default function VisitList(props) {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                if (result.error) {
+                    setError(result)
+                }
             }).catch(error => console.log(error))
         }
     }
@@ -127,6 +130,27 @@ export default function VisitList(props) {
             <div className="modal-div">
                 <ChildModal />
                 <div className="container p-3 bg-light">
+                    <div>
+                        {
+                            error ? 
+                            <Alert severity="error">
+                                <ul>
+                                {
+                                    typeof error.message === 'object' ?
+                                        Object.entries(error.message).map( ([key, value]) => {
+                                            let renameKey = key.split('_').join(' ')
+                                            renameKey = renameKey.charAt(0).toUpperCase() + renameKey.slice(1)
+                                            return (
+                                                <li key={key}>{renameKey} : {value}</li>
+                                            )
+                                        })
+                                    : <li>{error.message}</li>
+                                }
+                                </ul>
+                            </Alert>
+                            :null
+                        }
+                        </div>
                     <Grid container>
                         {
                             AddNote ? <h5>New Note</h5> :
