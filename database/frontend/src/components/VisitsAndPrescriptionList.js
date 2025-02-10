@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Paginator from "./Paginator";
 import { useNavigate } from "react-router-dom";
+import Modal from '@mui/material/Modal';
+import DateInput from "./DateInput";
 
 export default function VisitsAndPrescriptionList(props) {
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [vpList, setVpList] = useState([])
+    const [open, setOpen] = useState(false)
+    const [date, setDate] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,6 +21,11 @@ export default function VisitsAndPrescriptionList(props) {
             setNumPages(result.num_pages)
         }).catch(error => console.log(error))
     }, [page])
+
+    const goToDate = useCallback((input) => {
+        setDate(input)
+        navigate(`/date/${props.id}/${input}`)
+    }, [date])
 
     function NestedRow({item, row}) {
         if (item.length != 0) {
@@ -50,8 +59,29 @@ export default function VisitsAndPrescriptionList(props) {
         navigate(`/date/${props.id}/${date}`)
     }
 
+
     return (
         <>
+        <Modal open={open}>
+            <div className="modal-div">
+                <div className=" container bg-light p-3">
+                    <DateInput
+                    label="Choose Date"
+                    setDate={goToDate}/>
+                    <button className="btn btn-info m-1"
+                    onClick={() => setOpen(false)}>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </Modal>
+
+        <div>
+            <button className="btn btn-info m-2"
+            onClick={() => setOpen(true)}>
+                Add new
+            </button>
+        </div>
         <div className="table-container">
             <table className="table">
                 <thead>

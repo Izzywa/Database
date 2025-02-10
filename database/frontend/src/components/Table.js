@@ -30,7 +30,9 @@ export default function Table(props) {
                         
                     } else {
                         return(
-                        <td key={key}>{item[key]}</td>
+                        <td key={key}>
+                            <p>{item[key]}</p>
+                            </td>
                         )
                     }
             })
