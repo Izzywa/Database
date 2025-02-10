@@ -109,6 +109,7 @@ export default function ComplianceList(props) {
             count={props.visitPrescription ? props.count : count}
             setCount={props.visitPrescription ? props.setCount : setCount}
             ptId={props.id}
+            prescriptionDate={props.prescriptionDate}
             prescription={prescription}/>
             : null }
          <div>

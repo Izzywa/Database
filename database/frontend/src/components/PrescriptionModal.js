@@ -113,6 +113,8 @@ export default function PrescriptionModal(props) {
 
         let cl = new Set(complianceList)
         cl = [...cl]
+
+        let inputDate = (props.prescriptionDate ? props.prescriptionDate : date)
         
         const requestOptions = {
             method: ('PUT'),
@@ -129,13 +131,13 @@ export default function PrescriptionModal(props) {
 
         if (props.prescription.add) {
             url = '/backend/compliance/' + props.ptId
-            if (doseSelection == null && date == null) {
+            if (doseSelection == null && inputDate == null) {
                 setError({
                     error: true,
                     message: 'Date and dose must not be empty.'
                 })
                 return null
-            } else if (date == null) {
+            } else if (inputDate == null) {
                 setError({
                     error: true,
                     message: 'Date must not be empty.'
@@ -152,7 +154,7 @@ export default function PrescriptionModal(props) {
                 const dose = doseSelection.value
                 requestOptions.method = ('POST')
                 requestOptions.body = JSON.stringify({
-                    date: date,
+                    date: inputDate,
                     dose: dose,
                     diagnoses: dl,
                     compliance: cl
@@ -209,9 +211,16 @@ export default function PrescriptionModal(props) {
                     <h5>Add new prescription</h5>
                     <Grid size={12}>
                         <p><strong>Date:</strong></p>
-                        <p>{date}</p>
-                        <DateInput label={""}
-                        setDate={setDate}/>
+                        {
+                        props.prescriptionDate ?
+                        props.prescriptionDate
+                        : 
+                        <div>
+                            <p>{date}</p>
+                            <DateInput label={""}
+                            setDate={setDate}/>
+                            </div>
+                        }
                     </Grid>
                     <Grid size={{xs:12, md:6}}>
                         <p><strong>Antibiotic:</strong></p>
