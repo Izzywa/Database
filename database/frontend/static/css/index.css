@@ -28,6 +28,13 @@ tbody > tr:hover {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
 
+.modal-div {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*
 {
     "diagnoses": [

@@ -4,6 +4,7 @@ import { Modal } from "@mui/material";
 import {Grid2 as Grid} from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ChildModal from "./DeleteChildModal";
 
 export default function VisitList(props) {
     const visitOrder = {
@@ -13,6 +14,7 @@ export default function VisitList(props) {
     const [visit, setVisit] = useState(null)
     const [open, setOpen] = useState(false)
     const textRef = useRef();
+    const [openChild, setOpenChild] = useState(false)
 
     function handleRowClick(e) {
         const visit_id = (e.target.closest("[data-id]").dataset.id)
@@ -27,8 +29,21 @@ export default function VisitList(props) {
         setOpen(false)
     }
 
+    function handleCloseChild() {
+        setOpenChild(false)
+    }
+
+    function handleDeleteNote () {
+        console.log(`delete note #${visit.id} with note ${visit.note}`)
+    }
+
     function handleSaveChanges() {
         console.log(textRef.current.value)
+    }
+
+    function handleDeleteBtn(id) {
+        console.log('delete note id' + id)
+        setOpenChild(true)
     }
 
     function VisitModal() {
@@ -36,9 +51,15 @@ export default function VisitList(props) {
             <Modal
             open={open}>
             <div className="modal-div">
-                <div className="container p-3">
+                <ChildModal openChild={openChild}
+                label={`visit note with id#${visit.id}`}
+                handleCloseChild={handleCloseChild}
+                handleDelete={handleDeleteNote}
+                />
+                <div className="container p-3 bg-light">
                     <Grid container>
-                        <DeleteForeverIcon color="secondary"/>
+                        <DeleteForeverIcon color="secondary"
+                        onClick={() => handleDeleteBtn(visit.id)}/>
                         <Grid size={12} >
                             <Textarea className="my-2"
                             slotProps={{textarea: {ref: textRef}}}
