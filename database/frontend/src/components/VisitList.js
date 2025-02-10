@@ -62,6 +62,7 @@ export default function VisitList(props) {
 
     function handleSaveChanges() {
         const note = textRef.current.value
+        let url = ''
 
         const requestOptions = {
             method: ('POST'),
@@ -78,7 +79,18 @@ export default function VisitList(props) {
         }
 
         if (AddNote) {
-            fetch('/backend/visit_note', requestOptions)
+            url = '/backend/visit_note'
+        } else {
+            requestOptions.method = ('PUT')
+            requestOptions.body = JSON.stringify({
+                note: note,
+                visit_date: props.date
+            })
+
+            url = '/backend/visit_note/' + visit.id
+        }
+
+        fetch(url, requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result.error) {
@@ -87,7 +99,6 @@ export default function VisitList(props) {
                     props.setCount(props.count + 1)
                 }
             }).catch(error => console.log(error))
-        }
     }
 
     function handleDeleteBtn(id) {

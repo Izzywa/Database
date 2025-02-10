@@ -477,10 +477,17 @@ def test(request):
     return Response(serializer.data, status=200)
 
 @login_required(login_url="/login")
-@api_view(['DELETE', 'POST'])
+@api_view(['DELETE', 'POST', 'PUT'])
 def visit_note(request, visit_id=None):
+    if visit_id is not None:
+        try: 
+            visit = Visits.objects.get(id=visit_id)
+        except Visits.DoesNotExist:
+            return Response({
+                'error': True,
+                'message': f'Visti with id #{visit_id} does not exist'
+            })
     if request.method == 'DELETE':
-        visit = Visits.objects.get(id=visit_id)
         if request.user.is_staff and visit.deleted == 1:
             visit.delete()
             return Response({
@@ -495,7 +502,7 @@ def visit_note(request, visit_id=None):
                 'message': f'Successfully marked note #{visit_id} as deleted.'
             })
     
-    if request.method == 'POST':
+    elif request.method == 'POST':
         data = request.data
         try:
             patient = Patients.objects.get(id=data['patient'])
@@ -531,3 +538,23 @@ def visit_note(request, visit_id=None):
                 'message': serializers.errors
             }, status=409)
             
+    elif request.method == 'PUT':
+        if visit.deleted == 1 and not request.user.is_staff:
+            return Response({
+                'error': True,
+                'message': 'User not authorised to edit note marked deleted'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+            
+        serializer = VisitSerializer(visit, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'error': False,
+                'message': f"Succesfully updated visit note id #{visit_id}"
+                
+            })
+        else:
+            return Response({
+                'error': True,
+                'message': serializer.errors,
+            })
