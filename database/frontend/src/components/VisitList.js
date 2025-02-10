@@ -4,6 +4,7 @@ import {  Modal } from "@mui/material";
 import {Grid2 as Grid} from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import csrftoken from "./CSRFToken";
 
 export default function VisitList(props) {
     const visitOrder = {
@@ -33,7 +34,24 @@ export default function VisitList(props) {
     }
 
     function handleDeleteNote () {
-        console.log(`delete note #${visit.id} with note ${visit.note}`)
+        const requestOptions = {
+            method: ('DELETE'),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken()
+            },
+            mode: 'same-origin',
+            body: JSON.stringify({
+            })
+        }
+
+        fetch(`/backend/visit_note/${visit.id}`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (!result.error) {
+                props.setCount(props.count + 1)
+            }
+        }).catch(error => console.log(error))
     }
 
     function handleSaveChanges() {

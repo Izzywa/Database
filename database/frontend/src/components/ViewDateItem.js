@@ -29,7 +29,10 @@ export default function ViewDateItem(props) {
                 <div className="visit-list"
                 style={style}>
                     <h4>Visit Notes</h4>
-                    <VisitList visits={data.data.dates[0].visits}/>
+                    <VisitList visits={data.data.dates[0].visits}
+                    id={id}
+                    count={count}
+                    setCount={setCount}/>
                 </div>
                 <div className="prescription-list"
                 style={style}>

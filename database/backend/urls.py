@@ -24,5 +24,6 @@ urlpatterns = [
     path('ab_list', views.antibiotics_list, name="ab_list"),
     path('diagnoses', views.diagnoses_list, name="diagnoses_list"),
     path('abusage', views.abusage_list, name="abusage_list"),
-    path('dose/<str:ab>', views.dose_list, name="dose_list")
+    path('dose/<str:ab>', views.dose_list, name="dose_list"),
+    path('visit_note/<int:visit_id>', views.visit_note, name="visit_note")
 ]

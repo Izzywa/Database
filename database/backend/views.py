@@ -429,7 +429,7 @@ def compliance_list(request, pt_id=None, pr_id=None):
         }, status=200)
         
     elif request.method == 'DELETE':
-        if request.user.is_staff:
+        if request.user.is_staff and prescription.deleted == 1:
             prescription.delete()
         else:
             prescription.deleted = 1
@@ -475,3 +475,22 @@ def test(request):
     dosage = ab.dosage.all()
     serializer = DosageSerializer(dosage, many=True)
     return Response(serializer.data, status=200)
+
+@login_required(login_url="/login")
+@api_view(['DELETE'])
+def visit_note(request, visit_id):
+    if request.method == 'DELETE':
+        visit = Visits.objects.get(id=visit_id)
+        if request.user.is_staff and visit.deleted == 1:
+            visit.delete()
+            return Response({
+                'error': False,
+                'message': f'Successfully deleted note #{visit_id}.'
+            })
+        else:
+            visit.deleted = 1
+            visit.save()
+            return Response({
+                'error': False,
+                'message': f'Successfully marked note #{visit_id} as deleted.'
+            })
