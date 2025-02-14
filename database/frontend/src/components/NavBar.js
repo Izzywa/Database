@@ -43,8 +43,8 @@ export default function NavBar(props) {
             </div>
         </div> 
         </nav>
-        <div className="container">
-            <Breadcrumbs area-label="breadcrumb">
+        <div className="container p-2">
+            <Breadcrumbs area-label="breadcrumb" separator="›">
                 {
                     Object.entries(breadcrumbsList).map( ([key, value]) => {
                         const keys = Object.keys(breadcrumbsList)
@@ -54,11 +54,8 @@ export default function NavBar(props) {
                         color="inherit"
                         underline="hover"
                         href={value}>
-                            {
-                                key == activeKey ?
-                                <span style={{color: 'text.primary'}}>{key}</span>
-                                : <span>{key}</span>
-                            }
+                            {key == activeKey ? <span className="text-dark">{key}</span>
+                            : key}
                             </Link>)
                     })
                 }
