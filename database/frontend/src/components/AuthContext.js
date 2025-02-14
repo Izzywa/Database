@@ -7,6 +7,9 @@ export const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [authenticated ,setAuthenticated] = useState(false)
     const nav = useNavigate();
+    const [breadcrumbsList, setBreadcrumbsList] = useState({
+        'Home': '/'
+    })
 
     const checkAuth = useCallback(() => {
         setIsLoading(true)
@@ -42,7 +45,10 @@ export const AuthProvider = ({children}) => {
     }
 
     return(
-        <AuthContext.Provider value={{ authenticated, setAuthenticated, checkAuth, isLoading, logout }}>
+        <AuthContext.Provider value={{ 
+            authenticated, setAuthenticated, checkAuth, isLoading, logout,
+            breadcrumbsList, setBreadcrumbsList
+            }}>
             {children}
         </AuthContext.Provider>
     );

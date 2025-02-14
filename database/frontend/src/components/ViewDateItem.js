@@ -4,13 +4,23 @@ import { useParams } from "react-router-dom";
 import ComplianceList from "./ComplianceList";
 import VisitList from "./VisitList";
 import Alert from "@mui/material/Alert";
+import { useAuth } from "./AuthContext";
 
 export default function ViewDateItem(props) {
     const { id, date } = useParams();
+    const { setBreadcrumbsList } = useAuth();
     const [name, setName] = useState('')
     const [data, setData] = useState(null)
     const [count, setCount] = useState(0)
     const [error, setError] = useState(null)
+
+    useEffect(() => {
+        setBreadcrumbsList({
+            'Home': '/',
+            'Patient Information': `/patient/${id}`,
+            'Patient Visit and Prescription by date': `/date/${id}/${date}`
+        })
+    }, [])
 
     useEffect(() => {
         fetch(`/backend/vp/${id}/${date}`)

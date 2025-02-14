@@ -1,13 +1,16 @@
 import React from "react";
 import { useAuth } from "./AuthContext";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
 export default function NavBar(props) {
-    const { logout } = useAuth();
+    const { logout, breadcrumbsList } = useAuth();
     function hangleLogout() {
         logout()
     }
     
     return (
+        <>
         <nav className="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div className="container-fluid">
             <a className="navbar-brand" href="/">Home</a>
@@ -28,7 +31,7 @@ export default function NavBar(props) {
                 </li>
                 <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+                    More
                 </a>
                 <ul className="dropdown-menu">
                     <li><a className="dropdown-item" href="#">Action</a></li>
@@ -40,5 +43,27 @@ export default function NavBar(props) {
             </div>
         </div> 
         </nav>
+        <div className="container">
+            <Breadcrumbs area-label="breadcrumb">
+                {
+                    Object.entries(breadcrumbsList).map( ([key, value]) => {
+                        const keys = Object.keys(breadcrumbsList)
+                        const activeKey = keys[keys.length - 1]
+                        return (
+                        <Link key={key} 
+                        color="inherit"
+                        underline="hover"
+                        href={value}>
+                            {
+                                key == activeKey ?
+                                <span style={{color: 'text.primary'}}>{key}</span>
+                                : <span>{key}</span>
+                            }
+                            </Link>)
+                    })
+                }
+            </Breadcrumbs>
+        </div>
+        </>
     )
 }

@@ -8,8 +8,10 @@ import Table from "./Table";
 import AllergiesList from "./AllergiesList";
 import ComplianceList from "./ComplianceList";
 import VisitsAndPrescriptionList from "./VisitsAndPrescriptionList";
+import { useAuth } from "./AuthContext";
 
 export default function ViewPatients() {
+    const { setBreadcrumbsList } = useAuth()
     const { id } = useParams();
     const pathname = useLocation();
     const [isLoading, setIsLoading] = useState(true)
@@ -20,6 +22,13 @@ export default function ViewPatients() {
         'Visits and prescriptions',
         'Compliance'
     ]
+
+    useEffect(() => {
+        setBreadcrumbsList({
+            'Home': '/',
+            'Patient Information': `/patient/${id}`
+        })
+    },[])
 
     useEffect(() => {
         setIsLoading(true)
