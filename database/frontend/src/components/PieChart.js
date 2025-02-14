@@ -2,9 +2,12 @@ import React from "react";
 import Chart from "chart.js/auto";
 import { Pie } from "react-chartjs-2"
 import { Title } from "chart.js";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export default function PieChart(props) {
     Chart.register(Title)
+    Chart.register(ChartDataLabels);
+
     const data = {
             labels: props.labels,
             datasets: [{
@@ -28,8 +31,6 @@ export default function PieChart(props) {
                 title: {
                     display: true,
                     text: props.title
-                },
-                tooltip: {
                 }
             }
         }}
