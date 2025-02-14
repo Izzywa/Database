@@ -24,7 +24,7 @@ export default function AntibioticStatistics(props) {
         'Antibiotic Statistics': '/AntibioticStatistics'
        })
 
-       fetch('/backend/top_5_ab')
+       fetch('/backend/ab_stats')
        .then(response => response.json())
        .then(result => {
             setData(result)

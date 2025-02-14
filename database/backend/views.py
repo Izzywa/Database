@@ -557,7 +557,7 @@ def visit_note(request, visit_id=None):
     
 @login_required(login_url="/login")    
 @api_view(['GET'])    
-def top_5_ab(request):
+def ab_stats(request):
     all_prescriptions = Prescriptions.objects.all()
     count_all_prescriptions = all_prescriptions.count()
     top_5 = []

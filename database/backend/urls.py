@@ -27,6 +27,6 @@ urlpatterns = [
     path('dose/<str:ab>', views.dose_list, name="dose_list"),
     path('visit_note/<int:visit_id>', views.visit_note, name="visit_note"),
     path('visit_note', views.visit_note, name="add_visit_note"),
-    path('top_5_ab', views.top_5_ab, name="top_5_ab"),
+    path('ab_stats', views.ab_stats, name="ab_stats"),
     path('diagnosis_stats', views.diagnosis_stats, name="diagnosis_stats")
 ]
