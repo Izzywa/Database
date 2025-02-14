@@ -1,6 +1,8 @@
 import json
+import heapq
 from datetime import datetime
 from django.db import connection, IntegrityError
+from django.db.models import Count
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
@@ -469,12 +471,6 @@ def dose_list(request, ab):
     serializer = DosageSerializer(dosage, many=True)
     return Response(serializer.data, status=200)
 
-@api_view(['GET', 'POST'])
-def test(request):
-    ab = Antibiotics.objects.get(ab="AMX")
-    dosage = ab.dosage.all()
-    serializer = DosageSerializer(dosage, many=True)
-    return Response(serializer.data, status=200)
 
 @login_required(login_url="/login")
 @api_view(['DELETE', 'POST', 'PUT'])
@@ -558,3 +554,23 @@ def visit_note(request, visit_id=None):
                 'error': True,
                 'message': serializer.errors,
             })
+            
+
+@api_view(['GET', 'POST'])
+def test(request):
+    all_prescriptions = Prescriptions.objects.all()
+    count_all_prescriptions = all_prescriptions.count()
+    l = []
+    doses = [prescription.dose.ab.name for prescription in all_prescriptions]
+    for dose in set(doses):
+        count = all_prescriptions.filter(dose__ab__name=dose).count()
+        l.append({
+            'ab': dose,
+            'count': count,
+            'percentage': count/count_all_prescriptions * 100
+        })
+        
+    return Response({
+        'data': set(doses),
+        'list': sorted(l, key=lambda item: item['count'], reverse=True)[:10]
+        }, status=200)
