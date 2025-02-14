@@ -554,23 +554,45 @@ def visit_note(request, visit_id=None):
                 'error': True,
                 'message': serializer.errors,
             })
-            
+    
+@login_required(login_url="/login")    
+@api_view(['GET'])    
+def top_5_ab(request):
+    all_prescriptions = Prescriptions.objects.all()
+    count_all_prescriptions = all_prescriptions.count()
+    top_5 = []
+    doses = [prescription.dose.ab.name for prescription in all_prescriptions]
+    for dose in set(doses):
+        count = all_prescriptions.filter(dose__ab__name=dose).count()
+        top_5.append({
+            'ab': dose,
+            'percentage': count/count_all_prescriptions * 100
+        })
+    
+    top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:10]
+    labels = [item['ab'] for item in top_5]
+    data = [item['percentage'] for item in top_5]
+        
+    return Response({
+        'labels' : labels, 
+        'data': data
+        }, status=200)
 
 @api_view(['GET', 'POST'])
 def test(request):
     all_prescriptions = Prescriptions.objects.all()
     count_all_prescriptions = all_prescriptions.count()
-    l = []
+    top_5 = []
     doses = [prescription.dose.ab.name for prescription in all_prescriptions]
     for dose in set(doses):
         count = all_prescriptions.filter(dose__ab__name=dose).count()
-        l.append({
+        top_5.append({
             'ab': dose,
-            'count': count,
             'percentage': count/count_all_prescriptions * 100
         })
         
+    top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
     return Response({
-        'data': set(doses),
-        'list': sorted(l, key=lambda item: item['count'], reverse=True)[:10]
+        'label': 'label',
+        'list': top_5
         }, status=200)

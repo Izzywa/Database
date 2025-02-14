@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import { useAuth } from "./AuthContext";
 import PieChart from "./PieChart";
@@ -6,18 +6,24 @@ import PieChart from "./PieChart";
 
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
-    const data = {
-        labels: ['red', 'blue', 'yellow', 'green', 'purple'],
-        datasetLabel:'My pie chart',
-        data: [20,30,40, 50, 60]
-    }
+    const [data, setData] = useState({
+        labels: [],
+        data: []
+    })
 
     useEffect(() => {
        setBreadcrumbsList({
         'Home': '/',
         'Antibiotic Statistics': '/AntibioticStatistics'
        })
+
+       fetch('/backend/top_5_ab')
+       .then(response => response.json())
+       .then(result => {
+            setData(result)
+       }).catch(error => console.log(error))
     },[])
+
     return(
         <>
         <NavBar/>
@@ -25,7 +31,7 @@ export default function AntibioticStatistics(props) {
             AntibioticStatistics
             <div>
                 <PieChart labels={data.labels}
-                datasetLabel={data.datasetLabel}
+                datasetLabel={'Percentage over all prescribed antibiotics'}
                 title={'5 most prescribed antibiotics from database'}
                 data={data.data}/>
             </div>
