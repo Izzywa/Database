@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import { useAuth } from "./AuthContext";
 import PieChart from "./PieChart";
-
+import { Grid2 as Grid } from "@mui/material";
 
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
@@ -29,12 +29,14 @@ export default function AntibioticStatistics(props) {
         <NavBar/>
         <div className="container">
             AntibioticStatistics
-            <div>
-                <PieChart labels={data.labels}
-                datasetLabel={'Percentage over all prescribed antibiotics'}
-                title={'5 most prescribed antibiotics from database'}
-                data={data.data}/>
-            </div>
+            <Grid container>
+                <Grid size={{xs: 12, md: 6}}>
+                    <PieChart labels={data.labels}
+                    datasetLabel={'Percentage over all prescribed antibiotics'}
+                    title={'5 most prescribed antibiotics from database'}
+                    data={data.data}/>
+                </Grid>
+            </Grid>
         </div>
         </>
     )
