@@ -18,7 +18,7 @@ export default function ViewDateItem(props) {
         setBreadcrumbsList({
             'Home': '/',
             'Patient Information': `/patient/${id}`,
-            'Patient Visit and Prescription by date': `/date/${id}/${date}`
+            [`Patient Note: ${date}`] : `/date/${id}/${date}`
         })
     }, [])
 

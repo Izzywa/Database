@@ -6,6 +6,7 @@ import { AuthProvider } from "./AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import ViewPatients from "./ViewPatient";
 import ViewDateItem from "./ViewDateItem";
+import AntibioticStatistics from "./AntibioticStatistics";
 
 export default function App() {
     return(
@@ -18,6 +19,7 @@ export default function App() {
                 <Route path="patient/:id" element={<ViewPatients/>} />
                 <Route path="/" element={<Home/>}/>
                 <Route path="date/:id/:date" element={<ViewDateItem/>} />
+                <Route path="AntibioticStatistics" element={<AntibioticStatistics/>} />
                 </Route>
             </Routes>
         </AuthProvider>
