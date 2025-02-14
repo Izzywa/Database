@@ -572,5 +572,5 @@ def test(request):
         
     return Response({
         'data': set(doses),
-        'list': sorted(l, key=lambda item: item['count'], reverse=True)[:5]
+        'list': sorted(l, key=lambda item: item['count'], reverse=True)[:10]
         }, status=200)

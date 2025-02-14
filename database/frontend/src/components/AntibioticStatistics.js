@@ -3,12 +3,14 @@ import NavBar from "./NavBar";
 import { useAuth } from "./AuthContext";
 import PieChart from "./PieChart";
 
+
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
-
-    const labels = ['red', 'blue', 'yellow', 'green']
-    const datasetLabel = 'sample label'
-    const data = [20,30,40,50]
+    const data = {
+        labels: ['red', 'blue', 'yellow', 'green', 'purple'],
+        datasetLabel:'My pie chart',
+        data: [20,30,40, 50, 60]
+    }
 
     useEffect(() => {
        setBreadcrumbsList({
@@ -22,7 +24,10 @@ export default function AntibioticStatistics(props) {
         <div className="container">
             AntibioticStatistics
             <div>
-                <PieChart/>
+                <PieChart labels={data.labels}
+                datasetLabel={data.datasetLabel}
+                title={'5 most prescribed antibiotics from database'}
+                data={data.data}/>
             </div>
         </div>
         </>

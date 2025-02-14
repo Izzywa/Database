@@ -1,26 +1,38 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Chart from "chart.js/auto";
 import { Pie } from "react-chartjs-2"
-import {Chart, ArcElement} from 'chart.js'
+import { Title } from "chart.js";
 
 export default function PieChart(props) {
-     const data = {
-            labels: [
-              'Red',
-              'Blue',
-              'Yellow'
-            ],
+    Chart.register(Title)
+    const data = {
+            labels: props.labels,
             datasets: [{
-              label: 'My First Dataset',
-              data: [300, 50, 100],
+              label: props.datasetLabel,
+              data: props.data,
               backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
+                'rgb(255, 205, 86)',
+                'rgb(144, 241, 181)',
+                "#ce93d8"
               ],
               hoverOffset: 4
             }]
           };
+
     return (
-        <Pie data={data}/>
+        <>
+        <Pie options={{
+            plugins: {
+                title: {
+                    display: true,
+                    text: props.title
+                }
+            }
+        }}
+        data={data} 
+        />
+        </>
     )
 }
