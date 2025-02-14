@@ -11,7 +11,7 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage, PrescriptionDiagnosis
 from .serializers import *
 
 def index(request):
@@ -569,14 +569,35 @@ def top_5_ab(request):
             'percentage': count/count_all_prescriptions * 100
         })
     
-    top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:10]
+    top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
     labels = [item['ab'] for item in top_5]
-    data = [item['percentage'] for item in top_5]
+    data = [round(item['percentage'],2) for item in top_5]
         
     return Response({
         'labels' : labels, 
         'data': data
         }, status=200)
+    
+@login_required(login_url="/login")
+@api_view(['GET'])
+def diagnosis_stats(request):
+    all_diagnoses = PrescriptionDiagnosis.objects.all()
+    count_all_diagnoses = all_diagnoses.count()
+    diagnosis_list = [diagnosis.diagnosis.diagnosis for diagnosis in all_diagnoses]
+    
+    top_5 = []
+    for diagnosis in set(diagnosis_list):
+        count = all_diagnoses.filter(diagnosis__diagnosis=diagnosis).count()
+        top_5.append({
+            'diagnosis': diagnosis,
+            'percentage': count/count_all_diagnoses * 100
+        })
+    top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
+    
+    return Response({
+        'labels': [item['diagnosis'] for item in top_5],
+        'data': [round(item['percentage'],2) for item in top_5]
+    }, status=200)
 
 @api_view(['GET', 'POST'])
 def test(request):
@@ -589,7 +610,7 @@ def test(request):
         top_5.append({
             'ab': dose,
             'percentage': count/count_all_prescriptions * 100
-        })
+        }, status=200)
         
     top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
     return Response({

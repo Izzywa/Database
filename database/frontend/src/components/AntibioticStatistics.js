@@ -14,7 +14,8 @@ export default function AntibioticStatistics(props) {
     const formatter = {
         formatter: (value, context) => {;
             return value + " %";
-        }
+        },
+        color: 'ffffff'
     }
 
     useEffect(() => {
@@ -34,7 +35,6 @@ export default function AntibioticStatistics(props) {
         <>
         <NavBar/>
         <div className="container">
-            AntibioticStatistics
             <Grid container>
                 <Grid size={{xs: 12, md: 6}}>
                     <PieChart labels={data.labels}

@@ -3,6 +3,7 @@ import Chart from "chart.js/auto";
 import { Pie } from "react-chartjs-2"
 import { Title } from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { red, blue, yellow, green, purple } from "@mui/material/colors";
 
 export default function PieChart(props) {
     Chart.register(Title)
@@ -14,11 +15,11 @@ export default function PieChart(props) {
               label: props.datasetLabel,
               data: props.data,
               backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(144, 241, 181)',
-                "#ce93d8"
+                red[300],
+                blue[300],
+                green[300],
+                yellow[300],
+                purple[300]
               ],
               hoverOffset: 4
             }]
