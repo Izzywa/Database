@@ -31,7 +31,8 @@ export default function PieChart(props) {
                 title: {
                     display: true,
                     text: props.title
-                }
+                },
+                datalabels: props.formatter
             }
         }}
         data={data} 

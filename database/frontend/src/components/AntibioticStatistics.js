@@ -11,6 +11,12 @@ export default function AntibioticStatistics(props) {
         data: []
     })
 
+    const formatter = {
+        formatter: (value, context) => {;
+            return value + " %";
+        }
+    }
+
     useEffect(() => {
        setBreadcrumbsList({
         'Home': '/',
@@ -32,7 +38,8 @@ export default function AntibioticStatistics(props) {
             <Grid container>
                 <Grid size={{xs: 12, md: 6}}>
                     <PieChart labels={data.labels}
-                    datasetLabel={'Percentage over all prescribed antibiotics'}
+                    formatter={formatter}
+                    datasetLabel={'% over all prescribed antibiotics'}
                     title={'5 most prescribed antibiotics from database'}
                     data={data.data}/>
                 </Grid>
