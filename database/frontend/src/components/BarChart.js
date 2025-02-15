@@ -7,11 +7,12 @@ import { alpha } from "@mui/material";
 
 export default function BarChart(props){
     Chart.register(Title)
-    let labels = []
+    let labels = props.labels
+    /*
     props.labels.forEach(element => {
         labels.push(element.split(' '))
     });
-
+*/
     let borderColor = [];
     let backgroundColor = [];
     let startColor = 200
@@ -68,7 +69,8 @@ export default function BarChart(props){
                         }
                     }
                     
-                }
+                },
+                datalabels: props.formatter,
             },
             maintainAspectRatio: false
         }}

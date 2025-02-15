@@ -80,6 +80,14 @@ export default function AntibioticStatistics(props) {
             data: []
         })
 
+        useEffect(() => {
+            fetch('/backend/compliance_stats')
+            .then(response => response.json())
+            .then(result => {
+                setData(result)
+            }).catch(error => console.log(error))
+        }, [])
+
         return (
             <>
             <BarChart
@@ -96,14 +104,14 @@ export default function AntibioticStatistics(props) {
         <>
         <NavBar/>
         <div className="container py-2">
-            <Grid container>
+            <Grid container spacing={1}>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
                     <AntibioticPieChart/>
                 </Grid>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
                     <DiagnosisBarChart/>
                 </Grid>
-                <Grid size={12} style={gridStyle}>
+                <Grid size={12} style={{height: '100vh'}}>
                     <ComplianceBarChart/>
                 </Grid>
             </Grid>

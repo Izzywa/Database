@@ -613,7 +613,7 @@ def compliance_stats(request):
         
     return Response({
         'data': data,
-        'label': [use.use for use in usage]
+        'labels': [use.use for use in usage]
     }, status=200)
 
 @api_view(['GET', 'POST'])
