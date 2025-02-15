@@ -83,10 +83,18 @@ export default function AntibioticStatistics(props) {
     }
 
     function DiagnosisBarChart() {
-        const [data, SetData] = useState({
-            labels: ['lorem lorem lorem', 'lorem','lorem'],
-            data: [20,30,40]
+        const [data, setData] = useState({
+            labels: [],
+            data: []
         })
+
+        useEffect(() => {
+            fetch('/backend/diagnosis_stats')
+            .then(response => response.json())
+            .then(result => {
+                setData(result)
+            }).catch(error => console.log(error))
+        },[])
         return (
             <>
             <BarChart

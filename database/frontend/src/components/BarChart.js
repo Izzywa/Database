@@ -54,6 +54,7 @@ export default function BarChart(props){
         <Bar 
         data={data}
         options={{
+            indexAxis: 'y',
             plugins: {
                 title: {
                     display: true,
