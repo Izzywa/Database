@@ -73,6 +73,25 @@ export default function AntibioticStatistics(props) {
             </>
         )
     }
+
+    function ComplianceBarChart() {
+        const [data, setData] = useState({
+            labels: [],
+            data: []
+        })
+
+        return (
+            <>
+            <BarChart
+            labels={data.labels}
+            data={data.data}
+            datasetLabel={'% over all recorded compliance'}
+            title={"Statistics of recorded patient's compliance to antibiotics"}
+            />
+            </>
+        )
+    }
+
     return(
         <>
         <NavBar/>
@@ -85,7 +104,7 @@ export default function AntibioticStatistics(props) {
                     <DiagnosisBarChart/>
                 </Grid>
                 <Grid size={12} style={gridStyle}>
-                    Compliance
+                    <ComplianceBarChart/>
                 </Grid>
             </Grid>
         </div>
