@@ -1,14 +1,16 @@
 import React from "react";
 import Chart from "chart.js/auto";
-import { Title } from "chart.js";
+import { elements, Title } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { red, blue, yellow, green, purple } from "@mui/material/colors";
 import { alpha } from "@mui/material";
 
 export default function BarChart(props){
     Chart.register(Title)
-    let labels = props.labels
-    
+    let labels = []
+    props.labels.forEach(element => {
+        labels.push(element.split(' '))
+    });
 
     const data = {
     labels: labels,
