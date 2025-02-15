@@ -101,13 +101,43 @@ export default function AntibioticStatistics(props) {
     const gridStyle = {
         height: '50vh'
     }
+
+    function AntibioticPieChart() {
+        const [data, setData] = useState({
+            labels: [],
+            data: []
+        });
+
+        const formatter = {
+            formatter: (value, context) => {;
+                return value + " %";
+            },
+            color: 'ffffff'
+        }
+
+        useEffect(() => {
+            fetch('/backend/ab_stats')
+            .then(response => response.json())
+            .then(result => {
+                setData(result)
+            }).catch(error => console.log(error))
+        },[])
+
+        return (
+            <PieChart labels={data.labels}
+            formatter={formatter}
+            datasetLabel={'% over all prescribed antibiotics'}
+            title={'5 most prescribed antibiotics from database'}
+            data={data.data}/>
+        )
+    }
     return(
         <>
         <NavBar/>
         <div className="container">
             <Grid container>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
-                Pie Chart
+                    <AntibioticPieChart/>
                 </Grid>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
                 Bar Chart
