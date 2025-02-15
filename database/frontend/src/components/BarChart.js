@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import { Title } from "chart.js";
 import { Bar } from "react-chartjs-2";
@@ -12,11 +12,25 @@ export default function BarChart(props){
     let startColor = 200
     let labels = []
 
-    props.labels.forEach(element => {
+    const [barData, setBarData] = useState({
+                labels: [],
+                data: []
+            });
+    
+    useEffect(() => {
+        fetch('/backend/diagnosis_stats')
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+        })
+        .catch(error => console.log(error))
+    },[])
+
+    barData.labels.forEach(element => {
         labels.push(element.split(' '))
     });
 
-    while (backgroundColor.length < props.labels.length) {
+    while (backgroundColor.length < barData.labels.length) {
 
         startColor += 200
     }
@@ -26,7 +40,7 @@ export default function BarChart(props){
     labels: labels,
     datasets: [{
         label: props.datasetLabel,
-        data: props.data,
+        data: barData.data,
         backgroundColor: [
         alpha(red[300],0.2),
         'rgba(255, 159, 64, 0.2)',

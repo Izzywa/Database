@@ -7,11 +7,6 @@ import { Grid2 as Grid } from "@mui/material";
 
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
-   
-    const [barData, setBarData] = useState({
-        labels: [],
-        data: []
-    });
 
     const formatter = {
         formatter: (value, context) => {;
@@ -26,21 +21,7 @@ export default function AntibioticStatistics(props) {
         'Antibiotic Statistics': '/AntibioticStatistics'
        })
 
-       /*
-       fetch('/backend/ab_stats')
-       .then(response => response.json())
-       .then(result => {
-            console.log(result)
-            setData(result)
-       }).catch(error => console.log(error))
-
-       fetch('/backend/diagnosis_stats')
-       .then(response => response.json())
-       .then(result => {
-            console.log(result)
-            setBarData(result)
-       })
-       .catch(error => console.log(error))*/
+       /**/
     },[])
 
     function AntibioticPieChart() {
@@ -53,7 +34,6 @@ export default function AntibioticStatistics(props) {
             fetch('/backend/ab_stats')
             .then(response => response.json())
             .then(result => {
-                console.log(result)
                 setData(result)
             }).catch(error => console.log(error))
         },[])
@@ -67,6 +47,16 @@ export default function AntibioticStatistics(props) {
         )
     }
 
+    function DiagnosisBarChart() {
+
+        return(
+            <BarChart
+            datasetLabel={'% of prescription with this diagnosis'}
+            title={'5 most common diagnosis for prescribing antibiotics from database'}
+            />
+        )
+    }
+
     return(
         <>
         <NavBar/>
@@ -76,11 +66,7 @@ export default function AntibioticStatistics(props) {
                     <AntibioticPieChart/>
                 </Grid>
                 <Grid size={{xs: 12, md: 6}} sx={{maxHeight: '60vh', minHeight: '50vh'}} padding={1}>
-                    <BarChart
-                    labels={barData.labels}
-                    data={barData.data}
-                    datasetLabel={'% of prescription with this diagnosis'}
-                    title={'5 most common diagnosis for prescribing antibiotics from database'}/>
+                    <DiagnosisBarChart/>
                 </Grid>
             </Grid>
         </div>
