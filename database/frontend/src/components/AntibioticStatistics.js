@@ -7,10 +7,11 @@ import { Grid2 as Grid } from "@mui/material";
 
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
-    const [data, setData] = useState({
+   
+    const [barData, setBarData] = useState({
         labels: [],
         data: []
-    })
+    });
 
     const formatter = {
         formatter: (value, context) => {;
@@ -25,27 +26,61 @@ export default function AntibioticStatistics(props) {
         'Antibiotic Statistics': '/AntibioticStatistics'
        })
 
+       /*
        fetch('/backend/ab_stats')
        .then(response => response.json())
        .then(result => {
+            console.log(result)
             setData(result)
        }).catch(error => console.log(error))
+
+       fetch('/backend/diagnosis_stats')
+       .then(response => response.json())
+       .then(result => {
+            console.log(result)
+            setBarData(result)
+       })
+       .catch(error => console.log(error))*/
     },[])
+
+    function AntibioticPieChart() {
+        const [data, setData] = useState({
+            labels: [],
+            data: []
+        });
+
+        useEffect(() => {
+            fetch('/backend/ab_stats')
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                setData(result)
+            }).catch(error => console.log(error))
+        },[])
+
+        return (
+            <PieChart labels={data.labels}
+            formatter={formatter}
+            datasetLabel={'% over all prescribed antibiotics'}
+            title={'5 most prescribed antibiotics from database'}
+            data={data.data}/>
+        )
+    }
 
     return(
         <>
         <NavBar/>
         <div className="container">
             <Grid container>
-                <Grid size={{xs: 12, md: 6}} padding={1}>
-                    <PieChart labels={data.labels}
-                    formatter={formatter}
-                    datasetLabel={'% over all prescribed antibiotics'}
-                    title={'5 most prescribed antibiotics from database'}
-                    data={data.data}/>
+                <Grid size={{xs: 12, md: 6}} sx={{maxHeight: '60vh', minHeight: '50vh'}} padding={1}>
+                    <AntibioticPieChart/>
                 </Grid>
-                <Grid size={{xs: 12, md: 6}} height={350} padding={1}>
-                    <BarChart/>
+                <Grid size={{xs: 12, md: 6}} sx={{maxHeight: '60vh', minHeight: '50vh'}} padding={1}>
+                    <BarChart
+                    labels={barData.labels}
+                    data={barData.data}
+                    datasetLabel={'% of prescription with this diagnosis'}
+                    title={'5 most common diagnosis for prescribing antibiotics from database'}/>
                 </Grid>
             </Grid>
         </div>
