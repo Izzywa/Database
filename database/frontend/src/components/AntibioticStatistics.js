@@ -24,10 +24,6 @@ export default function AntibioticStatistics(props) {
     }
 
     useEffect(() => {
-       setBreadcrumbsList({
-        'Home': '/',
-        'Antibiotic Statistics': '/AntibioticStatistics'
-       })
 
        /*
        fetch('/backend/ab_stats')
@@ -104,7 +100,8 @@ export default function AntibioticStatistics(props) {
     return(
         <>
         <NavBar/>
-        <h1>AntibioticStatistics</h1>
+        <div className="container">
+        </div>
         </>
     )
 }

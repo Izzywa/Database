@@ -76,7 +76,7 @@ export default function ViewDateItem(props) {
                 </Alert>
                 :
                 <div>
-                    <h1>Patient (#{id}): {name}</h1>
+                    <h5>Patient (#{id}): {name}</h5>
                     <h3>{date}</h3>
                     {
                         data ?

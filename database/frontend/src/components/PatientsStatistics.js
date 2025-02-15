@@ -15,7 +15,8 @@ export default function PatientsStatistics(props) {
     return (
         <>
         <NavBar/>
-        <h1>PatientsStatistics</h1>
+        <div className="container">
+        </div>
         </>
     )
 }

@@ -145,7 +145,6 @@ export default function ViewPatients() {
         <>
         <NavBar/>
         <div className="container">
-            <h1>Patient Information</h1>
             { ptDetails.error == true ? 
             <Alert severity="warning">{ptDetails.message}</Alert>
             :<PtInfromation/>}
