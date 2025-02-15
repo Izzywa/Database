@@ -582,7 +582,7 @@ def ab_stats(request):
 @api_view(['GET'])
 def diagnosis_stats(request):
     all_diagnoses = PrescriptionDiagnosis.objects.all()
-    count_all_diagnoses = all_diagnoses.count()
+    count_all_prescriptions = Prescriptions.objects.all().count()
     diagnosis_list = [diagnosis.diagnosis.diagnosis for diagnosis in all_diagnoses]
     
     top_5 = []
@@ -590,7 +590,7 @@ def diagnosis_stats(request):
         count = all_diagnoses.filter(diagnosis__diagnosis=diagnosis).count()
         top_5.append({
             'diagnosis': diagnosis,
-            'percentage': count/count_all_diagnoses * 100
+            'percentage': count/count_all_prescriptions * 100
         })
     top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
     

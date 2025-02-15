@@ -76,13 +76,16 @@ export default function AntibioticStatistics(props) {
     return(
         <>
         <NavBar/>
-        <div className="container">
+        <div className="container py-2">
             <Grid container>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
                     <AntibioticPieChart/>
                 </Grid>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
                     <DiagnosisBarChart/>
+                </Grid>
+                <Grid size={12} style={gridStyle}>
+                    Compliance
                 </Grid>
             </Grid>
         </div>
