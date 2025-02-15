@@ -77,7 +77,7 @@ export default function AntibioticStatistics(props) {
             <PieChart labels={data.labels}
             formatter={formatter}
             datasetLabel={'% over all prescribed antibiotics'}
-            title={'5 most prescribed antibiotics from database'}
+            title={'Most prescribed antibiotics from database'}
             data={data.data}/>
         )
     }
@@ -93,7 +93,7 @@ export default function AntibioticStatistics(props) {
             labels={data.labels}
             data={data.data}
             datasetLabel={'% of prescription with this diagnosis'}
-            title={'Most common cause for prescription'}
+            title={'Most common cause for prescription from database'}
             />
             </>
         )

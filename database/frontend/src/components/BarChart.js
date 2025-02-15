@@ -24,6 +24,10 @@ export default function BarChart(props){
             green[startColor],
             purple[startColor]
         )
+        
+        borderColor.forEach(element => {
+            backgroundColor.push(alpha(element, 0.2))
+        });
         startColor =+ 200
     }
 
@@ -32,21 +36,12 @@ export default function BarChart(props){
     datasets: [{
         label: props.datasetLabel,
         data: props.data,
-        backgroundColor: [
-        alpha(red[300],0.2),
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 205, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(201, 203, 207, 0.2)'
-        ],
+        backgroundColor: backgroundColor,
         borderColor: borderColor,
         borderWidth: 1
     }]
     };
 
-    console.log(borderColor)
 
     function FallbackContent() {
         return(
