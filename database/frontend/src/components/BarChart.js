@@ -7,26 +7,12 @@ import { alpha } from "@mui/material";
 
 export default function BarChart(props){
     Chart.register(Title)
-    let backgroundColor = []
-    let borderColor = []
-    let startColor = 200
-    let labels = []
-
-    props.labels.forEach(element => {
-        labels.push(element.split(' '))
-    });
-
-    while (backgroundColor.length < props.labels.length) {
-
-        startColor += 200
-    }
-
 
     const data = {
-    labels: labels,
+    labels: [['lorem', 'lorem', 'lorem'],2,3,4,5],
     datasets: [{
         label: props.datasetLabel,
-        data: props.data,
+        data: [20,30,40,50,60],
         backgroundColor: [
         alpha(red[300],0.2),
         'rgba(255, 159, 64, 0.2)',
@@ -68,7 +54,6 @@ export default function BarChart(props){
                 tooltip: {
                     callbacks: {
                         title: (context) => {
-                            console.log(context[0].label)
                             return context[0].label.replaceAll(',', ' ')
                         }
                     }

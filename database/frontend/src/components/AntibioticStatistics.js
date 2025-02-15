@@ -15,56 +15,6 @@ export default function AntibioticStatistics(props) {
         })
     }, []);
     /*
-   
-    const formatter = {
-        formatter: (value, context) => {;
-            return value + " %";
-        },
-        color: 'ffffff'
-    }
-
-    useEffect(() => {
-
-       /*
-       fetch('/backend/ab_stats')
-       .then(response => response.json())
-       .then(result => {
-            console.log(result)
-            setData(result)
-       }).catch(error => console.log(error))
-
-       fetch('/backend/diagnosis_stats')
-       .then(response => response.json())
-       .then(result => {
-            console.log(result)
-            setBarData(result)
-       })
-       .catch(error => console.log(error))
-    },[])
-
-    function AntibioticPieChart() {
-        const [data, setData] = useState({
-            labels: [],
-            data: []
-        });
-
-        useEffect(() => {
-            fetch('/backend/ab_stats')
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                setData(result)
-            }).catch(error => console.log(error))
-        },[])
-
-        return (
-            <PieChart labels={data.labels}
-            formatter={formatter}
-            datasetLabel={'% over all prescribed antibiotics'}
-            title={'5 most prescribed antibiotics from database'}
-            data={data.data}/>
-        )
-    }
 
     function DiagnosisBarChart() {
         const [barData, setBarData] = useState({
@@ -131,6 +81,17 @@ export default function AntibioticStatistics(props) {
             data={data.data}/>
         )
     }
+
+    function DiagnosisBarChart() {
+        return (
+            <>
+            <BarChart
+            datasetLabel={'% of prescription with this diagnosis'}
+            title={'Most common cause for prescription'}
+            />
+            </>
+        )
+    }
     return(
         <>
         <NavBar/>
@@ -140,7 +101,7 @@ export default function AntibioticStatistics(props) {
                     <AntibioticPieChart/>
                 </Grid>
                 <Grid size={{ xs:12, md:6}} style={gridStyle}>
-                Bar Chart
+                    <DiagnosisBarChart/>
                 </Grid>
             </Grid>
         </div>
