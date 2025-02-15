@@ -20,9 +20,10 @@ export default function BarChart(props){
         borderColor.push(
             red[startColor],
             blue[startColor],
+            purple[startColor],
             yellow[startColor],
-            green[startColor],
-            purple[startColor]
+            green[startColor]
+            
         )
         
         borderColor.forEach(element => {

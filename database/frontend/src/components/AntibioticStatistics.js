@@ -14,39 +14,6 @@ export default function AntibioticStatistics(props) {
          'Antibiotic Statistics': '/AbStats'
         })
     }, []);
-    /*
-
-    function DiagnosisBarChart() {
-        const [barData, setBarData] = useState({
-            labels: ['lorem ipsum lorem ipsum', '1', '2'],
-            data: [20,30,40]
-        })
-        return (
-            <BarChart
-            labels={barData.labels}
-            data={barData.data}
-            datasetLabel={'% of prescription with this diagnosis'}
-            title={'5 most common diagnosis for prescribing antibiotics from database'}
-            />
-        )
-    }
-
-    return(
-        <>
-        <NavBar/>
-        <div className="container">
-            <Grid container>
-                <Grid size={{xs: 12, md: 6}} sx={{maxHeight: '60vh', minHeight: '50vh'}} padding={1}>
-                    <AntibioticPieChart/>
-                </Grid>
-                <Grid size={{xs: 12, md: 6}} sx={{maxHeight: '60vh', minHeight: '50vh'}} padding={1}>
-                    <DiagnosisBarChart/>
-                </Grid>
-            </Grid>
-        </div>
-        </>
-    )
-        */
 
     const gridStyle = {
         height: '50vh'
@@ -100,7 +67,7 @@ export default function AntibioticStatistics(props) {
             <BarChart
             labels={data.labels}
             data={data.data}
-            datasetLabel={'% of prescription with this diagnosis'}
+            datasetLabel={'% of prescription with given diagnosis'}
             title={'Most common cause for prescription from database'}
             />
             </>

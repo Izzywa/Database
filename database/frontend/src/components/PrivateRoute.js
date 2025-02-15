@@ -8,7 +8,6 @@ export default function PrivateRoute(){
     const pathname = useLocation();
 
     useEffect(() => {
-        console.log('checked auth')
         checkAuth()
     }, [])
     
