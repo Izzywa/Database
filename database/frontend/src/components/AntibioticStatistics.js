@@ -6,8 +6,15 @@ import BarChart from "./BarChart";
 import { Grid2 as Grid } from "@mui/material";
 
 export default function AntibioticStatistics(props) {
-    /*
     const { setBreadcrumbsList } = useAuth()
+
+    useEffect(() => {
+        setBreadcrumbsList({
+         'Home': '/',
+         'Antibiotic Statistics': '/AbStats'
+        })
+    }, []);
+    /*
    
     const formatter = {
         formatter: (value, context) => {;
