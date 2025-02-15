@@ -11,7 +11,7 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage, PrescriptionDiagnosis
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage, PrescriptionDiagnosis, Compliance
 from .serializers import *
 
 def index(request):
@@ -597,6 +597,23 @@ def diagnosis_stats(request):
     return Response({
         'labels': [item['diagnosis'] for item in top_5],
         'data': [round(item['percentage'],2) for item in top_5]
+    }, status=200)
+    
+@login_required(login_url="/login")
+@api_view(['GET'])
+def compliance_stats(request):
+    compliances = Compliance.objects.all()
+    usage = AbUsage.objects.all()
+    compliance_count = compliances.count()
+    
+    data = [] 
+    for use in usage:
+        count = compliances.filter(use=use).count()
+        data.append(round(count/compliance_count * 100, 2))
+        
+    return Response({
+        'data': data,
+        'label': [use.use for use in usage]
     }, status=200)
 
 @api_view(['GET', 'POST'])

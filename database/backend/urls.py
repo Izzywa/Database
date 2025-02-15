@@ -28,5 +28,6 @@ urlpatterns = [
     path('visit_note/<int:visit_id>', views.visit_note, name="visit_note"),
     path('visit_note', views.visit_note, name="add_visit_note"),
     path('ab_stats', views.ab_stats, name="ab_stats"),
-    path('diagnosis_stats', views.diagnosis_stats, name="diagnosis_stats")
+    path('diagnosis_stats', views.diagnosis_stats, name="diagnosis_stats"),
+    path('compliance_stats', views.compliance_stats, name="compliance_stats")
 ]
