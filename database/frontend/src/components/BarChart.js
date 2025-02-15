@@ -12,6 +12,21 @@ export default function BarChart(props){
         labels.push(element.split(' '))
     });
 
+    let borderColor = [];
+    let backgroundColor = [];
+    let startColor = 200
+
+    while (borderColor.length < props.labels.length) {
+        borderColor.push(
+            red[startColor],
+            blue[startColor],
+            yellow[startColor],
+            green[startColor],
+            purple[startColor]
+        )
+        startColor =+ 200
+    }
+
     const data = {
     labels: labels,
     datasets: [{
@@ -26,18 +41,12 @@ export default function BarChart(props){
         'rgba(153, 102, 255, 0.2)',
         'rgba(201, 203, 207, 0.2)'
         ],
-        borderColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)',
-        'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)'
-        ],
+        borderColor: borderColor,
         borderWidth: 1
     }]
     };
+
+    console.log(borderColor)
 
     function FallbackContent() {
         return(
