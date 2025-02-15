@@ -97,10 +97,22 @@ export default function AntibioticStatistics(props) {
         </>
     )
         */
+
+    const gridStyle = {
+        height: '50vh'
+    }
     return(
         <>
         <NavBar/>
         <div className="container">
+            <Grid container>
+                <Grid size={{ xs:12, md:6}} style={gridStyle}>
+                Pie Chart
+                </Grid>
+                <Grid size={{ xs:12, md:6}} style={gridStyle}>
+                Bar Chart
+                </Grid>
+            </Grid>
         </div>
         </>
     )
