@@ -25,10 +25,12 @@ export const AuthProvider = ({children}) => {
             } else {
                 setAuthenticated(false)
             }
+
+            setIsLoading(false)
         })
         .catch(error => alert(error))
         .finally(() => {
-            setIsLoading(false)
+            console.log(authenticated)
         })
     }, [authenticated])
 

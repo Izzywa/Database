@@ -8,11 +8,18 @@ export default function PrivateRoute(){
     const pathname = useLocation();
 
     useEffect(() => {
+        console.log('checked auth')
         checkAuth()
-    }, [pathname])
+    }, [])
     
     if (isLoading) {
-        return <CircularProgress/>
+        return (
+            <div className="d-flex flex-column justify-content-center align-items-center"
+            style={{ height: '100vh'}}>
+                <CircularProgress/>
+                <p>Loading...</p>
+            </div>
+        )
     }
     else {
         return authenticated ? <Outlet /> : <Navigate to="/login"/>

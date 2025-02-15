@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import ViewPatients from "./ViewPatient";
 import ViewDateItem from "./ViewDateItem";
 import AntibioticStatistics from "./AntibioticStatistics";
+import PatientsStatistics from "./PatientsStatistics";
 
 export default function App() {
     return(
@@ -19,7 +20,8 @@ export default function App() {
                 <Route path="patient/:id" element={<ViewPatients/>} />
                 <Route path="/" element={<Home/>}/>
                 <Route path="date/:id/:date" element={<ViewDateItem/>} />
-                <Route path="AntibioticStatistics" element={<AntibioticStatistics/>} />
+                <Route path="AbStats" element={<AntibioticStatistics/>} />
+                <Route path="PtStats" element={<PatientsStatistics/>} />
                 </Route>
             </Routes>
         </AuthProvider>

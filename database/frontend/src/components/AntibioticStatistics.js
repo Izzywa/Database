@@ -6,13 +6,9 @@ import BarChart from "./BarChart";
 import { Grid2 as Grid } from "@mui/material";
 
 export default function AntibioticStatistics(props) {
+    /*
     const { setBreadcrumbsList } = useAuth()
    
-    const [barData, setBarData] = useState({
-        labels: [],
-        data: []
-    });
-
     const formatter = {
         formatter: (value, context) => {;
             return value + " %";
@@ -40,7 +36,7 @@ export default function AntibioticStatistics(props) {
             console.log(result)
             setBarData(result)
        })
-       .catch(error => console.log(error))*/
+       .catch(error => console.log(error))
     },[])
 
     function AntibioticPieChart() {
@@ -67,6 +63,21 @@ export default function AntibioticStatistics(props) {
         )
     }
 
+    function DiagnosisBarChart() {
+        const [barData, setBarData] = useState({
+            labels: ['lorem ipsum lorem ipsum', '1', '2'],
+            data: [20,30,40]
+        })
+        return (
+            <BarChart
+            labels={barData.labels}
+            data={barData.data}
+            datasetLabel={'% of prescription with this diagnosis'}
+            title={'5 most common diagnosis for prescribing antibiotics from database'}
+            />
+        )
+    }
+
     return(
         <>
         <NavBar/>
@@ -76,14 +87,17 @@ export default function AntibioticStatistics(props) {
                     <AntibioticPieChart/>
                 </Grid>
                 <Grid size={{xs: 12, md: 6}} sx={{maxHeight: '60vh', minHeight: '50vh'}} padding={1}>
-                    <BarChart
-                    labels={barData.labels}
-                    data={barData.data}
-                    datasetLabel={'% of prescription with this diagnosis'}
-                    title={'5 most common diagnosis for prescribing antibiotics from database'}/>
+                    <DiagnosisBarChart/>
                 </Grid>
             </Grid>
         </div>
+        </>
+    )
+        */
+    return(
+        <>
+        <NavBar/>
+        <h1>AntibioticStatistics</h1>
         </>
     )
 }

@@ -34,8 +34,8 @@ export default function NavBar(props) {
                     More
                 </a>
                 <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="/AntibioticStatistics">Antibiotics Statistics</a></li>
-                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                    <li><a className="dropdown-item" href="/AbStats">Antibiotics Statistics</a></li>
+                    <li><a className="dropdown-item" href="/PtStats">Patients Statistics</a></li>
                     <li><a className="dropdown-item" href="#">Something else here</a></li>
                 </ul>
                 </li>
