@@ -9,18 +9,26 @@ export default function PieChart(props) {
     Chart.register(Title)
     Chart.register(ChartDataLabels);
 
+    let backgroundColor = []
+    let startColor = 200;
+
+    while (backgroundColor.length < props.labels.length) {
+        backgroundColor.push(
+            red[startColor], 
+            blue[startColor], 
+            yellow[startColor],
+            green[startColor],
+            purple[startColor]
+        )
+        startColor += 200
+    }
+
     const data = {
             labels: props.labels,
             datasets: [{
               label: props.datasetLabel,
               data: props.data,
-              backgroundColor: [
-                red[300],
-                blue[300],
-                green[300],
-                yellow[300],
-                purple[300]
-              ],
+              backgroundColor: backgroundColor,
               hoverOffset: 4
             }]
           };
