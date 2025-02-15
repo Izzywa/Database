@@ -83,9 +83,15 @@ export default function AntibioticStatistics(props) {
     }
 
     function DiagnosisBarChart() {
+        const [data, SetData] = useState({
+            labels: ['lorem lorem lorem', 'lorem','lorem'],
+            data: [20,30,40]
+        })
         return (
             <>
             <BarChart
+            labels={data.labels}
+            data={data.data}
             datasetLabel={'% of prescription with this diagnosis'}
             title={'Most common cause for prescription'}
             />

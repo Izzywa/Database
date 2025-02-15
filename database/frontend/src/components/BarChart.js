@@ -7,12 +7,14 @@ import { alpha } from "@mui/material";
 
 export default function BarChart(props){
     Chart.register(Title)
+    let labels = props.labels
+    
 
     const data = {
-    labels: [['lorem', 'lorem', 'lorem'],2,3,4,5],
+    labels: labels,
     datasets: [{
         label: props.datasetLabel,
-        data: [20,30,40,50,60],
+        data: props.data,
         backgroundColor: [
         alpha(red[300],0.2),
         'rgba(255, 159, 64, 0.2)',
