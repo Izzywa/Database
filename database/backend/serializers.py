@@ -1,7 +1,7 @@
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Diagnoses, AbUsage, Dosage
+from .models import Patients, Countries, DialCodes, Prescriptions, Visits, Antibiotics, Diagnoses, AbUsage, PrescriptionDiagnosis
         
 class PatientSerializer(serializers.ModelSerializer):
     resident_country = serializers.ReadOnlyField()
@@ -265,7 +265,7 @@ class AllAntibioticStats(serializers.ModelSerializer):
         fields = [
             'name',
             'number_of_prescription',
-            'percentage_of_prescription',
+            'percentage_of_prescription'
         ]
     
     def get_number_of_prescription(self, obj):
@@ -275,3 +275,22 @@ class AllAntibioticStats(serializers.ModelSerializer):
         count_prescription = Prescriptions.objects.all().count()
         this_ab_prescription = Prescriptions.objects.filter(dose__ab=obj).count()
         return str(round(this_ab_prescription/ count_prescription * 100, 2)) + " %"
+
+class AllDiagnosesStats(serializers.ModelSerializer):
+    number_of_diagnosis = serializers.SerializerMethodField()
+    percentage_of_diagnosis = serializers.SerializerMethodField()
+    class Meta:
+        model = Diagnoses
+        fields = [
+            'diagnosis',
+            'number_of_diagnosis',
+            'percentage_of_diagnosis'
+        ]
+        
+    def get_number_of_diagnosis(self, obj):
+        return PrescriptionDiagnosis.objects.filter(diagnosis=obj).count()
+    
+    def get_percentage_of_diagnosis(self,obj):
+        count_prescription = Prescriptions.objects.all().count()
+        this_diagnosis = PrescriptionDiagnosis.objects.filter(diagnosis=obj).count()
+        return str(round(this_diagnosis/ count_prescription * 100, 2)) + ' %'

@@ -587,6 +587,13 @@ def ab_stats(request):
 @login_required(login_url="/login")
 @api_view(['GET'])
 def diagnosis_stats(request):
+    all = request.GET.get('all', None)
+    
+    if all is not None and all == 'true':
+        diagnoses = Diagnoses.objects.all()
+        serializer = AllDiagnosesStats(diagnoses, many=True)
+        return Response(serializer.data, status=200)
+        
     all_diagnoses = PrescriptionDiagnosis.objects.all()
     count_all_prescriptions = Prescriptions.objects.all().count()
     diagnosis_list = [diagnosis.diagnosis.diagnosis for diagnosis in all_diagnoses]
