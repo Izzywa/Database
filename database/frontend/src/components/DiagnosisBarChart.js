@@ -7,6 +7,7 @@ export default function DiagnosisBarChart() {
         labels: [],
         data: []
     })
+    const [allDiagnoses, setAllDiagnoses] = useState(false);
 
     const gridStyle = {
         height: '50vh'
@@ -19,9 +20,26 @@ export default function DiagnosisBarChart() {
             setData(result)
         }).catch(error => console.log(error))
     },[])
+
+    function toggleDiagnosisList() {
+        setAllDiagnoses(prev => !prev)
+    }
+
+    function AllDiagnosesStats() {
+        return (
+            <Grid style={{height: '50vh', overflow: 'scroll'}}>
+                <p>all diagnoses stats</p>
+            </Grid>
+        )
+    }
+
     return (
         <>
-        <Grid style={gridStyle}>
+        {
+            allDiagnoses ? 
+            <AllDiagnosesStats/>
+            :
+            <Grid style={gridStyle}>
             <BarChart
             labels={data.labels}
             data={data.data}
@@ -29,9 +47,17 @@ export default function DiagnosisBarChart() {
             title={'Most common cause for prescription from database'}
             />
         </Grid>
+
+        }
         <Grid>
-            <button className="btn btn-dark m-2">
-                Statistics of all diagnoses
+            <button className="btn btn-dark m-2"
+            onClick={toggleDiagnosisList}>
+                {
+                    allDiagnoses ?
+                    'Statistics of most common diagnoses'
+                    : 
+                    'Statistics of all diagnoses'
+                }
             </button>
         </Grid>
         
