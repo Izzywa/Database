@@ -256,3 +256,20 @@ class DosageSerializer(serializers.ModelSerializer):
     
     def get_value(self, obj):
         return obj.id
+    
+class AllAntibioticStats(serializers.ModelSerializer):
+    number_of_prescription = serializers.SerializerMethodField()
+    percentage_of_prescription = serializers.SerializerMethodField()
+    class Meta:
+        model = Antibiotics
+        fields = [
+            'name',
+            'number_of_prescription',
+            'percentage_of_prescription'
+        ]
+    
+    def get_number_of_prescription(self, obj):
+        return obj.ab
+    
+    def get_percentage_of_prescription(self,obj):
+        return obj.ab
