@@ -84,7 +84,7 @@ export default function VisitsAndPrescriptionList(props) {
         </div>
         <div className="table-container">
             <table className="table">
-                <thead>
+                <thead style={{position: 'sticky', top:0}}>
                     <tr>
                         <th>Date</th>
                         <th>Visits</th>

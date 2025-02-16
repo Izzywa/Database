@@ -51,7 +51,7 @@ export default function AntibioticPieChart() {
         },[])
 
         return (
-        <Grid style={{minHeight: '50vh', maxHeight: '100vh', overflow: 'scroll'}} >
+        <Grid style={{height: '50vh', overflow: 'scroll'}} >
             {
                 tableList ? 
                 <Table tableList={tableList}

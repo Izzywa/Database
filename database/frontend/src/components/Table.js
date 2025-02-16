@@ -43,7 +43,7 @@ export default function Table(props) {
     return (
         <div>
             <table className="table">
-                <thead>
+                <thead style={{position: 'sticky', top: 0}}>
                     <tr>
                     {
                         Object.entries(props.tableOrder)
