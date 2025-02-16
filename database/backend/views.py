@@ -595,7 +595,7 @@ def diagnosis_stats(request):
     top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
     
     return Response({
-        'labels': [item['diagnosis'] for item in top_5],
+        'labels': [item['diagnosis'].capitalize() for item in top_5],
         'data': [round(item['percentage'],2) for item in top_5]
     }, status=200)
     
@@ -613,7 +613,7 @@ def compliance_stats(request):
         
     return Response({
         'data': data,
-        'labels': [use.use for use in usage]
+        'labels': [use.use.capitalize() for use in usage]
     }, status=200)
 
 @api_view(['GET', 'POST'])

@@ -7,7 +7,7 @@ import { Grid2 as Grid } from "@mui/material";
 
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
-
+    
     useEffect(() => {
         setBreadcrumbsList({
          'Home': '/',
@@ -19,17 +19,24 @@ export default function AntibioticStatistics(props) {
         height: '50vh'
     }
 
+    
+
     function AntibioticPieChart() {
         const [data, setData] = useState({
             labels: [],
             data: []
         });
+        const [allAb, setAllAb] = useState(false)
 
         const formatter = {
             formatter: (value, context) => {;
                 return value + " %";
             },
             color: 'ffffff'
+        }
+
+        function toggleAbList() {
+            setAllAb(prev => !prev)
         }
 
         useEffect(() => {
@@ -41,11 +48,33 @@ export default function AntibioticStatistics(props) {
         },[])
 
         return (
-            <PieChart labels={data.labels}
-            formatter={formatter}
-            datasetLabel={'% over all prescribed antibiotics'}
-            title={'Most prescribed antibiotics from database'}
-            data={data.data}/>
+            <>
+            {
+                allAb ? 
+                <Grid style={{maxHeight: '100vh', overflow: 'scroll'}} >
+                    <p>Table for all ab stats</p>
+                    </Grid>
+                :
+                <Grid style={gridStyle}>
+                    <PieChart labels={data.labels}
+                    formatter={formatter}
+                    datasetLabel={'% over all prescribed antibiotics'}
+                    title={'Most prescribed antibiotics from database'}
+                    data={data.data}/>
+                </Grid>
+            }
+            <Grid>
+                <button className="btn btn-dark m-2"
+                onClick={toggleAbList}>
+                    {
+                        allAb ? 
+                        'Statistics of most prescribed antibiotics'
+                        :
+                        'Statistics of all antibiotics'
+                    }
+                </button>
+            </Grid>
+            </>
         )
     }
 
@@ -64,12 +93,20 @@ export default function AntibioticStatistics(props) {
         },[])
         return (
             <>
-            <BarChart
-            labels={data.labels}
-            data={data.data}
-            datasetLabel={'% of prescription with given diagnosis'}
-            title={'Most common cause for prescription from database'}
-            />
+            <Grid style={gridStyle}>
+                <BarChart
+                labels={data.labels}
+                data={data.data}
+                datasetLabel={'% of prescription with given diagnosis'}
+                title={'Most common cause for prescription from database'}
+                />
+            </Grid>
+            <Grid>
+                <button className="btn btn-dark m-2">
+                    Statistics of all diagnoses
+                </button>
+            </Grid>
+            
             </>
         )
     }
@@ -105,10 +142,10 @@ export default function AntibioticStatistics(props) {
         <NavBar/>
         <div className="container py-2">
             <Grid container spacing={1}>
-                <Grid size={{ xs:12, md:6}} style={gridStyle}>
+                <Grid size={{ xs:12, md:6}}>
                     <AntibioticPieChart/>
                 </Grid>
-                <Grid size={{ xs:12, md:6}} style={gridStyle}>
+                <Grid size={{ xs:12, md:6}}>
                     <DiagnosisBarChart/>
                 </Grid>
                 <Grid size={12} style={{height: '100vh'}}>
