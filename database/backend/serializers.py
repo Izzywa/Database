@@ -273,7 +273,8 @@ class AllAntibioticStats(serializers.ModelSerializer):
         ]
     
     def get_number_of_prescription(self, obj):
-        return obj.ab
+        prescriptions = Prescriptions.objects.filter(dose__ab=obj).count()
+        return prescriptions
     
     def get_percentage_of_prescription(self,obj):
         return obj.ab
