@@ -7,12 +7,20 @@ import { alpha } from "@mui/material";
 
 export default function BarChart(props){
     Chart.register(Title)
-    let labels = props.labels
-    /*
+
+    let labels = []
     props.labels.forEach(element => {
-        labels.push(element.split(' '))
-    });
-*/
+        let list = element.split(' ')
+        let tempList = []
+        for (let i = 0; i < list.length; i ++ ){
+            if ( i % 2 == 0) {
+                tempList.push(list.slice(i, i + 2).join(' '))
+            }
+        }
+
+        labels.push(tempList)
+    })
+
     let borderColor = [];
     let backgroundColor = [];
     let startColor = 200
