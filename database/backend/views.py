@@ -11,8 +11,8 @@ from django.urls import reverse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage, PrescriptionDiagnosis, Compliance
-from .serializers import *
+from .models import Patients, Countries, DialCodes, Antibiotics, Synonyms, Allergies, Diagnoses, AbUsage, PrescriptionDiagnosis, Compliance, Dosage, Prescriptions, Visits
+from .serializers import PatientSerializer, PatientPostSerializer, PrescriptionSerializer, VisitPrescriptionSerializer, CountrySerializer, DiagnosesSerializer, DialCodeSerializer, VisitSerializer, AntibioticSerializer, AllAntibioticStats, AllDiagnosesStats, AbUsageSerializer, DosageSerializer, SynonymsSerializer
 
 def index(request):
     return JsonResponse({'message': 'index'})
