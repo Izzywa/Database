@@ -260,12 +260,16 @@ class DosageSerializer(serializers.ModelSerializer):
 class AllAntibioticStats(serializers.ModelSerializer):
     number_of_prescription = serializers.SerializerMethodField()
     percentage_of_prescription = serializers.SerializerMethodField()
+    abbreviations = serializers.SerializerMethodField()
+    synonyms = serializers.SerializerMethodField()
     class Meta:
         model = Antibiotics
         fields = [
             'name',
             'number_of_prescription',
-            'percentage_of_prescription'
+            'percentage_of_prescription',
+            'synonyms',
+            'abbreviations'
         ]
     
     def get_number_of_prescription(self, obj):
@@ -273,3 +277,13 @@ class AllAntibioticStats(serializers.ModelSerializer):
     
     def get_percentage_of_prescription(self,obj):
         return obj.ab
+    
+    def get_abbreviations(self, obj):
+        abbreviation = obj.abbreviations.all()
+        abbreviation = [ab.abbreviation for ab in abbreviation]
+        return abbreviation
+    
+    def get_synonyms(self,obj):
+        synonym = obj.synonyms.all()
+        synonym = [ab.synonym for ab in synonym]
+        return synonym
