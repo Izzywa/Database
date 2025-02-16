@@ -27,6 +27,10 @@ tbody > tr:hover {
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
+tbody > tr td {
+  max-width: 50vw;
+  overflow-wrap: break-word;
+}
 
 .modal-div {
   height: 100vh;

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import PieChart from "./PieChart";
 import { Grid2 as Grid } from "@mui/material";
+import Table from "./Table";
+import LoadingPage from "./LoadingPage";
 
 export default function AntibioticPieChart() {
     const [data, setData] = useState({
@@ -33,16 +35,31 @@ export default function AntibioticPieChart() {
     },[])
 
     function AllAbStats() {
+        const [tableList, setTableList] = useState(null)
+        const tableOrder = {
+            'name': 'Name',
+            'number_of_prescription': 'Number of Prescriptions',
+            'percentage_of_prescription': 'Percentage of Prescriptions'
+        }
+
         useEffect(() => {
             fetch(`/backend/ab_stats?all=${allAb}`)
             .then(response => response.json())
             .then(result => {
-                console.log(result)
+                setTableList(result)
             }).catch(error => alert(error))
         },[])
+
         return (
-        <Grid style={{maxHeight: '100vh', overflow: 'scroll'}} >
-            <p>Table for all ab stats</p>
+        <Grid style={{minHeight: '50vh', maxHeight: '100vh', overflow: 'scroll'}} >
+            {
+                tableList ? 
+                <Table tableList={tableList}
+                tableOrder={tableOrder}
+                />
+                : <LoadingPage/>
+            }
+            
         </Grid>
         )
     }

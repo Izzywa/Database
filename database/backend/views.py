@@ -562,10 +562,7 @@ def ab_stats(request):
     if all is not None and all == 'true':
         ab_list = Antibiotics.objects.all()
         serializer = AllAntibioticStats(ab_list, many=True)
-        return Response({
-            'data': serializer.data,
-            'all': all
-        }, status=200)
+        return Response(serializer.data, status=200)
     else:
         all_prescriptions = Prescriptions.objects.all()
         count_all_prescriptions = all_prescriptions.count()

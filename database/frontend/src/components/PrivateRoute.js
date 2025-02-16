@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from "./AuthContext";
+import LoadingPage from "./LoadingPage";
 
 export default function PrivateRoute(){
     const { authenticated, checkAuth, isLoading } = useAuth();
@@ -13,11 +13,7 @@ export default function PrivateRoute(){
     
     if (isLoading) {
         return (
-            <div className="d-flex flex-column justify-content-center align-items-center"
-            style={{ height: '100vh'}}>
-                <CircularProgress/>
-                <p>Loading...</p>
-            </div>
+            <LoadingPage/>
         )
     }
     else {

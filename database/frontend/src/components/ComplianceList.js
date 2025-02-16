@@ -61,7 +61,6 @@ export default function ComplianceList(props) {
     }
 
     function ComplianceListPrescription() {
-        
         return (
             <>
             <div className="table-container">
