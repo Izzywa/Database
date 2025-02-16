@@ -273,11 +273,12 @@ class AllAntibioticStats(serializers.ModelSerializer):
         ]
     
     def get_number_of_prescription(self, obj):
-        prescriptions = Prescriptions.objects.filter(dose__ab=obj).count()
-        return prescriptions
+        return Prescriptions.objects.filter(dose__ab=obj).count()
     
     def get_percentage_of_prescription(self,obj):
-        return obj.ab
+        count_prescription = Prescriptions.objects.all().count()
+        this_ab_prescription = Prescriptions.objects.filter(dose__ab=obj).count()
+        return round(this_ab_prescription/ count_prescription * 100, 2)
     
     def get_abbreviations(self, obj):
         abbreviation = obj.abbreviations.all()
