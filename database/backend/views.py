@@ -558,25 +558,31 @@ def visit_note(request, visit_id=None):
 @login_required(login_url="/login")    
 @api_view(['GET'])    
 def ab_stats(request):
-    all_prescriptions = Prescriptions.objects.all()
-    count_all_prescriptions = all_prescriptions.count()
-    top_5 = []
-    doses = [prescription.dose.ab.name for prescription in all_prescriptions]
-    for dose in set(doses):
-        count = all_prescriptions.filter(dose__ab__name=dose).count()
-        top_5.append({
-            'ab': dose,
-            'percentage': count/count_all_prescriptions * 100
-        })
-    
-    top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
-    labels = [item['ab'] for item in top_5]
-    data = [round(item['percentage'],2) for item in top_5]
-        
-    return Response({
-        'labels' : labels, 
-        'data': data
+    all = request.GET.get('all', None)
+    if all is not None:
+        return Response({
+            'all': all
         }, status=200)
+    else:
+        all_prescriptions = Prescriptions.objects.all()
+        count_all_prescriptions = all_prescriptions.count()
+        top_5 = []
+        doses = [prescription.dose.ab.name for prescription in all_prescriptions]
+        for dose in set(doses):
+            count = all_prescriptions.filter(dose__ab__name=dose).count()
+            top_5.append({
+                'ab': dose,
+                'percentage': count/count_all_prescriptions * 100
+            })
+        
+        top_5 = sorted(top_5, key=lambda item: item['percentage'], reverse=True)[:5]
+        labels = [item['ab'] for item in top_5]
+        data = [round(item['percentage'],2) for item in top_5]
+            
+        return Response({
+            'labels' : labels, 
+            'data': data
+            }, status=200)
     
 @login_required(login_url="/login")
 @api_view(['GET'])
