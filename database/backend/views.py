@@ -559,8 +559,10 @@ def visit_note(request, visit_id=None):
 @api_view(['GET'])    
 def ab_stats(request):
     all = request.GET.get('all', None)
-    if all is not None:
+    if all is not None and all == 'true':
+        ab_names = [ab.name for ab in Antibiotics.objects.all()]
         return Response({
+            'ab_names': ab_names,
             'all': all
         }, status=200)
     else:

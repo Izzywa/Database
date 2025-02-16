@@ -32,13 +32,26 @@ export default function AntibioticPieChart() {
         }).catch(error => console.log(error))
     },[])
 
+    function AllAbStats() {
+        useEffect(() => {
+            fetch(`/backend/ab_stats?all=${allAb}`)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+            }).catch(error => alert(error))
+        },[])
+        return (
+        <Grid style={{maxHeight: '100vh', overflow: 'scroll'}} >
+            <p>Table for all ab stats</p>
+        </Grid>
+        )
+    }
+
     return (
         <>
         {
             allAb ? 
-            <Grid style={{maxHeight: '100vh', overflow: 'scroll'}} >
-                <p>Table for all ab stats</p>
-                </Grid>
+            <AllAbStats/>
             :
             <Grid style={gridStyle}>
                 <PieChart labels={data.labels}
