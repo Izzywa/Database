@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "chart.js/auto";
-import { elements, Title } from "chart.js";
+import { Title } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { red, blue, yellow, green, purple } from "@mui/material/colors";
 import { alpha } from "@mui/material";

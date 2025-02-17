@@ -13,6 +13,7 @@ export default function AgesStats(props) {
     return(
         <>
         <ScatterChart
+        title={'Statistics of recorded patients age'}
         data={data}
         label={"Number of Patients by Age"}
         yTitle={"Number of Patients"}

@@ -1,8 +1,12 @@
 import React from "react";
-import { Scatter } from 'react-chartjs-2';
+import Chart from "chart.js/auto";
 import { red } from "@mui/material/colors";
+import { plugins, Title } from "chart.js";
+import { Scatter } from 'react-chartjs-2';
+
 
 export default function ScatterChart(props){
+    Chart.register(Title)
     const data = {
         datasets: [{
           label: props.label,
@@ -26,7 +30,13 @@ export default function ScatterChart(props){
                 }
             }
         },
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: props.title
+            }
+        }
     }
 
     return (
