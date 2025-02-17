@@ -28,9 +28,9 @@ export default function AntibioticStatistics(props) {
                 <Grid size={{ xs:12, md:6}}>
                     <DiagnosisBarChart/>
                 </Grid>
-                <Grid size={12}>
+                
                 <DatePrescriptionStats/>
-                </Grid>
+                
                 <Grid size={12} style={{height: '100vh'}}>
                     <ComplianceBarChart/> 
                     </Grid>
