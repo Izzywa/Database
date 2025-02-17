@@ -25,7 +25,8 @@ export default function ScatterChart(props){
                     text: props.yTitle
                 }
             }
-        }
+        },
+        maintainAspectRatio: false
     }
 
     return (
