@@ -28,8 +28,12 @@ export default function PatientsStatistics(props) {
                     <AgesStats/>
                 </Grid>
                 <Grid size={{xs:12, md:6}} style={style}>
-                    Frequency of prescribed antibiotics
+                    <p>
+                    Frequency antibiotics was prescribed to each patients
                     (this means the number of antibiotics prescription within a time period)
+                    y axis = number of prescriptions
+                    x axis = time period
+                    </p>
                     intervals of prescription
                     (for more than one prescription, count how many days since)
                 </Grid>

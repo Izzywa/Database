@@ -5,6 +5,7 @@ import AntibioticPieChart from "./AntibioticPieChart";
 import DiagnosisBarChart from "./DiagnosisBarChart";
 import { Grid2 as Grid } from "@mui/material";
 import ComplianceBarChart from "./ComplianceBarChart";
+import DatePrescriptionStats from "./DatePrescriptionStats";
 
 export default function AntibioticStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
@@ -26,6 +27,9 @@ export default function AntibioticStatistics(props) {
                 </Grid>
                 <Grid size={{ xs:12, md:6}}>
                     <DiagnosisBarChart/>
+                </Grid>
+                <Grid size={12}>
+                <DatePrescriptionStats/>
                 </Grid>
                 <Grid size={12} style={{height: '100vh'}}>
                     <ComplianceBarChart/> 

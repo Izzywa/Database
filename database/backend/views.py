@@ -658,6 +658,27 @@ def patients_stats(request):
             'error': True,
             'message': 'Invalid request.'
         }, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+@login_required(login_url="/login")
+@api_view(['GET'])
+def precriptions_stats(request):
+    time = request.GET.get('time', None)
+    if time == 'week':
+        s = time
+    elif time == 'month':
+        s = time + 'since today'
+    elif time == 'year':
+        s = time + 'just year'
+    else:
+        return Response ({
+            'error': True,
+            'message': 'Invalid Request'
+        }, status=status.HTTP_400_BAD_REQUEST)
+    
+    return Response ({
+        'data': s
+        }, status=200)
+        
 
 @api_view(['GET', 'POST'])
 def test(request):
