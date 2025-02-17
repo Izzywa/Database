@@ -29,6 +29,9 @@ export default function PatientsStatistics(props) {
                 </Grid>
                 <Grid size={{xs:12, md:6}} style={style}>
                     Frequency of prescribed antibiotics
+                    (this means the number of antibiotics prescription within a time period)
+                    intervals of prescription
+                    (for more than one prescription, count how many days since)
                 </Grid>
             </Grid>
         </div>

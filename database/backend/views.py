@@ -633,10 +633,10 @@ def compliance_stats(request):
 @api_view(['GET'])
 def patients_stats(request):
     age = request.GET.get('age', None)
-    if age is not None:
-        patients = Patients.objects.all()
+    frequency = request.GET.get('frequency', None)
+    patients = Patients.objects.all()
+    if age is not None and age == 'true':
         today = date.today()
-        
         ages = [relativedelta(today, patient.birth_date).years for patient in patients]
         coordinates = collections.Counter(ages)
         data = []
@@ -647,6 +647,12 @@ def patients_stats(request):
             })
             
         return Response(data, status=200)
+    
+    elif frequency is not None and frequency == 'true':
+        return Response({
+            'data': 'frequency'
+        }, status=200)
+        
     else:
         return Response({
             'error': True,
