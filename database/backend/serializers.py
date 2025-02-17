@@ -279,6 +279,7 @@ class AllAntibioticStats(serializers.ModelSerializer):
 class AllDiagnosesStats(serializers.ModelSerializer):
     number_of_diagnosis = serializers.SerializerMethodField()
     percentage_of_diagnosis = serializers.SerializerMethodField()
+    diagnosis = serializers.SerializerMethodField()
     class Meta:
         model = Diagnoses
         fields = [
@@ -286,6 +287,9 @@ class AllDiagnosesStats(serializers.ModelSerializer):
             'number_of_diagnosis',
             'percentage_of_diagnosis'
         ]
+        
+    def get_diagnosis(self, obj):
+        return obj.diagnosis.capitalize()
         
     def get_number_of_diagnosis(self, obj):
         return PrescriptionDiagnosis.objects.filter(diagnosis=obj).count()

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import BarChart from "./BarChart";
 import { Grid2 as Grid } from "@mui/material";
+import Table from "./Table";
+import LoadingPage from "./LoadingPage";
 
 export default function DiagnosisBarChart() {
     const [data, setData] = useState({
@@ -26,9 +28,29 @@ export default function DiagnosisBarChart() {
     }
 
     function AllDiagnosesStats() {
+        const [tableList, setTableList] = useState(null)
+        const tableOrder = {
+            'diagnosis': 'Diagnosis',
+            'number_of_diagnosis': 'Number of Prescriptions with this diagnosis',
+            'percentage_of_diagnosis': 'Percentage of Prescriptions with this diagnosis'
+        }
+
+        useEffect(() => {
+            fetch(`/backend/diagnosis_stats?all=${allDiagnoses}`)
+            .then(response => response.json())
+            .then(result => {
+                setTableList(result)
+            }).catch(error => alert(error))
+        },[])
+
         return (
             <Grid style={{height: '50vh', overflow: 'scroll'}}>
-                <p>all diagnoses stats</p>
+                {
+                    tableList ? 
+                    <Table tableList={tableList}
+                    tableOrder={tableOrder}/>
+                    : <LoadingPage/>
+                }
             </Grid>
         )
     }

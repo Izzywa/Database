@@ -28,7 +28,7 @@ tbody > tr:hover {
   border: 1px solid rgba(0, 0, 0, 0.6);
 }
 tbody > tr td {
-  max-width: 50vw;
+  max-width: 40vw;
   overflow-wrap: break-word;
 }
 
@@ -42,17 +42,5 @@ tbody > tr td {
 p {
   white-space: pre-line;
 }
-
-/*
-{
-    "diagnoses": [
-    "Acne",
-    "mrsa"
-    ],
-    "compliance" : [
-        "Keeping left-over antibiotics for future use"
-        ]
-}
-*/
 
 /*# sourceMappingURL=index.css.map */
