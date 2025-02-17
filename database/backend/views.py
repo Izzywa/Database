@@ -662,22 +662,41 @@ def patients_stats(request):
 @login_required(login_url="/login")
 @api_view(['GET'])
 def precriptions_stats(request):
-    time = request.GET.get('time', None)
-    if time == 'week':
-        s = time
-    elif time == 'month':
-        s = time + 'since today'
-    elif time == 'year':
-        s = time + 'just year'
-    else:
+    prescriptions = Prescriptions.objects.all().order_by('prescription_date')
+    today = date.today()
+    interval = request.GET.get('interval', None)
+    if interval is not None:
+        try:
+            interval = int(interval)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        dates = []
+        for i  in range(12 * interval):
+            label_date = today - relativedelta(months= i )
+            dates.append({
+                'month': label_date.month,
+                'year': label_date.year
+            })
+            
+        labels = [str(d['month']) + "/" + str(d['year']) for d in dates]
+        
+        prescriptions_data = [prescription.prescription_date.strftime('%-m/%Y') for prescription in prescriptions]
+        prescriptions_data = collections.Counter(prescriptions_data)
+        
+        data  = []
+        for label in labels:
+            try:
+                data.append(prescriptions_data[label])
+            except ValueError:
+                data.append(0)
+        
         return Response ({
-            'error': True,
-            'message': 'Invalid Request'
-        }, status=status.HTTP_400_BAD_REQUEST)
-    
-    return Response ({
-        'data': s
-        }, status=200)
+            'labels' : labels,
+            'data': data
+            }, status=200)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
         
 
 @api_view(['GET', 'POST'])
