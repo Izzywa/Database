@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import NavBar from "./NavBar";
 import { useAuth } from "./AuthContext";
 import { Grid2 as Grid } from "@mui/material";
+import AgesStats from "./AgesStats";
 
 export default function PatientsStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
@@ -19,7 +20,7 @@ export default function PatientsStatistics(props) {
         <div className="container py-2">
             <Grid container>
                 <Grid size={{xs:12, md:6}}>
-                    Patient's age
+                    <AgesStats/>
                 </Grid>
                 <Grid size={{xs:12, md:6}}>
                     Frequency of prescribed antibiotics
