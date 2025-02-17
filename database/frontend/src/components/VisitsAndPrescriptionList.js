@@ -23,8 +23,7 @@ export default function VisitsAndPrescriptionList(props) {
     }, [page])
 
     const goToDate = useCallback((input) => {
-        setDate(input)
-        navigate(`/date/${props.id}/${input}`)
+        navigate(`/date/${props.id}/${date}`)
     }, [date])
 
     function NestedRow({item, row}) {
@@ -67,10 +66,14 @@ export default function VisitsAndPrescriptionList(props) {
                 <div className=" container bg-light p-3">
                     <DateInput
                     label="Choose Date"
-                    setDate={goToDate}/>
+                    setDate={setDate}/>
                     <button className="btn btn-info m-1"
                     onClick={() => setOpen(false)}>
                         Cancel
+                    </button>
+                    <button className="btn btn-dark m-1"
+                    onClick={goToDate}>
+                        Submit
                     </button>
                 </div>
             </div>
