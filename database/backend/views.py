@@ -1,8 +1,8 @@
 import json
-import heapq
-from datetime import datetime
+import collections
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
 from django.db import connection, IntegrityError
-from django.db.models import Count
 from django.contrib.auth import authenticate, login, logout
 from django.core.paginator import Paginator, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
@@ -628,6 +628,30 @@ def compliance_stats(request):
         'data': data,
         'labels': [use.use.capitalize() for use in usage]
     }, status=200)
+    
+@login_required(login_url="/login")
+@api_view(['GET'])
+def patients_stats(request):
+    age = request.GET.get('age', None)
+    if age is not None:
+        patients = Patients.objects.all()
+        today = date.today()
+        
+        ages = [relativedelta(today, patient.birth_date).years for patient in patients]
+        coordinates = collections.Counter(ages)
+        data = []
+        for y, x in coordinates.items():
+            data.append({
+                'x': x,
+                'y': y
+            })
+            
+        return Response(data, status=200)
+    else:
+        return Response({
+            'error': True,
+            'message': 'Invalid request.'
+        }, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 @api_view(['GET', 'POST'])
 def test(request):
