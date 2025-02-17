@@ -680,6 +680,7 @@ def precriptions_stats(request):
             })
             
         labels = [str(d['month']) + "/" + str(d['year']) for d in dates]
+        labels.reverse()
         
         prescriptions_data = [prescription.prescription_date.strftime('%-m/%Y') for prescription in prescriptions]
         prescriptions_data = collections.Counter(prescriptions_data)
