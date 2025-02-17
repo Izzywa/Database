@@ -5,20 +5,8 @@ import { red } from "@mui/material/colors";
 export default function ScatterChart(props){
     const data = {
         datasets: [{
-          label: 'Scatter Dataset',
-          data: [{
-            x: -10,
-            y: 0
-          }, {
-            x: 0,
-            y: 10
-          }, {
-            x: 10,
-            y: 5
-          }, {
-            x: 0.5,
-            y: 5.5
-          }],
+          label: props.label,
+          data: props.data,
           backgroundColor: red[200]
         }],
       };
@@ -28,13 +16,13 @@ export default function ScatterChart(props){
             x: {
                 title: {
                     display: true,
-                    text: 'x axis title'
+                    text: props.xTitle
                 }
             },
             y : {
                 title: {
                     display: true,
-                    text: 'y axis title'
+                    text: props.yTitle
                 }
             }
         }

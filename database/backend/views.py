@@ -640,7 +640,7 @@ def patients_stats(request):
         ages = [relativedelta(today, patient.birth_date).years for patient in patients]
         coordinates = collections.Counter(ages)
         data = []
-        for y, x in coordinates.items():
+        for x,y in coordinates.items():
             data.append({
                 'x': x,
                 'y': y

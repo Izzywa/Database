@@ -18,7 +18,7 @@ export default function PatientsStatistics(props) {
         <>
         <NavBar/>
         <div className="container py-2">
-            <Grid container>
+            <Grid container spacing={1}>
                 <Grid size={{xs:12, md:6}}>
                     <AgesStats/>
                 </Grid>
