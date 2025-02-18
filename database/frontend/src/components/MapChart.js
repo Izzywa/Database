@@ -36,9 +36,13 @@ export default function MapChart(props) {
         // create chart
         let chart = root.container.children.push(
             am5map.MapChart.new(root, {
-                projection: am5map.geoNaturalEarth1()
+                projection: am5map.geoNaturalEarth1(),
+                wheelY: "none"
             })
         );
+
+        // add title
+
 
         // create polygon series
         let polygonSeries = chart.series.push(
@@ -114,8 +118,7 @@ export default function MapChart(props) {
     
     return (
         <>
-        500
-        <div id="chartdiv" style={{ width: "100vw", height: "100%"}}>
+        <div id="chartdiv" style={{ width: "100%", height: "100%"}}>
             
         </div>
         </>

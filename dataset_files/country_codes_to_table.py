@@ -31,7 +31,7 @@ def insert_countries_and_dial_codes(cursor, filename):
     codes = codes[codes['ISO3166-1-Alpha-3'] != 'UMI']
 
 
-    insert_country = 'INSERT INTO countries (code, name, ISO2) VALUES (?,?, ?);'
+    insert_country = 'INSERT INTO countries (code, name, ISO2) VALUES (?,?,?);'
     insert_dial_code = 'INSERT INTO dial_codes (dial, country_code) VALUES (?,?);'
 
     for index, row in codes.iterrows():
