@@ -7,22 +7,6 @@ import { red, blueGrey } from "@mui/material/colors";
 import { alpha } from "@mui/material";
 
 export default function MapChart(props) {
-    const [data, setData] = useState([
-        {
-            id: "AF",
-            value: 10,
-            name: 'America'
-        }, {
-            id: "GB",
-            value: 100,
-            name: 'Brittain'
-        }, 
-        {
-            id: "MY",
-            value: 50,
-            name: 'America'
-        }
-    ])
     
     useLayoutEffect(() => {
         // create root
@@ -114,7 +98,7 @@ export default function MapChart(props) {
             }
         ])
 
-        bubbleSeries.data.setAll(data)
+        bubbleSeries.data.setAll(props.data)
 
         return () => {
             root.dispose();
