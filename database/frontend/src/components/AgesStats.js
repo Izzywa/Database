@@ -17,7 +17,7 @@ export default function AgesStats(props) {
         data={data}
         label={"Number of Patients by Age"}
         yTitle={"Number of Patients"}
-        xTitle={"Age"}
+        xTitle={"Age (years)"}
         />
         </>
     )
