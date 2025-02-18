@@ -458,12 +458,3 @@ However, there is no relation of visits and prescription.
 Although the visits and prescriptions can be viewed together, grouped by the prescription and visit date, there is currently no relation between both tables.
 This is to allow recording of visits and prescription indipendently.
 However, it is not convenient to view follow up visits after a particular visit or prescription to judge its effects.
-
-## video overview
-- short video no more than 3 minutes
-- begin with an opening section that display's:
-    - project's title
-    - name
-    - GitHub and edX usernames
-    - city & country
-    - date video recorded
