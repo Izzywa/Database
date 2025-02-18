@@ -57,9 +57,9 @@ export default function MapChart(props) {
 
             let circle = container.children.push(
                 am5.Circle.new(root, {
-                    radius: 10,
+                    radius: 8,
                     fillOpacity: 0.7,
-                    fill: alpha(red[200], 0.5),
+                    fill: alpha(red[300], 0.5),
                     cursorOverStyle: "pointer",
                     tooltipText: `{name}: {value}[/]`
                 }, circleTemplate)
@@ -85,7 +85,7 @@ export default function MapChart(props) {
             })
         })
 
-        // minValue and maxValue must be set for the animations to work
+        /* minValue and maxValue must be set for the animations to work
         bubbleSeries.set("heatRules", [
             {
                 target: circleTemplate,
@@ -96,7 +96,7 @@ export default function MapChart(props) {
                 maxValue: 2,
                 key: "radius"
             }
-        ])
+        ])*/
 
         bubbleSeries.data.setAll(props.data)
 
