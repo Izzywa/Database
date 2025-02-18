@@ -633,8 +633,9 @@ def compliance_stats(request):
 @api_view(['GET'])
 def patients_stats(request):
     age = request.GET.get('age', None)
-    frequency = request.GET.get('frequency', None)
+    resident_country = request.GET.get('residentCountry', None)
     patients = Patients.objects.all()
+    
     if age is not None and age == 'true':
         today = date.today()
         ages = [relativedelta(today, patient.birth_date).years for patient in patients]
@@ -647,12 +648,23 @@ def patients_stats(request):
             })
             
         return Response(data, status=200)
-    
-    elif frequency is not None and frequency == 'true':
-        return Response({
-            'data': 'frequency'
-        }, status=200)
         
+    elif resident_country is not None:
+        if resident_country == 'true':
+            countries = [patient.resident_country_code.ISO2 for patient in patients]
+        else:
+            countries = [patient.birth_country_code.ISO2 for patient in patients]
+            
+        collection = collections.Counter(countries)
+        data = []
+        for key, value in collection.items():
+            data.append({
+                'id': key,
+                'value': value,
+                'name': Countries.objects.get(ISO2=key).name
+            })
+            
+        return Response(data, status=200)
     else:
         return Response({
             'error': True,

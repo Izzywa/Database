@@ -4,7 +4,22 @@ import { Grid2 as Grid } from "@mui/material";
 
 export default function PatientsCountryStats(props) {
     const [resident, setResident] = useState(true)
-    const [data, setData] = useState([])
+    const [data, setData] = useState([
+            {
+                id: "AF",
+                value: 10,
+                name: 'America'
+            }, {
+                id: "GB",
+                value: 100,
+                name: 'Brittain'
+            }, 
+            {
+                id: "MY",
+                value: 50,
+                name: 'America'
+            }
+        ])
     return(
         <>
             <Grid size={12} 
