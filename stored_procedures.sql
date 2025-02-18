@@ -148,5 +148,3 @@ BEGIN
     )
     OR `name` LIKE CONCAT('%',`ab_name`,'%');
 END |
-
--- DELIMITER ; (removed to run on test.py)

@@ -15,7 +15,8 @@ def insert_countries_and_dial_codes(cursor, filename):
     codes_columns_to_keep = [
         'Dial',
         'ISO3166-1-Alpha-3',
-        'official_name_en'
+        'official_name_en',
+        'ISO3166-1-Alpha-2'
     ]
 
     codes.drop(
@@ -30,11 +31,11 @@ def insert_countries_and_dial_codes(cursor, filename):
     codes = codes[codes['ISO3166-1-Alpha-3'] != 'UMI']
 
 
-    insert_country = 'INSERT INTO countries (code, name) VALUES (?,?);'
+    insert_country = 'INSERT INTO countries (code, name, ISO2) VALUES (?,?, ?);'
     insert_dial_code = 'INSERT INTO dial_codes (dial, country_code) VALUES (?,?);'
 
     for index, row in codes.iterrows():
-        country = (row['ISO3166-1-Alpha-3'], row['official_name_en'])
+        country = (row['ISO3166-1-Alpha-3'], row['official_name_en'], row['ISO3166-1-Alpha-2'])
         try:
             cursor.execute(insert_country, country)
         except:

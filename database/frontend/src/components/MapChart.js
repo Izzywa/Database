@@ -98,8 +98,8 @@ export default function MapChart(props) {
                 target: circleTemplate,
                 dataField: "value",
                 min: 1,
-                max: 5,
-                minValue: 0,
+                max: 10,
+                minValue: 1,
                 maxValue: 100,
                 key: "radius"
             }

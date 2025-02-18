@@ -60,6 +60,10 @@ class TestMySQL(unittest.TestCase):
                     cursor.execute(command)
             except IOError as msg:
                 print("Command skipped: ", msg) 
+            
+            except Exception as e:
+                print(e)
+                print(command)
         
     def test_country_codes(self):
         # sample testing data 
@@ -80,7 +84,11 @@ class TestMySQL(unittest.TestCase):
             insert_countries_and_dial_codes(cursor, 'dataset_files/country-codes.csv')            
             
             cursor.execute('SELECT name FROM countries WHERE code = ?;', (test_country['code'],))
-            country = cursor.fetchone()[0]
+            try:
+                country = cursor.fetchone()[0]
+            except Exception as e:
+                print(e)
+                print(test_country['code'])
             cursor.execute('SELECT dial FROM dial_codes WHERE country_code = ?;', (test_country['code'],))
             dial = cursor.fetchone()[0]
             

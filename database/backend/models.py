@@ -81,8 +81,9 @@ class Diagnoses(models.Model):
         
 
 class Countries(models.Model):
-    code = models.CharField(primary_key=True, max_length=3)
+    code = models.CharField(primary_key=True, max_length=3, unique=True)
     name = models.CharField(max_length=64)
+    ISO2 = models.CharField(max_length=2, unique=True)
 
     class Meta:
         db_table = 'countries'
