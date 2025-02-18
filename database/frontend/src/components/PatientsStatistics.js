@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 import { useAuth } from "./AuthContext";
 import { Grid2 as Grid } from "@mui/material";
 import AgesStats from "./AgesStats";
-import MapStats from "./MapStats";
+import MapChart from "./MapChart";
 
 export default function PatientsStatistics(props) {
     const { setBreadcrumbsList } = useAuth()
@@ -29,7 +29,7 @@ export default function PatientsStatistics(props) {
                     <AgesStats/>
                 </Grid>
                 <Grid size={{xs:12, md:6}} style={style}>
-                    <MapStats/>
+                    <MapChart/>
                 </Grid>
             </Grid>
         </div>
