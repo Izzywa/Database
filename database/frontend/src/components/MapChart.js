@@ -41,8 +41,13 @@ export default function MapChart(props) {
             })
         );
 
-        // add title
-
+        /*add title
+        chart.children.unshift(am5.Label.new(root, {
+            text: props.title,
+            fontSize: 15,
+            centerX: am5.percent(50),
+            x: am5.percent(50),
+        }))*/
 
         // create polygon series
         let polygonSeries = chart.series.push(
@@ -118,6 +123,9 @@ export default function MapChart(props) {
     
     return (
         <>
+        <div>
+            <p className="text-center">{props.title}</p>
+        </div>
         <div id="chartdiv" style={{ width: "100%", height: "100%"}}>
             
         </div>
