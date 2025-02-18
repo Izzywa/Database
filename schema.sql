@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `countries` (
     `code` CHAR(3) UNIQUE NOT NULL,
     `name` VARCHAR(64) NOT NULL,
+    `ISO2` CHAR(2) UNIQUE,
     PRIMARY KEY (`code`),
     CONSTRAINT `force_upper_case` CHECK(BINARY `code` = UPPER(`code`))
 );

@@ -3,15 +3,24 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import { red, blueGrey } from "@mui/material/colors";
+import { alpha } from "@mui/material";
 
 export default function MapChart(props) {
     const [data, setData] = useState([
         {
-            id: "US",
-            value: 100
+            id: "AF",
+            value: 10,
+            name: 'America'
         }, {
             id: "GB",
-            value: 100
+            value: 100,
+            name: 'Brittain'
+        }, 
+        {
+            id: "MY",
+            value: 50,
+            name: 'America'
         }
     ])
     
@@ -55,11 +64,11 @@ export default function MapChart(props) {
 
             let circle = container.children.push(
                 am5.Circle.new(root, {
-                    radius: 20,
+                    radius: 10,
                     fillOpacity: 0.7,
-                    fill: am5.color(0xff0000),
+                    fill: alpha(red[200], 0.5),
                     cursorOverStyle: "pointer",
-                    tooltipText: `{id}: {value}[/]`
+                    tooltipText: `{name}: {value}[/]`
                 }, circleTemplate)
             )
 
@@ -73,7 +82,7 @@ export default function MapChart(props) {
             return am5.Bullet.new(root, {
                 sprite: am5.Label.new(root, {
                     text: "{value.formatNumber('#.')}",
-                    fill: am5.color(0xffffff),
+                    fill: blueGrey[900],
                     populateText: true,
                     centerX: am5.p50,
                     centerY: am5.p50,
@@ -88,8 +97,8 @@ export default function MapChart(props) {
             {
                 target: circleTemplate,
                 dataField: "value",
-                min: 10,
-                max: 50,
+                min: 1,
+                max: 5,
                 minValue: 0,
                 maxValue: 100,
                 key: "radius"
@@ -105,7 +114,7 @@ export default function MapChart(props) {
     
     return (
         <>
-        usestate
+        500
         <div id="chartdiv" style={{ width: "100vw", height: "100%"}}>
             
         </div>
