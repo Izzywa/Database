@@ -1,25 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapChart from "./MapChart";
 import { Grid2 as Grid } from "@mui/material";
 
 export default function PatientsCountryStats(props) {
     const [resident, setResident] = useState(true)
-    const [data, setData] = useState([
-            {
-                id: "AF",
-                value: 10,
-                name: 'America'
-            }, {
-                id: "GB",
-                value: 100,
-                name: 'Brittain'
-            }, 
-            {
-                id: "MY",
-                value: 50,
-                name: 'America'
-            }
-        ])
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        fetch(`/backend/pt_stats?residentCountry=${resident}`)
+        .then(response => response.json())
+        .then(result => {
+            setData(result)
+        }).catch(error => alert(error))
+    },[resident])
+
     return(
         <>
             <Grid size={12} 
@@ -29,8 +23,9 @@ export default function PatientsCountryStats(props) {
             data={data}/>
             </Grid>
             <div>
-            <button className="btn btn-dark m-auto">
-                View Statistics for  
+            <button className="btn btn-dark m-auto"
+            onClick={() => setResident(prev => !prev)}>
+                View Statistics for
                 {
                     resident ? " Birth " : " Resident "
                 }
