@@ -15,7 +15,7 @@ export default function DatePrescriptionStats(props) {
         .then(result => {
             setData(result)
         }).catch(error => alert(error))
-    }, [])
+    }, [years])
 
     const options = {
         maintainAspectRatio: false
@@ -49,7 +49,7 @@ export default function DatePrescriptionStats(props) {
             onClick={minusYears}>
                 -
             </button>
-            <span className="input-group-text border-dark">Years</span>
+            <span className="input-group-text border-dark">Years From Today</span>
             <input type="number" value={years} 
             style={{width: '50px'}}
             min={1}
