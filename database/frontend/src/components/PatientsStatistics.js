@@ -28,7 +28,7 @@ export default function PatientsStatistics(props) {
                 <Grid size={{xs:12, md:6}} style={style}>
                     <AgesStats/>
                 </Grid>
-                <Grid size={{xs:12, md:6}} style={style}>
+                <Grid size={12} style={style}>
                     <MapChart/>
                 </Grid>
             </Grid>
