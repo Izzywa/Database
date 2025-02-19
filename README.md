@@ -15,11 +15,28 @@ The Database was then imported to Django with the following command.
 ```
 python3 manage.py inspectdb > backend/models.py
 ```
-
+The above command `inspectdb` maps the database structure to the file `models.py`
 After some mofification on the Django Models, the application is now suited to query and modify the database.
 
 However, the plan for proper migration for the application is to create a separate database and copy the data from the existing database.
 But as the course requires the database to be created with the [schema.sql](schema.sql) file, no further action is taken
 
-The above command `inspectdb` maps the database structure to the file `models.py`
-- django will create the models based on the database
+# Project files
+<details>
+<summary>
+.github/workflows/cy.yml
+</summary>
+
+- Written to apply github Actions
+- Every a push is made to the repository, it will automate the running of the test file.
+
+</details>
+
+<details>
+<summary> 
+test.py
+</summary>
+
+- test file
+
+</details>
