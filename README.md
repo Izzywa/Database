@@ -38,6 +38,45 @@ test.py
 </summary>
 
 - This file will be run for testing during github actions
-- A test database will be connected and populated with data from the [dataset_files](dataset_files)
+- A test database will be connected and populated with sample data from the csv files in hte [dataset_files](dataset_files) folder.
+
+</details>
+
+<details>
+<summary>
+SQL files
+</summary>
+
+<details>
+<summary>
+schema.sql
+</summary>
+
+- Contains the query run in MySQL to create the tables and views for the database.
+</details>
+
+<details>
+<summary>
+stored_procedures.sql
+</summary>
+
+- Contains the query run in MySQL to create the stored procedures for the database.
+</details>
+
+<details>
+<summary>
+privilege.sq
+</summary>
+
+- The list of privilege granted to the user 'test_user'.
+</details>
+
+<details>
+<summary>
+queries.sql
+</summary>
+
+- Contains the list of queries expected to be commonly run with the database.
+</details>
 
 </details>
