@@ -37,6 +37,7 @@ But as the course requires the database to be created with the [schema.sql](sche
 test.py
 </summary>
 
-- test file
+- This file will be run for testing during github actions
+- A test database will be connected and populated with data from the [dataset_files](dataset_files)
 
 </details>
