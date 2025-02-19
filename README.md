@@ -80,3 +80,36 @@ queries.sql
 </details>
 
 </details>
+
+<details>
+<summary>
+dataset_files
+</summary>
+
+- The CSV files in this folder contains the set of sample data used to populate the database during trial and testing.
+- The Python files contains functions that takes in arguments to automate transferring the data from the CSV files to the database.
+</details>
+
+<details>
+<summary>
+database
+</summary>
+
+- This folder contains all the files for the Django web application.
+
+<details>
+<summary>
+backend
+</summary>
+
+- The backend application for the Django project used for handling of API requests using Django REST Framework
+</details>
+
+<details>
+<summary>
+frontend
+</summary>
+
+- The frontend application for the Django project where the client side application is rendered using React
+</details>
+</details>
