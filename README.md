@@ -6,10 +6,20 @@ The misuse and overuse of antimicrobials in humans, animals, and plants are the 
 
 ## [YouTube Video URL of the project](https://youtu.be/g7YD6gS2-ws)
 
-## importing mysql to Django
+# Details on The Project Limitation in Database Migration
+The project starts of as a final project for an SQL course, thus the database was designed and created in MySQL.
+The following web application, made with Django and React, was made after the database was created to display the practical appliation of the database.
+
+The Database was then imported to Django with the following command.
+
 ```
 python3 manage.py inspectdb > backend/models.py
 ```
+
+After some mofification on the Django Models, the application is now suited to query and modify the database.
+
+However, the plan for proper migration for the application is to create a separate database and copy the data from the existing database.
+But as the course requires the database to be created with the [schema.sql](schema.sql) file, no further action is taken
 
 The above command `inspectdb` maps the database structure to the file `models.py`
 - django will create the models based on the database
