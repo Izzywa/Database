@@ -6,7 +6,7 @@ The misuse and overuse of antimicrobials in humans, animals, and plants are the 
 
 ## [YouTube Video URL of the project](https://youtu.be/g7YD6gS2-ws)
 
-# Details on The Project Limitation in Database Migration
+# Details on The Project Limitation
 The project starts of as a final project for an SQL course, thus the database was designed and created in MySQL.
 The following web application, made with Django and React, was made after the database was created to display the practical appliation of the database.
 
@@ -20,6 +20,16 @@ After some mofification on the Django Models, the application is now suited to q
 
 However, the plan for proper migration for the application is to create a separate database and copy the data from the existing database.
 But as the course requires the database to be created with the [schema.sql](schema.sql) file, no further action is taken
+
+For the Django Application to be functionally optimised, it is assumed the information in the following tables is filled:
+- antibiotic_groups
+- sntibiotics
+- synonyms
+- dosage
+- ab_usage
+- countries
+- dial_codes
+- diagnoses
 
 # Project files
 <details>
