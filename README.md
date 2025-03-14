@@ -21,7 +21,7 @@ After some mofification on the Django Models, the application is now suited to q
 However, the plan for proper migration for the application is to create a separate database and copy the data from the existing database.
 But as the course requires the database to be created with the [schema.sql](schema.sql) file, no further action is taken
 
-For the Django Application to be functionally optimised, it is assumed the information in the following tables is filled:
+For the Django Application to be functionally optimised, it is assumed the information in the following tables are filled:
 - antibiotic_groups
 - sntibiotics
 - synonyms
@@ -30,6 +30,20 @@ For the Django Application to be functionally optimised, it is assumed the infor
 - countries
 - dial_codes
 - diagnoses
+
+# Project functionalities
+
+##  MySQL Database
+<details>
+<summary>Views</summary>
+The `current_patients`, `current_visits`, and `current_prescription` listed the data from each table that is not marked as deleted (deleted column = 0) while also concatinating and joining views from other tables.
+
+![current patients](images/current_patients.png)
+![current visits](images/current_visits.png)
+![current prescriptions](images/current_prescriptions.png)
+
+</details>
+
 
 # Project files
 <details>
