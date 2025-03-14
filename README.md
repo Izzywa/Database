@@ -93,6 +93,27 @@ The `delete_pt_cascade` will be triggered when the deleted status of a `patient`
 
 </details>
 
+## Web Application
+
+<details>
+<summary> Statistics page</summary>
+
+### Antibiotics Statistics page
+This page shows the statistics of the recorded antibiotics.
+![statistics gif](images/statisticsGif.gif)
+
+A pie chart will display the 5 most prescribed antibiotics and the percentage of those antibiotics over all of the prescribed antibiotics in the database.
+- An alternative display is a table listing the number and percentages of all antibiotics prescribed
+
+The top right bar chart will display the 5 most common cause of prescription of antibiotics. Calculated as the percentage of number of prescription with said diagnosis over all of the prescriptions. A prescription could have multiple diagnosis asigned to it.
+- An alternative display is a table with the number and percentages of prescription associated to a list of diagnosis.
+
+The line graph displays the number of prescription by month.
+- By default, the graph displays statistics of the past 12 months.
+- The graph could be manipulated to display statistics up to the past 10 years.
+
+</details>
+
 
 # Project files
 <details>
