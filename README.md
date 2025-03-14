@@ -23,7 +23,7 @@ But as the course requires the database to be created with the [schema.sql](sche
 
 For the Django Application to be functionally optimised, it is assumed the information in the following tables are filled:
 - antibiotic_groups
-- sntibiotics
+- antibiotics
 - synonyms
 - dosage
 - ab_usage
@@ -94,6 +94,14 @@ The `delete_pt_cascade` will be triggered when the deleted status of a `patient`
 </details>
 
 ## Web Application
+
+<details>
+<summary>Homepage</summary>
+
+User can search or register new patients.
+![homepage](images/homepage.gif)
+
+</details>
 
 <details>
 <summary> Statistics page</summary>
