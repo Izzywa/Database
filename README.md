@@ -111,8 +111,12 @@ User can add the antibiotics the patient is allergic to and view either the offi
 ![allergies](images/allergiesGif.gif)
 
 ### Compliance
-User can add prescriptions, diagnosis and compliance as well as edit htem
+User can add prescriptions, diagnosis and compliance as well as edit them.
 ![compliance](images/complianceGif.gif)
+
+### Visit Note and Prescription by Date
+User can view, add, and edit visit notes and prescription.
+![visit and prescription](images/visit_prescriptionGif.gif)
 
 </details>
 
