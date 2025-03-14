@@ -104,6 +104,19 @@ User can search or register new patients.
 </details>
 
 <details>
+<summary>Patient's Details</summary>
+
+### Allergies
+User can add the antibiotics the patient is allergic to and view either the official name or the trade name.
+![allergies](images/allergiesGif.gif)
+
+### Compliance
+User can add prescriptions, diagnosis and compliance as well as edit htem
+![compliance](images/complianceGif.gif)
+
+</details>
+
+<details>
 <summary> Statistics page</summary>
 
 ### Antibiotics Statistics page
