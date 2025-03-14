@@ -112,6 +112,14 @@ The line graph displays the number of prescription by month.
 - By default, the graph displays statistics of the past 12 months.
 - The graph could be manipulated to display statistics up to the past 10 years.
 
+The bottom bar chart displays the statistics of compliance of antibiotics
+
+### Patients Statistics page
+The map, by default, shows the number of patients by resident country.
+- This could be changed to show the number of patients by birth country.
+
+The scatter plot displays the number of patients by age.
+
 </details>
 
 
