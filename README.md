@@ -35,7 +35,7 @@ For the Django Application to be functionally optimised, it is assumed the infor
 
 ##  MySQL Database
 <details>
-<summary>Views</summary>
+<summary> Views </summary>
 The `current_patients`, `current_visits`, and `current_prescription` listed the data from each table that is not marked as deleted (deleted column = 0) while also concatinating and joining views from other tables.
 
 ![current patients](images/current_patients.png)
@@ -44,6 +44,34 @@ The `current_patients`, `current_visits`, and `current_prescription` listed the 
 
 </details>
 
+<details>
+<summary> Stored Procedures </summary>
+
+<details>
+<summary>`allergy_trade_name_by_pt_id` and `allergy_official_name_by_pt_id`</summary>
+
+Takes in a patient's ID as a parameter and returns either the trade name or official name of the antibiotics the patient is allergic to.
+![allergy stored procedure](images/call_allergy.png)
+
+</details>
+
+<details>
+<summary>`visit_prescription_by_pt_id`</summary>
+
+Takes in a patient's ID as a parameter and returns the visit notes and dose of antibiotic prescribed to the patient grouped by date.
+![visits and prescriptions stored procedure](images/call_visit_prescriptions.png)
+
+</details>
+
+<details>
+<summary>`search_ab`</summary>
+
+Takes in a string as a parameter and matches it with the abbreviation, trade name and official names of antibiotics and returning the official name of the antibiotics.
+![seach antibiotic stored procedure](images/call_search_ab.png)
+
+</details>
+
+</details>
 
 # Project files
 <details>
