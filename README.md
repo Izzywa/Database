@@ -71,7 +71,28 @@ Takes in a string as a parameter and matches it with the abbreviation, trade nam
 
 </details>
 
+<details>
+<summary>`diagnosis_compliance_by_pt_id`</summary>
+
+Takes in a patient's ID as a parameter and returns a list of all the antibiotics prescribed to the patient, their diagnosis, and the patient's compliance to each antibiotic
+![compliance diagnosis stored procedure](images/call_diagnosis_compliance.png)
+
 </details>
+
+</details>
+
+<details>
+<summary> Trigger </summary>
+
+The `patients`, `visits` and `prescriptions` tables each have a column `deleted`. In this column, the patient will be marked as deleted when the value is `1` and not deleted when the value is `0`.
+
+The `delete_pt_cascade` will be triggered when the deleted status of a `patient` changed. If a patient is marked as deleted, the `visits` and `prescriptions` related to the patient will also be deleted.
+
+![delete patient trigger](images/delete_pt_trigger.png)
+![effect of trigger](images/effect_of_delete_trigger.png)
+
+</details>
+
 
 # Project files
 <details>
