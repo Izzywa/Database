@@ -15,7 +15,7 @@ The Database was then imported to Django with the following command.
 ```
 python3 manage.py inspectdb > backend/models.py
 ```
-The above command `inspectdb` maps the database structure to the file `models.py`
+In the above command, `inspectdb` maps the database structure to the file `models.py`.
 After some mofification on the Django Models, the application is now suited to query and modify the database.
 
 However, the plan for proper migration for the application is to create a separate database and copy the data from the existing database.
